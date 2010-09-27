@@ -1,0 +1,5 @@
+glob:.classpath
+glob:.project
+glob:target
+glob:.settings
+glob:example.log
