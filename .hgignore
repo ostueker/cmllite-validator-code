@@ -3,3 +3,6 @@ glob:.project
 glob:target
 glob:.settings
 glob:example.log
+glob:CMLLiteValidator.iml
+glob:CMLLiteValidator.ipr
+glob:CMLLiteValidator.iws
