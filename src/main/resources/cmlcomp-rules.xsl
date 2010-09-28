@@ -28,8 +28,8 @@
     <xsl:template match="cml:cml[@convention]">
         <xsl:choose>
             <xsl:when
-                test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $cmlcomp">
-                <xsl:apply-templates mode="$cmlcomp" />
+                test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'cmlcomp'">
+                <xsl:apply-templates mode="cmlcomp" />
             </xsl:when>
             <xsl:otherwise>
                 <o:warning>No cml element found with correct convention</o:warning>
@@ -38,9 +38,10 @@
     </xsl:template>
 
 
-    <xsl:template match="*|@*|text()" mode="cmllite">
-        <xsl:apply-templates mode="cmllite" />
+    <xsl:template match="*|@*|text()" mode="cmlcomp">
+        <xsl:apply-templates mode="cmlcomp" />
     </xsl:template>
+
     <xsl:template match="cml:molecule" mode="cmllite">
         <molecule>
             <xsl:value-of select="@id" />
