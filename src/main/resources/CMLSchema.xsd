@@ -3130,10 +3130,17 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:enumeration>
-      <xsd:enumeration value="">
+     <xsd:enumeration value="undefined">
         <xsd:annotation>
           <xsd:documentation>
-            <h:div class="summary">empty or missing.</h:div>
+            <h:div class="summary">Undefined stereo chemistry.</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="other">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="summary">Another type of bond stereo - use dictRef to add further information.</h:div>
           </xsd:documentation>
         </xsd:annotation>
       </xsd:enumeration>
@@ -7773,6 +7780,179 @@
           <xsd:anyAttribute namespace="##other" processContents="lax"/>
         </xsd:extension>
       </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="link" id="el.link" substitutionGroup="anyCml">
+    <xsd:annotation>
+      <xsd:documentation>
+        <h:div class="summary">An internal or external link to other objects.</h:div>
+        <h:div class="description">
+          <h:p>
+            <h:b>Semantics are similar to XLink, but simpler and only a subset is implemented.</h:b>
+            This is intended to make the instances easy to create and read, and software
+            relatively easy to implement. The architecture is:
+          </h:p>
+          <h:ul>
+            <h:li>
+              <h:b>
+                A single element (<h:tt>link</h:tt>) used for all linking purposes.
+              </h:b>
+            </h:li>
+            <h:li>
+              <h:b>
+                The link types are determined by the <h:tt>type</h:tt> attribute and can be:
+              </h:b>.
+              <h:ul>
+                <h:li>
+                  <h:b>locator</h:b>. This points to a single target and must carry either a <h:tt>ref</h:tt> or <h:tt>href</h:tt> attribute.
+                  <h:tt>locator</h:tt> links are usually children of an extended link.
+                  <h:li>
+                    <h:b>arc</h:b>. This is a 1:1 link with both ends (<h:tt>from</h:tt> and <h:tt>to</h:tt>) defined.
+                  </h:li>
+                  <h:li>
+                    <h:b>extended</h:b>. This is usually a parent of several locator links and serves
+                    to create a grouping of link ends (i.e. a list of references in documents).
+                  </h:li>
+                  Many-many links can be built up from arcs linking extended elements
+                </h:li>
+              </h:ul>
+              <h:p>
+                All links can have optional <h:tt>role</h:tt> attributes. The semantics of this are not defined;
+                you are encouraged to use a URI as described in the XLink specification.
+              </h:p>
+              <h:p>There are two address spaces: </h:p>
+              <h:ul>
+                <h:li>
+                  The <h:tt>href</h:tt> attribute on locators behaves in the same way as <h:tt>href</h:tt> in
+                  HTML and is of type <h:tt>xsd:anyURI</h:tt>. Its primary use is to use XPointer to reference
+                  elements outside the document.
+                </h:li>
+                <h:li>
+                  The <h:tt>ref</h:tt> attribute on locators and the <h:tt>from</h:tt> and <h:tt>to</h:tt>
+                  attributes on <h:tt>arc</h:tt>s refer to IDs (<h:em>without</h:em> the '#' syntax).
+                </h:li>
+              </h:ul>
+
+              <h:p>
+                Note: several other specific linking mechanisms are defined elsewhere in STM. <h:a href="el.relatedEntry">relatedEntry</h:a> should be used in dictionaries, and <h:a href="st.dictRef">dictRef</h:a>
+                should be used to link to dictionaries. There are no required uses of <h:tt>link</h:tt> in STMML
+                but we have used it to map atoms, electrons and bonds in reactions in CML
+              </h:p>
+            </h:li>
+          </h:ul>
+          <h:p>
+            <h:b>Relation to XLink</h:b>.
+            At present (2002) we are not aware of generic XLink
+            processors from which we would benefit, so the complete implementation brings little
+            extra value.
+            Among the simplifications from Xlink are:
+          </h:p>
+          <h:ul>
+            <h:li>
+              <h:tt>type</h:tt> supports only <h:tt>extended</h:tt>, <h:tt>locator</h:tt> and <h:tt>arc</h:tt>
+            </h:li>
+            <h:li>
+              <h:tt>label</h:tt> is not supported and <h:tt>id</h:tt>s are used as targets of links.
+            </h:li>
+            <h:li>
+              <h:tt>show</h:tt> and <h:tt>actuate</h:tt> are not supported.
+            </h:li>
+            <h:li>
+              <h:tt>xlink:title</h:tt> is not supported (all STM elements can have a <h:tt>title</h:tt>
+              attribute).
+            </h:li>
+            <h:li>
+              <h:tt>xlink:role</h:tt> supports any string (i.e. does not have to be a namespaced resource).
+              This mechanism can, of course, still be used and we shall promote it where STM
+              benefits from it
+            </h:li>
+            <h:li>
+              The <h:tt>to</h:tt> and <h:tt>from</h:tt> attributes point to IDs rather than labels
+            </h:li>
+            <h:li>The xlink namespace is not used</h:li>
+            <h:li>
+              It is not intended to create independent linkbases, although some collections of
+              links may have this property and stand outside the documents they link to
+            </h:li>
+          </h:ul>
+        </h:div>
+      </xsd:documentation>
+    </xsd:annotation>    
+    <xsd:complexType>
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="anyCml"/>
+        <xsd:any namespace="##other" processContents="lax"/>
+        <xsd:any namespace="##local" processContents="lax"/>
+      </xsd:choice>
+      <xsd:attributeGroup ref="title"/>
+      <xsd:attributeGroup ref="id"/>
+      <xsd:attributeGroup ref="convention"/>
+      <xsd:attributeGroup ref="dictRef"/>
+      <xsd:attributeGroup ref="from"/>
+      <xsd:attributeGroup ref="to"/>
+      <xsd:attributeGroup ref="ref"/>
+      <xsd:attributeGroup ref="fromType">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The type of the object/element in the 'from' attributes. Requires the objects referenced by the 'from' attributes to have a given elementType. Can be overridden by 'from' attributes in individual links. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="toType">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The type of the object/element in the 'to' attributes. Requires the objects referenced by the 'to' attributes to have a given elementType. Can be overridden by 'to' attributes in individual links. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="fromSet">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The set of ids in the base of the link. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="toSet">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The set of ids in the target of the link. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="fromContext">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The id of the ancestral element of objects referenced by 'from' attributes. Provides a context for uniquifying the references in the 'from' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'fromContext'. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="toContext">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The id of the ancestral element of objects referenced by 'to' attributes. Provides a context for uniquifying the references in the 'to' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'toContext'. 2005-06-18: created</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="role">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">
+              The role of the link. Xlink adds semantics through a
+              URI; we shall not be this strict. We shall not normally use this mechanism
+              and use dictionaries instead.
+            </h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="href">
+        <xsd:annotation>
+          <xsd:documentation>
+            <h:div class="specific">The target of the (locator) link, outside the document.</h:div>
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:attributeGroup>
+      <xsd:attributeGroup ref="linkType"/>
+      <xsd:anyAttribute namespace="##other" processContents="lax"/>
     </xsd:complexType>
   </xsd:element>
   <xsd:element name="list" id="el.list" substitutionGroup="anyCml">
