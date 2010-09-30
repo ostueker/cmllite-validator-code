@@ -17,25 +17,19 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
 
-public class CmlCompValidatorTest {
+public class CmlCompMinValidatorTest {
 
     CMLRuleValidator validator;
     Builder builder = new Builder();
     Collection<Document> validCmlComp = new LinkedList<Document>();
-    Collection<Document> invalidCmlComp = new LinkedList<Document>();
 
     @Before
     public void setUp() throws Exception {
-        validator = new CMLRuleValidator("cmlcomp-rules.xsl");
+        validator = new CMLRuleValidator("cmlcomp-min.xsl");
 
-        Collection<File> validFiles = FileUtils.listFiles(new File("./src/test/resources/cmlcomp/valid"), new String[]{"cml"}, false);
+        Collection<File> validFiles = FileUtils.listFiles(new File("./src/test/resources/cmlcomp/min"), new String[]{"cml"}, false);
         for (File file : validFiles) {
             validCmlComp.add(builder.build(file));
-        }
-
-        Collection<File> invalidFiles = FileUtils.listFiles(new File("./src/test/resources/cmlcomp/invalid"), new String[]{"cml"}, false);
-        for (File file : invalidFiles) {
-            invalidCmlComp.add(builder.build(file));
         }
 
     }
@@ -46,18 +40,7 @@ public class CmlCompValidatorTest {
         for (Document document : validCmlComp) {
             System.out.println("validating: " + document.getBaseURI());
             boolean isValid = validator.validate(document);
-            assertTrue(document.getBaseURI() + " should be valid", isValid);
         }
     }
 
-    @Test
-    //@Ignore
-    public void testInvalidCmlComp() {
-        assertFalse("there should be invalid test documents", invalidCmlComp.isEmpty());
-        for (Document document : invalidCmlComp) {
-            System.out.println("validating: " + document.getBaseURI());
-            boolean isValid = validator.validate(document);
-            assertFalse(document.getBaseURI() + " should be invalid", isValid);
-        }
-    }
 }

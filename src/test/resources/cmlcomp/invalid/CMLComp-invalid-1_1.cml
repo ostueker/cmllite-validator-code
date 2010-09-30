@@ -6,7 +6,7 @@
     xmlns:conventions="http://www.xml-cml.org/convention"
     xmlns:units="http://www.xml-cml.org/units/units"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <module role="joblist">
+    <module role="joblist1">
         <identifier convention="chemid:EmpiricalFormula" value="CCl2O2"/>
         <identifier convention="chemid:InChI" value="InChI=1/CCl2O2/c2-1(4)5-3"/>
         <identifier convention="chemid:CanonicalSmiles" value="ClOC(=O)Cl"/>

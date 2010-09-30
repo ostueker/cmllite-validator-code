@@ -1,13 +1,17 @@
 package org.xmlcml.www;
 
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import nu.xom.Builder;
+import nu.xom.DocType;
 import nu.xom.Document;
+import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.Nodes;
 import nu.xom.Serializer;
+import nu.xom.XMLException;
 import nu.xom.xslt.XSLException;
 import nu.xom.xslt.XSLTransform;
 
@@ -53,7 +57,7 @@ public class CMLRuleValidator {
         }
         Document result = XSLTransform.toDocument(nodes);
         print(result, System.out);
-        Nodes failures = result.query("//*[local-name()='failed-assert' and namespace-uri()='http://purl.oclc.org/dsdl/svrl']");
+        Nodes failures = result.query("//*[local-name()='error' and namespace-uri()='http://www.xml-cml.org/report']");
         for (int index = 0, n = failures.size(); index < n; index++) {
             Node node = failures.get(index);
             //log.error("\n"+node.toXML());
