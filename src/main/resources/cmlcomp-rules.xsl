@@ -136,7 +136,7 @@
                 module[@role='init'] must be within module module[@role='job']
             </o:error>
         </xsl:if>
-       <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
+        <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -144,7 +144,7 @@
                 found elements other than molecule, parameterList and propertyList
             </o:error>
         </xsl:if>
-         <xsl:choose>
+        <xsl:choose>
             <!-- Apply cmllite if cml:molecule is found. -->
             <xsl:when test="count(child::cml:molecule) = 1">
                 <xsl:for-each select="cml:molecule">
@@ -200,7 +200,7 @@
                 module[@role='calculation'] must be within module module[@role='job']
             </o:error>
         </xsl:if>
-       <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
+        <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -208,7 +208,7 @@
                 found elements other than molecule, parameterList and propertyList
             </o:error>
         </xsl:if>
-         <xsl:choose>
+        <xsl:choose>
             <!-- Apply cmllite if cml:molecule is found. -->
             <xsl:when test="count(child::cml:molecule) &lt;= 1">
                 <xsl:for-each select="cml:molecule">
@@ -251,6 +251,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
     <xsl:template match="cml:module[@role='final']" mode="cmlcomp">
         <!-- Contain : molecule [Must = 1?], parameterList [None], propertyList [Must = 1] -->
         <xsl:if test="not(parent::cml:module[@role='job'])">
@@ -306,6 +307,43 @@
                 </o:error>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="cml:parameterList" mode="cmlcomp">
+        <xsl:if test="not(parent::cml:module[@role='init'] or parent::cml:module[@role='calculation'])">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                parameterList must be within module[@role='init'], module[@role='calculation']
+            </o:error>
+        </xsl:if>
+        <xsl:if test="not(count(child::cml:parameter) = count(child::cml:*))">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:attribute>
+                found elements other than parameter in parameterList
+            </o:error>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="cml:propertyList" mode="cmlcomp">
+        <xsl:if test="not(parent::cml:module[@role='init'] or parent::cml:module[@role='calculation'] or parent::cml:module[@role='final'])">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                propertyList must be within module module[@role='init'], module module[@role='calculation'] or module module[@role='final']
+            </o:error>
+        </xsl:if>
+        <xsl:if test="not(count(child::cml:property) = count(child::cml:*))">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:attribute>
+                found elements other than property in propertyList
+            </o:error>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="cml:property" mode="cmlcomp">

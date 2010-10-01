@@ -51,7 +51,7 @@ public class CmlCompValidatorTest {
     }
 
     @Test
-    //@Ignore
+    @Ignore
     public void testInvalidCmlComp() {
         assertFalse("there should be invalid test documents", invalidCmlComp.isEmpty());
         for (Document document : invalidCmlComp) {
