@@ -14,7 +14,7 @@
          but we are expecting cml container -->
     <xsl:template match="/">
         <o:result>
-            <xsl:apply-templates />
+            <xsl:apply-templates mode="cmlcomp"/>
         </o:result>
     </xsl:template>
 
@@ -25,7 +25,7 @@
 
     <!-- Choosing convention from cml root element. Convention has become a required
          attribute. -->
-    <xsl:template match="cml:cml[@convention]">
+    <xsl:template match="cml:cml[@convention]" mode="cmlcomp">
         <xsl:choose>
             <xsl:when test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'cmlcomp'">
                 <xsl:apply-templates mode="cmlcomp-joblist-mod" />
@@ -176,7 +176,7 @@
                                 <xsl:attribute name="location">
                                     <xsl:apply-templates select="." mode="get-full-path"/>
                                 </xsl:attribute>
-                                found '<xsl:value-of select="name((child::*)[1])"/>' element. Only 'scalar', 'array' or 'matrix' is allowed.
+                                found '<xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
                             </o:error>
                         </xsl:if>
                     </xsl:when>
@@ -212,7 +212,7 @@
                                 <xsl:attribute name="location">
                                     <xsl:apply-templates select="." mode="get-full-path"/>
                                 </xsl:attribute>
-                                found '<xsl:value-of select="name((child::*)[1])"/>' element. Only 'scalar', 'array' or 'matrix' is allowed.
+                                found '<xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
                             </o:error>
                         </xsl:if>
                     </xsl:when>
@@ -238,7 +238,9 @@
     </xsl:template>
 
     <xsl:template match="cml:scalar" mode="cmlcomp">
-        <!-- Contain : @dataType [Must] in xsd:double, ..  -->
+        <!-- Contain : @dataType [Must] in xsd:double, .. 
+        parent must be property or parameter
+        -->
         <xsl:if test="not(@dataType)">
             <o:error>
                 <xsl:attribute name="location">
@@ -313,7 +315,7 @@
                 atomArray must contain atoms
             </o:error>
         </xsl:if>
-        <xsl:if test="index-of((cml:molecule, cml:formula), parent::*) = 0">
+        <xsl:if test="not(parent::cml:formula or parent::cml:molecule)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path" />
