@@ -469,7 +469,7 @@
         <molecule>
             <xsl:value-of select="@id" />
         </molecule>
-        <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
+        <xsl:if test="not(parent::cml:cml or parent::cml:molecule or parent::cml:module)">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path" />
