@@ -4,10 +4,12 @@
     convention="conventions:cmlcomp"
     xmlns="http://www.xml-cml.org/schema"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <property dictRef2="cmlqm:property.nsymrot">
-        <data2 dataType="xsd:integer">1</data2>
-    </property>
-    <parameter dictRef="cmlqm:qm.symm">
-        <data dataType="xsd:string">None</data>
-    </parameter>
+    <module role="job" title="job1">
+        <module role="init">
+        </module>
+        <module role="final">
+        </module>
+        <module role="">
+        </module>
+    </module>
 </cml>

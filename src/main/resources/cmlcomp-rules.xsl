@@ -28,7 +28,7 @@
     <xsl:template match="cml:cml[@convention]" mode="cmlcomp">
         <xsl:choose>
             <xsl:when test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'cmlcomp'">
-                <xsl:apply-templates mode="cmlcomp-joblist-mod" />
+                <xsl:apply-templates mode="cmlcomp" />
             </xsl:when>
             <xsl:otherwise>
                 <o:warning>No cml element found with correct convention</o:warning>
@@ -36,7 +36,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="cml:module[@role='joblist']" mode="cmlcomp-joblist-mod">
+    <xsl:template match="cml:module[@role='joblist']" mode="cmlcomp">
         <module>
             <xsl:value-of select="@role" />
         </module>
@@ -56,7 +56,6 @@
                 module[@role='joblist'] must contains at least one module[@role='job']
             </o:error>
         </xsl:if>
-
         <xsl:if test="not(count(child::cml:module[@role='job']) + count(child::cml:identifier) = count(child::*))">
             <o:error>
                 <xsl:attribute name="location">
@@ -66,28 +65,11 @@
                 other cml elements are not allowed here.
             </o:error>
         </xsl:if>
-        <xsl:apply-templates mode="cmlcomp-job-mod" />
-        <!--<xsl:for-each select="child::*">
-            <xsl:choose>
-                <xsl:when test=" node()=cml:module">
-                    module
-                    <xsl:apply-templates mode="cmlcomp-job-mod" />
-                </xsl:when>
-                <xsl:when test="local-name()='identifier' and namespace-uri()=''">
-                    identifier
-                    <xsl:apply-templates mode="cmlcomp-identifier-mod" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <o:warning>
-                        <xsl:value-of select="name()" /> element found with correct convention
-                    </o:warning>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>-->
+        <xsl:apply-templates mode="cmlcomp" />
     </xsl:template>
 
     <!-- process the job list jobs -->
-    <xsl:template match="cml:module[@role='job']" mode="cmlcomp-job-mod">
+    <xsl:template match="cml:module[@role='job']" mode="cmlcomp">
         <module>
             <xsl:value-of select="@role" />
         </module>
@@ -107,15 +89,31 @@
                 module job must have a title
             </o:error>
         </xsl:if>
+        <!-- test if module[@role='job'] must contain module[@role='init'] and module[@role='final']. it may contain optional module[@role='calculation']-->
+        <xsl:if test="not(count(child::cml:module[@role='init'])=1 and count(child::cml:module[@role='final'])=1 and count(child::cml:module[@role='calculation'])&lt;=1)">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:attribute>
+                module[@role='job'] must contain 1 module[@role='init'] and 1 module[@role='final'] and optional module[@role='calculation']
+            </o:error>
+        </xsl:if>
+        <xsl:if test="not(count(child::cml:module[@role='init']) + count(child::cml:module[@role='final']) + count(child::cml:module[@role='calculation']) = count(child::*))">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='job'] must contain 1 module[@role='init'] and 1 module[@role='final'] and optional module[@role='calculation'].
+                other cml elements are not allowed here.
+            </o:error>
+        </xsl:if>
         <!-- test that the title is unique with in the joblist -->
         <xsl:choose>
-            <xsl:when
-                    test="count(ancestor::cml:module[@role='joblist']//cml:module[@role = 'job'][@title = current()/@title]) = 1"/>
+            <xsl:when test="count(ancestor::cml:module[@role='joblist']//cml:module[@role = 'job'][@title = current()/@title]) = 1"/>
             <xsl:otherwise>
                 <o:error>
                     <xsl:attribute name="location">
-                        <xsl:apply-templates select="."
-                                mode="get-full-path"/>
+                        <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:attribute>
                     module job titles must be unique within the job list
                     <xsl:text/>
@@ -125,44 +123,189 @@
                 </o:error>
             </xsl:otherwise>
         </xsl:choose>
-
         <xsl:apply-templates mode="cmlcomp" />
     </xsl:template>
 
-    <xsl:template match="cml:module[@role='init']" mode="cmlcomp-init-mod">
+    <xsl:template match="cml:module[@role='init']" mode="cmlcomp">
         <!-- Contain : molecule [Must = 1?], parameterList [Must = 1?], propertyList [optional = 1] -->
-        <xsl:if test="not(count(child::cml:molecule) = 1)">
+        <xsl:if test="not(parent::cml:module[@role='job'])">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='init'] must be within module module[@role='job']
+            </o:error>
+        </xsl:if>
+       <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:attribute>
-                only 1 molecule is allowed in module[@role='init']
+                found elements other than molecule, parameterList and propertyList
             </o:error>
         </xsl:if>
-        <!-- Apply cmllite if cml:molecule is found. -->
-        <xsl:if test="count(child::cml:molecule) = 1">
-            <xsl:for-each select="cml:molecule">
-                <xsl:apply-templates select="." mode="cmllite"/>
-            </xsl:for-each>
+         <xsl:choose>
+            <!-- Apply cmllite if cml:molecule is found. -->
+            <xsl:when test="count(child::cml:molecule) = 1">
+                <xsl:for-each select="cml:molecule">
+                    <xsl:apply-templates select="." mode="cmllite"/>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                        exactly 1 molecule is allowed in module[@role='init']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="count(child::cml:parameterList) = 1">
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                    only 1 parameterList is allowed in module[@role='init'], an initialization module must contain
+                    parameters for setting up computational job.
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="count(child::cml:propertyList) &lt;= 1">
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                    only 1 or no propertyList is allowed in module[@role='init'], it is unusal to have preoperty in
+                    the initializing step.
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="cml:module[@role='calculation']" mode="cmlcomp">
+        <!-- Contain : molecule [Optional], parameterList [Optional], propertyList [Must = 1] -->
+        <xsl:if test="not(parent::cml:module[@role='job'])">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='calculation'] must be within module module[@role='job']
+            </o:error>
         </xsl:if>
-        <xsl:if test="not(count(child::cml:parameterList) = 1)">
+       <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:attribute>
-                only 1 parameterList is allowed in module[@role='init'], an initialization module must contain
-                parameters for setting up computational job.
+                found elements other than molecule, parameterList and propertyList
             </o:error>
         </xsl:if>
-        <xsl:if test="not(count(child::cml:parameterList) &lt;= 1)">
+         <xsl:choose>
+            <!-- Apply cmllite if cml:molecule is found. -->
+            <xsl:when test="count(child::cml:molecule) &lt;= 1">
+                <xsl:for-each select="cml:molecule">
+                    <xsl:apply-templates select="." mode="cmllite"/>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                        zero or one 1 molecule is allowed in module[@role='calculation']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="count(child::cml:parameterList) &lt;= 1">
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                    zero or one parameterList is allowed in module[@role='calculation']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="count(child::cml:propertyList) = 1">
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                    exactly one propertyList must be in module[@role='calculation']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="cml:module[@role='final']" mode="cmlcomp">
+        <!-- Contain : molecule [Must = 1?], parameterList [None], propertyList [Must = 1] -->
+        <xsl:if test="not(parent::cml:module[@role='job'])">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='final'] must be within module module[@role='job']
+            </o:error>
+        </xsl:if>
+        <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:attribute>
-                only 1 or no propertyList is allowed in module[@role='init'], it is unusal to have preoperty in
-                the initializing step.
+                found elements other than molecule and propertyList
             </o:error>
         </xsl:if>
+        <xsl:choose>
+            <!-- Apply cmllite if cml:molecule is found. -->
+            <xsl:when test="count(child::cml:molecule) = 1">
+                <xsl:for-each select="cml:molecule">
+                    <xsl:apply-templates select="." mode="cmllite"/>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                        exactly 1 molecule is allowed in module[@role='final']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="not(count(child::cml:parameterList) = 0)">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:attribute>
+                no parameterList is allowed in module[@role='final']
+            </o:error>
+        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="count(child::cml:propertyList) = 1">
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <o:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:attribute>
+                    exactly one propertyList must be in module[@role='final']
+                </o:error>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="cml:property" mode="cmlcomp">
@@ -176,7 +319,8 @@
                                 <xsl:attribute name="location">
                                     <xsl:apply-templates select="." mode="get-full-path"/>
                                 </xsl:attribute>
-                                found '<xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
+                                found '
+                                <xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
                             </o:error>
                         </xsl:if>
                     </xsl:when>
@@ -212,7 +356,8 @@
                                 <xsl:attribute name="location">
                                     <xsl:apply-templates select="." mode="get-full-path"/>
                                 </xsl:attribute>
-                                found '<xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
+                                found '
+                                <xsl:value-of select="name((child::*)[1])"/>' element. only 'scalar', 'array' or 'matrix' is allowed.
                             </o:error>
                         </xsl:if>
                     </xsl:when>
