@@ -7,22 +7,22 @@ import java.util.Set;
 
 public class UriData {
 
-	private Set<URI> uris = new HashSet<URI>();
-	
-	public synchronized Set<URI> getUris() {
-		return new HashSet<URI>(this.uris);			
-	}
+    private Set<URI> uris = new HashSet<URI>();
 
-	synchronized void add(URI uri) {
-		this.uris.add(uri);		
-	}
+    public synchronized Set<URI> getUris() {
+        return new HashSet<URI>(this.uris);
+    }
 
-	synchronized void addAll(Collection<URI> uris) {
-		this.uris.addAll(uris);		
-	}
-	
-	synchronized void clear() {
-		this.uris.clear();
-	}
+    synchronized void add(URI uri) {
+        this.uris.add(uri);
+    }
+
+    synchronized void addAll(Collection<URI> uris) {
+        this.uris.addAll(uris);
+    }
+
+    synchronized void clear() {
+        this.uris.clear();
+    }
 
 }
