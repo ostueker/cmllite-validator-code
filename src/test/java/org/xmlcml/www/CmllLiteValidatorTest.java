@@ -1,19 +1,18 @@
 package org.xmlcml.www;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import nu.xom.Builder;
+import nu.xom.Document;
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import nu.xom.Builder;
-import nu.xom.Document;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CmllLiteValidatorTest {
 
@@ -21,6 +20,7 @@ public class CmllLiteValidatorTest {
     Builder builder = new Builder();
     Collection<Document> validCmlLite = new LinkedList<Document>();
     Collection<Document> invalidCmlLite = new LinkedList<Document>();
+
 
     @Before
     public void setUp() throws Exception {
@@ -63,4 +63,5 @@ public class CmllLiteValidatorTest {
             assertFalse(document.getBaseURI() + " should be invalid", isValid);
         }
     }
+
 }
