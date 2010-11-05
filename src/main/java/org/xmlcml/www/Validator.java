@@ -12,7 +12,7 @@ public class Validator {
     private XmlDocumentValidator xmlDocumentValidator = new XmlDocumentValidator();
     private SchemaValidator schemaValidator = SchemaValidator.newInstance();
     private ConventionValidator conventionValidator = ConventionValidator.newInstance();    
-
+   private QNameValidator qnameValidator = new QNameValidator();
     public final static String CmlNS = "http://www.xml-cml.org/schema";
 
     /**
@@ -35,10 +35,12 @@ public class Validator {
         boolean valid = false;
         if (xmlDocumentValidator.validate(input)) {
             if (schemaValidator.validate(input)) {
-                System.out.println("schema valid");
                 if (conventionValidator.validate(input)) {
-                    System.out.println("convention valid");
+                    if (checkQNamesAreURLs) {
+                        valid = qnameValidator.validate(input);
+                    } else {
                     valid = true;
+                    }
                 }
             }
         }

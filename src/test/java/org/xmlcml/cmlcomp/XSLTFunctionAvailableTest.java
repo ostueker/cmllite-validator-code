@@ -23,7 +23,7 @@ public class XSLTFunctionAvailableTest {
     public void setUp() throws Exception {
         validator = new CMLRuleValidator("xslt-function-available-test.xsl");
 
-        Collection<File> validFiles = FileUtils.listFiles(new File("./src/test/resources/empty"), new String[]{"cml"}, false);
+        Collection<File> validFiles = FileUtils.listFiles(new File("./src/test/resources/cmllite/empty"), new String[]{"cml"}, false);
         for (File file : validFiles) {
             validCmlComp.add(builder.build(file));
         }

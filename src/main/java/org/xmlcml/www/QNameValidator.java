@@ -1,11 +1,9 @@
 package org.xmlcml.www;
 
 import com.thoughtworks.xstream.XStream;
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Nodes;
+import nu.xom.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -122,6 +120,19 @@ public class QNameValidator {
         } catch (IOException e) {
             log.fatal("can't create file", e);
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean validate(String input) {
+        try {
+            Document document = new Builder().build(IOUtils.toInputStream(input));
+            return validate(document);
+        } catch (ParsingException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
