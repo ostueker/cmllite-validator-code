@@ -27,6 +27,7 @@ public class SchemaValidatorTest {
     public void testValidate() throws IOException {
 
         String text = "<?xml version=\"1.0\" ?>\r\n" +
+                "<foo>"+
                 "<cml convention=\"cmlDict:cmllite\"\r\n" +
                 "     xmlns=\"http://www.xml-cml.org/schema\"\r\n" +
                 "     xmlns:cmlDict=\"http://www.xml-cml.org/dictionary/cml/\"\r\n" +
@@ -53,11 +54,10 @@ public class SchemaValidatorTest {
                 "      <bond id=\"b2\" atomRefs2=\"a1 a3\" order=\"1\" />\r\n" +
                 "    </bondArray>\r\n" +
                 "  </molecule>\r\n" +
-                "</cml>";
+                "</cml></foo>";
 
-        InputStream is = IOUtils.toInputStream(text, "UTF-8");
 
-        boolean isValid = validator.validate(is);
+        boolean isValid = validator.validate(text);
         assertTrue("should be valid", isValid);
 
     }

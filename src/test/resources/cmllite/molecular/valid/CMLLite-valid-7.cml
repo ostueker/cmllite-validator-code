@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:cmllite">
-    <dc:title>CMLLite test file</dc:title>
-    <dc:description>valid CMLLite should not fail becuase although two atoms have same id they are in different
+     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
+    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
+    <dc:description>valid molecular should not fail becuase although two atoms have same id they are in different
         (sibling) molecules
     </dc:description>
     <dc:author>J A Townsend</dc:author>

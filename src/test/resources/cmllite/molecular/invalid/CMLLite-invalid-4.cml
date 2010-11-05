@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:cmllite">
-    <dc:title>CMLLite test file</dc:title>
+     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
+    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
     <dc:description>should fail because two atom descendents of a molecule have the same id</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>

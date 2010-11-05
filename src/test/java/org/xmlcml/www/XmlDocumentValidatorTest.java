@@ -24,13 +24,13 @@ public class XmlDocumentValidatorTest {
 
     @Test
     public void testValidateWithNonXml() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("a non xml string"));
+        boolean isValid = validator.validate("a non xml string");
         assertFalse("should be invalid", isValid);
     }
 
     @Test
     public void testValidateWithEmptyStream() {
-        boolean isValid = validator.validate(IOUtils.toInputStream(""));
+        boolean isValid = validator.validate("");
         assertFalse("should be invalid", isValid);
     }
 
@@ -42,55 +42,54 @@ public class XmlDocumentValidatorTest {
 
     @Test
     public void testValidateWithXmlDeclarationOnly() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         assertFalse("should be invalid", isValid);
     }
 
     @Test
     public void testValidateWithBasicXml() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<xml />"));
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xml />");
         assertTrue("should be valid", isValid);
     }
 
     @Test
     public void testValidateWithBadlyFormedXml1() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                "<xml>"));
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                "<xml>");
         assertFalse("should be invalid", isValid);
     }
 
     @Test
     public void testValidateWithBadlyFormedXml2() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<xml>" +
                 "<a>" +
-                "</xml>"));
+                "</xml>");
         assertFalse("should be invalid", isValid);
     }
 
     @Test
     public void testValidateWithNamespacedXml() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<xml xmlns=\"http://www.example.com\">" +
-                "</xml>"));
+                "</xml>");
         assertTrue("should be valid", isValid);
     }
 
     @Test
     public void testValidateWithPrefixedNamespacedXml() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<x:xml xmlns:x=\"http://www.example.com\">" +
-                "</x:xml>"));
+                "</x:xml>");
         assertTrue("should be valid", isValid);
     }
 
     @Test
     public void testValidateWithMixedNamespacedXml() {
-        boolean isValid = validator.validate(IOUtils.toInputStream("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+        boolean isValid = validator.validate("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<x:xml xmlns:x=\"http://www.example.com\" xmlns:o=\"http://www.other.com\">" +
                 "<o:a />" +
-                "</x:xml>"));
+                "</x:xml>");
         assertTrue("should be valid", isValid);
     }
 }

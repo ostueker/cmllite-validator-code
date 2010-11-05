@@ -6,3 +6,4 @@ glob:example.log
 glob:CMLLiteValidator.iml
 glob:CMLLiteValidator.ipr
 glob:CMLLiteValidator.iws
+glob:example.log.1

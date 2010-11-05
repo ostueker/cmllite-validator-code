@@ -1,5 +1,8 @@
 package org.xmlcml.www;
 
+import nu.xom.*;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -17,6 +20,9 @@ import javax.xml.validation.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SchemaValidator {
 
@@ -90,19 +96,63 @@ public class SchemaValidator {
     }
 
 
-    public boolean validate(InputStream input) {
-        Document document = buildDocument(input);
-        if (document != null) {
-            try {
-                validator.validate(new DOMSource(document));
-                return true;
-            } catch (SAXException e) {
-                log.error("invalid document", e);
-            } catch (IOException e) {
-                log.error("invalid document", e);
+    public boolean validate(String input) {        
+        List<InputStream> inputs = getEldestCmlChildren(input);
+        for (InputStream is : inputs) {
+            Document doc = buildDocument(is);
+            if (doc != null) {
+                try {
+                    validator.validate(new DOMSource(doc));
+                } catch (SAXException e) {
+                    log.error("invalid document", e);
+                    return false;
+                } catch (IOException e) {
+                    return false;
+                }
             }
+
         }
-        return false;
+        return true;
     }
 
+    private List<InputStream> getEldestCmlChildren(String input) {
+        List<InputStream> list = Collections.emptyList();
+        try {
+            nu.xom.Document document = new Builder().build(IOUtils.toInputStream(input));            
+            Nodes nodes = document.query("//*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "' and not(ancestor::*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "'])]");
+            int size = nodes.size();
+            list = new ArrayList<InputStream>(size);
+            for (int i = 0; i < size; i++) {
+                Element e = new Element((Element) nodes.get(i));
+                nu.xom.Document d = new nu.xom.Document(e);
+                list.add(print(d));
+            }
+        } catch (ParsingException e) {
+            log.error("invalid document", e);
+        } catch (IOException e) {
+            log.error("invalid document", e);
+        }
+
+        return list;
+    }
+
+     /**
+     * Prints a XOM document to an OutputStream without having to remember the
+     * serializer voodoo. The encoding is always UTF-8.
+     *
+     * @param doc the XOM Document to print
+     */
+    public InputStream print(nu.xom.Document doc) {
+        Serializer serializer;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            serializer = new Serializer(baos, "UTF-8");
+            serializer.setIndent(0);
+            serializer.write(doc);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
+		}
+        return IOUtils.toInputStream(baos.toString());
+	}
 }

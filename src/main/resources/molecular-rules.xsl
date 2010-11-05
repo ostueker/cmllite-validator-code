@@ -2,26 +2,29 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:cml="http://www.xml-cml.org/schema"
                 xmlns:o="http://www.xml-cml.org/report"
+                xmlns:saxon="http://saxon.sf.net/"
 
         >
     <xsl:output method="xml" omit-xml-declaration="no"
                 standalone="yes" indent="yes"/>
-    <xsl:variable name="conventionNS">
-        http://www.xml-cml.org/convention/
-    </xsl:variable>
+    <xsl:param name="absoluteXPathToStartElement" select="/" />
+
+    <xsl:variable name="conventionName">molecular</xsl:variable>
+
+    <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
 
     <xsl:template match="/">
         <o:result>
-            <xsl:apply-templates/>
+           <xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)"/>
         </o:result>
     </xsl:template>
 
     <xsl:template match="cml:cml[@convention]">
         <xsl:choose>
             <xsl:when
-                    test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'cmllite'"
+                    test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'molecular'"
                     >
-                <xsl:apply-templates mode="cmllite"/>
+                <xsl:apply-templates mode="molecular"/>
             </xsl:when>
             <xsl:otherwise>
                 <o:warning>No cml element found with correct convention</o:warning>
@@ -33,10 +36,10 @@
         <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()" mode="cmllite">
-        <xsl:apply-templates mode="cmllite"/>
+    <xsl:template match="*|@*|text()" mode="molecular">
+        <xsl:apply-templates mode="molecular"/>
     </xsl:template>
-    <xsl:template match="cml:molecule" mode="cmllite">
+    <xsl:template match="cml:molecule" mode="molecular">
         <molecule>
             <xsl:value-of select="@id"/>
         </molecule>
@@ -60,9 +63,9 @@
                 </o:error>
             </xsl:if>
         </xsl:if>
-        <xsl:apply-templates mode="cmllite"/>
+        <xsl:apply-templates mode="molecular"/>
     </xsl:template>
-    <xsl:template match="cml:atomArray" mode="cmllite">
+    <xsl:template match="cml:atomArray" mode="molecular">
         <xsl:if test="count(child::cml:atom) = 0">
             <o:error>
                 <xsl:attribute name="location">
@@ -83,9 +86,9 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
-        <xsl:apply-templates mode="cmllite"/>
+        <xsl:apply-templates mode="molecular"/>
     </xsl:template>
-    <xsl:template match="cml:atom" mode="cmllite">
+    <xsl:template match="cml:atom" mode="molecular">
         <!--
           atoms must have id unless they are part of an atomArray in a
           formula
@@ -201,9 +204,9 @@
                 </o:error>
             </xsl:otherwise>
         </xsl:choose>
-        <xsl:apply-templates mode="cmllite"/>
+        <xsl:apply-templates mode="molecular"/>
     </xsl:template>
-    <xsl:template match="cml:bond" mode="cmllite">
+    <xsl:template match="cml:bond" mode="molecular">
         <!--ASSERT -->
         <xsl:choose>
             <xsl:when test="@atomRefs2"/>
@@ -335,4 +338,5 @@
         <xsl:value-of select="namespace-uri()"/>
         <xsl:text>']</xsl:text>
     </xsl:template>
+
 </xsl:stylesheet>

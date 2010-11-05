@@ -1,21 +1,17 @@
 package org.xmlcml.cmlcomp;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import nu.xom.Builder;
+import nu.xom.Document;
+import org.apache.commons.io.FileUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.xmlcml.www.CMLRuleValidator;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import nu.xom.Builder;
-import nu.xom.Document;
-
-import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.xmlcml.www.CMLRuleValidator;
+import static org.junit.Assert.assertFalse;
 
 public class XSLTFunctionAvailableTest {
 
@@ -31,7 +27,6 @@ public class XSLTFunctionAvailableTest {
         for (File file : validFiles) {
             validCmlComp.add(builder.build(file));
         }
-
     }
 
     @Test

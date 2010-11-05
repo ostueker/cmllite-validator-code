@@ -27,7 +27,7 @@ public class CmlLiteValidator {
     private static XSLTransform createTransform() {
         Builder builder = new Builder();
         URL xslt = Thread.currentThread().getContextClassLoader().getResource(
-                "cmllite-rules.xsl");
+                "molecular-rules.xsl");
         /* set up to use saxon 9 */
         System.setProperty("javax.xml.transform.TransformerFactory",
                 "net.sf.saxon.TransformerFactoryImpl");

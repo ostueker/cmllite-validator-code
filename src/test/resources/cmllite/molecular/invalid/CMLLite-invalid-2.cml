@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:conventions="http://www.xml-cml.org/convention/"
-     convention="conventions:cmllite">
-    <dc:title>CMLLite test file</dc:title>
-    <dc:description>invalid CMLLite - atom has a child from the CML namespace which is not one of the ones allowed by
-        the CMLLite definition
+     convention="conventions:molecular">
+    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
+    <dc:description>invalid molecular - atom has a child from the CML namespace which is not one of the ones allowed by
+        the molecular definition
     </dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>

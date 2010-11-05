@@ -2,8 +2,8 @@
 <cml xmlns="http://www.xml-cml.org/schema"
      xmlns:foo="http://www.another.ns"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:cmllite">
-    <dc:title>CMLLite test file</dc:title>
+     xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
+    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
     <dc:description>should not fail because content model allows foreign namespaced elements</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>

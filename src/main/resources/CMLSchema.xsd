@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://www.xml-cml.org/schema"
             elementFormDefault="qualified"
@@ -440,7 +440,7 @@
                         the application.
                     </h:p>
                     <h:p>At present there is a controlled pattern of characters selected so as not to collide with
-                        common usage in XML document
+                        common usage in XML doc
                     </h:p>
                 </h:div>
                 <h:div class="example" href="delimiterType1.xml">
@@ -2891,7 +2891,7 @@
             <xsd:documentation>
                 <h:div class="summary">A reference to an existing object.</h:div>
                 <h:div class="description">
-                    A reference to an existing element in the document.
+                    A reference to an existing element in the doc.
                     The target of the ref attribute must exist. The test for validity will normally
                     occur in the element's _appinfo_. Any DOM Node created from this element will
                     normally be a reference to another Node, so that if the target node is modified
@@ -3525,7 +3525,7 @@
     <xsd:simpleType name="versionType" id="st.versionType">
         <xsd:annotation>
             <xsd:documentation>
-                <h:div class="summary">Version of a document or code.</h:div>
+                <h:div class="summary">Version of a doc or code.</h:div>
                 <h:div class="description">Forms include 1, 0.9, 1.1.3, 1.2alpha, etc.</h:div>
                 <h:div class="example" href="version1.xml"/>
             </xsd:documentation>
@@ -3611,7 +3611,7 @@
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">A reference to a map providing mappings between atoms</h:div>
-                    <h:div class="description">The map will normally be contained within the same document and
+                    <h:div class="description">The map will normally be contained within the same doc and
                         referenced by its ID. It will contain a list of links with from and to attributes linking atoms.
                         The topology of the linking is defined by the application - it could be overlay of molecular
                         fragments, reactant/product mapping, etc. The reserved phrase "USE_IDS" assume that the sets of
@@ -3744,7 +3744,7 @@
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">A reference to a map providing mappings between bonds</h:div>
-                    <h:div class="description">The map will normally be contained within the same document and
+                    <h:div class="description">The map will normally be contained within the same doc and
                         referenced by its ID. It will contain a list of links with from and to attributes linking bonds.
                         The topology of the linking is defined by the application - it could be overlay of molecular
                         fragments, reactant/product mapping, etc. The reserved phrase "USE_IDS" assume that the sets of
@@ -3992,7 +3992,7 @@
                     <h:div class="summary">default value in an enumeration.</h:div>
                     <h:div class="description">A non-whitespace string (value is irrelevant) indicates that the content
                         of this enumeration is the default value (usually of a scalar). It is an error to have more than
-                        one default. If the scalar in an instance document has no value (i.e. is empty or contains only
+                        one default. If the scalar in an instance doc has no value (i.e. is empty or contains only
                         whitespace) its value is given by the default. If the scalar in the instance is empty and no
                         enumerations have a default attribute, an application may throw an error.
                     </h:div>
@@ -4063,9 +4063,9 @@
                         <h:tt>dictRef</h:tt>
                         attribute to point to an entry in a dictionary. To avoid excessive use of (mutable) filenames
                         and URIs we recommend a namespace prefix, mapped to a namespace URI in the normal manner. In
-                        this case, of course, the namespace URI must point to a real XML document containing _entry_
+                        this case, of course, the namespace URI must point to a real XML doc containing _entry_
                         elements and validated against STMML Schema.
-                        <h:p>Where there is concern about the dictionary becoming separated from the document the
+                        <h:p>Where there is concern about the dictionary becoming separated from the doc the
                             dictionary entries can be physically included as part of the data instance and the normal
                             XPointer addressing mechanism can be used.
                         </h:p>
@@ -4133,7 +4133,7 @@
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">A reference to a map providing mappings between electrons</h:div>
-                    <h:div class="description">The map will normally be contained within the same document and
+                    <h:div class="description">The map will normally be contained within the same doc and
                         referenced by its ID. It will contain a list of links with from and to attributes linking
                         electrons. The topology of the linking is defined by the application - it could be
                         reactant/product mapping, etc. The reserved phrase "USE_IDS" assume that the sets of electrons
@@ -4252,8 +4252,8 @@
                     <h:div class="summary">Information identifying the name of a file or other resource.</h:div>
                     <h:div class="description">
                         This allows an element (such as cml) to carry limited
-                        information about provenance such as the name of the document used to provide the
-                        content. It is not a complete solution but can help to protect a document becoming
+                        information about provenance such as the name of the doc used to provide the
+                        content. It is not a complete solution but can help to protect a doc becoming
                         separated from its external metadata. It is restricted to the basic XML character set
                         (printable ANSI) and whitespace (which should anyway be discouraged) is normalized to
                         single space (attribute values cannot carry newlines).
@@ -4344,7 +4344,7 @@
                 <xsd:documentation>
                     <h:div class="summary">The base of one or more links.</h:div>
                     <h:div class="description">On link elements the value is the single id of an element within the
-                        document or context specified in map@fromRef attributes. It must identify the element uniquely.
+                        doc or context specified in map@fromRef attributes. It must identify the element uniquely.
                         The reserved value 'null' implies that no mapping has been provided for the object(s) in the
                         'to' attribute. This implies no semantics but may be used by software to keep count of which
                         elements have been mapped. For multiple targets use 'fromSet'.
@@ -4361,7 +4361,7 @@
                     <h:div class="summary">The context for the 'from' links in a map.</h:div>
                     <h:div class="description">
                         <h:p>A reference to the unique 'id' attribute of an element defining the context for links in a
-                            map. This may be required when id attributes may not be unique within a document. The id
+                            map. This may be required when id attributes may not be unique within a doc. The id
                             should either reference an element uniquely or should be taken as the first ancestor (of the
                             map) with such an id.
                         </h:p>
@@ -4486,7 +4486,7 @@
                         as containing only alphanumerics, '_', ',' and '-' and and must start with an
                         alphabetic character. Ids are case sensitive. Ids should be unique within local scope,
                         thus all atoms within a molecule should have unique ids, but separated molecules within a
-                        document (such as a published article) might have identical ids. Software
+                        doc (such as a published article) might have identical ids. Software
                         should be able to search local scope (e.g. all atoms within a molecule).
                         However this is under constant review.
                     </h:div>
@@ -4649,7 +4649,7 @@
                 <xsd:documentation>
                     <h:div class="summary">Reference to a fuller description of the isotope.</h:div>
                     <h:div class="general">The description may be found in an external collection (e.g. IUPAC) or within
-                        the current document.
+                        the current doc.
                     </h:div>
                     <h:div class="example" href="isotope2.xml"/>
                 </xsd:documentation>
@@ -5441,7 +5441,7 @@
                     <h:div class="summary">A reference to an element of given type.</h:div>
                     <h:div class="description">
                         <h:tt>ref</h:tt>
-                        modifies an element into a reference to an existing element of that type within the document.
+                        modifies an element into a reference to an existing element of that type within the doc.
                         This is similar to a pointer and it can be thought of a strongly typed hyperlink. It may also be
                         used for "subclassing" or "overriding" elements.
                         <br xmlns=""/>
@@ -5833,7 +5833,7 @@
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">The target of one or more links.</h:div>
-                    <h:div class="summary">On link elements the value is the single id of an element within the document
+                    <h:div class="summary">On link elements the value is the single id of an element within the doc
                         or context specified in map@toContext attributes. It must identify the element uniquely. The
                         reserved value 'null' implies that no mapping has been provided for the object(s) in the 'from'
                         attribute. This implies no semantics but may be used by software to keep count of which elements
@@ -5851,7 +5851,7 @@
                     <h:div class="summary">The context for the 'from' links in a map.</h:div>
                     <h:div class="description">
                         <h:p>A reference to the unique 'id' attribute of an element defining the context for links in a
-                            map. This may be required when id attributes may not be unique within a document. The id
+                            map. This may be required when id attributes may not be unique within a doc. The id
                             should either reference an element uniquely or should be taken as the first ancestor (of the
                             map) with such an id.
                         </h:p>
@@ -6474,7 +6474,7 @@
                     <h:p>
                         The order of the
                         <h:tt>action</h:tt>
-                        elements in the document may, but will not always, define
+                        elements in the doc may, but will not always, define
                         the order that they actually occur in.
                     </h:p>
                     <h:p>
@@ -6951,7 +6951,7 @@
                         in the program and so it may be necessary to generate
                         <h:tt>basisSet</h:tt>
                         information for some programs before XML technology can be automatically used
-                        to link the components of the CCML document.
+                        to link the components of the CCML doc.
                     </h:p>
                 </h:div>
                 <h:div class="example" href="atomicBasisFunction1.xml"/>
@@ -7080,7 +7080,7 @@
                         </h:ul>
                     </h:p>
                     <h:p>
-                        The atomSet may be referenced from elsewhere in the document and you are encouraged to use
+                        The atomSet may be referenced from elsewhere in the doc and you are encouraged to use
                         locally unique id attributes on atomSets.
                     </h:p>
                 </h:div>
@@ -7384,7 +7384,7 @@
                         </h:ul>
                     </h:p>
                     <h:p>
-                        The bondSet may be referenced from elsewhere in the document and you are encouraged to use
+                        The bondSet may be referenced from elsewhere in the doc and you are encouraged to use
                         locally unique id attributes on bondSets.
                     </h:p>
                 </h:div>
@@ -7565,11 +7565,11 @@
             <xsd:documentation>
                 <h:div class="summary">A general container for CML elements.</h:div>
                 <h:div class="description">
-                    Often the root of the CML (sub)document.
+                    Often the root of the CML (sub)doc.
                     Has no explicit function but can serve to hold the dictionary and
                     namespace and version information, and is a useful tag to alert
                     CML processors
-                    and search/XMLQuery tools that there is chemistry in the document.
+                    and search/XMLQuery tools that there is chemistry in the doc.
                     Can contain any content, but usually a list of molecules and other
                     CML components. The fileId attribute can be used to preserve the origin
                     of the information, though metadat should also be used. Can be nested.
@@ -7721,7 +7721,7 @@
                     Dictionaries can also contain unit-related information.
                     The dictRef attribute on a dictionary element sets a
                     namespace-like prefix allowing the dictionary to be referenced
-                    from within the document. In general dictionaries are referenced
+                    from within the doc. In general dictionaries are referenced
                     from an element using the __dictRef__ attribute.
                 </h:div>
                 <h:div class="example" href="dictionary1.xml"/>
@@ -7814,7 +7814,7 @@
                     </h:p>
                     <h:p>
                         If will probably only be used when there is significant appinfo
-                        in the entry or where the entry defines an XSD-like datatype of an element in the document.
+                        in the entry or where the entry defines an XSD-like datatype of an element in the doc.
                     </h:p>
                 </h:div>
                 <h:div class="example" href="documentation1.xml"/>
@@ -7987,7 +7987,7 @@
                         purely textual. It can be used with or without atomArray or concise but there is no
                         guarantee that it can be interpreted as a meaningful chemical formula or that there is
                         consistency.
-                        In some cases a document supplies several formula representations (e.g. the IUCr's CIF). In this
+                        In some cases a doc supplies several formula representations (e.g. the IUCr's CIF). In this
                         case a molecule (or crystal) element might contain several formula children. The semantics of
                         which
                         to use are application dependent.
@@ -8546,7 +8546,7 @@
                                     in
                                     HTML and is of type<h:tt>xsd:anyURI</h:tt>. Its primary use is to use XPointer to
                                     reference
-                                    elements outside the document.
+                                    elements outside the doc.
                                 </h:li>
                                 <h:li>
                                     The
@@ -8709,7 +8709,7 @@
             <xsd:attributeGroup ref="href">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <h:div class="specific">The target of the (locator) link, outside the document.</h:div>
+                        <h:div class="specific">The target of the (locator) link, outside the doc.</h:div>
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:attributeGroup>
@@ -8723,7 +8723,7 @@
                 <h:div class="summary">A generic container with no implied semantics.</h:div>
                 <h:div class="description">A generic container with no implied semantics. It just contains things and
                     can have attributes which bind conventions to it. It could often act as the root element in an STM
-                    document.
+                    doc.
                 </h:div>
                 <h:div class="example" href="list1.xml"/>
             </xsd:documentation>
@@ -8749,10 +8749,10 @@
                 <h:div class="description">
                     <h:p>
                         Usage is now standardized with map as the container and link as the individual links. The links
-                        are often effectively typed pointers to other parts of the document. The type can be set for all
+                        are often effectively typed pointers to other parts of the doc. The type can be set for all
                         links by the 'fromType' and 'toType' attributes, either in the map, which then applied to all
                         links by default, or in individual links, when it overrides the map setting. Since ids may not
-                        be unique within a document the refs can be given context with the 'fromRef' and 'toRef'
+                        be unique within a doc the refs can be given context with the 'fromRef' and 'toRef'
                         attributes in the map element. If more than one context is used it may be better to use multiple
                         maps. The role of map, and its relationship to RDF is still being developed.
                     </h:p>
@@ -8781,7 +8781,7 @@
                         intermediate documents where more precise semantics can be added later. The ids must all refer
                         to elements of the same type. Note that a 'to' link referencing a single atomSet
                         (toType='atomSet') is not the same as a 'toSet' of toType='atom' with multiple atomIds. The
-                        first would require an 'atomSet' element in the document; the second would not. The precise
+                        first would require an 'atomSet' element in the doc; the second would not. The precise
                         semantics such as the order of ids are application-dependent. If the order is known in both the
                         toSet and fromSet then individual links should be used rather than adding the burden of
                         deconstruction on the implementer.
