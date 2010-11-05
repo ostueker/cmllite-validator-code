@@ -74,6 +74,7 @@ public class ValidatorTest {
     }
 
     @Test
+    @Ignore
     public void testValidCmlcompWithoutQNameChecks() {
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validCmlcomp) {
