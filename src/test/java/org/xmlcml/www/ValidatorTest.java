@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -73,41 +72,41 @@ public class ValidatorTest {
         }
     }
 
-    @Test
-    @Ignore
-    public void testValidCmlcompWithoutQNameChecks() {
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validCmlcomp) {
-            InputStream input = null;
-            try {
-                input = FileUtils.openInputStream(file);
-            } catch (IOException e) {
-                fail("should be able to create an InputStream from: " + file.getAbsolutePath());
-            }
-            try {
-                assertTrue(file.getAbsolutePath() + " should be valid", validator.validate(IOUtils.toString(input), false));
-            } catch (IOException e) {
-                fail("should be able to read the InputStream from: " + file);
-            }
-        }
-    }
-
-    @Test
-    @Ignore    
-    public void testInvalidCmlcompWithoutQNameChecks() {
-        assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
-        for (File file : invalidCmlcomp) {
-            InputStream input = null;
-            try {
-                input = FileUtils.openInputStream(file);
-            } catch (IOException e) {
-                fail("should be able to create an InputStream from: " + file.getAbsolutePath());
-            }
-            try {
-                assertFalse(file.getAbsolutePath() + " should be invalid", validator.validate(IOUtils.toString(input), false));
-            } catch (IOException e) {
-                fail("should be able to read the InputStream from: " + file);
-            }
-        }
-    }
+//    @Test
+//    @Ignore
+//    public void testValidCmlcompWithoutQNameChecks() {
+//        assertFalse("there should be test documents", validMolecular.isEmpty());
+//        for (File file : validCmlcomp) {
+//            InputStream input = null;
+//            try {
+//                input = FileUtils.openInputStream(file);
+//            } catch (IOException e) {
+//                fail("should be able to create an InputStream from: " + file.getAbsolutePath());
+//            }
+//            try {
+//                assertTrue(file.getAbsolutePath() + " should be valid", validator.validate(IOUtils.toString(input), false));
+//            } catch (IOException e) {
+//                fail("should be able to read the InputStream from: " + file);
+//            }
+//        }
+//    }
+//
+//    @Test
+//    @Ignore
+//    public void testInvalidCmlcompWithoutQNameChecks() {
+//        assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
+//        for (File file : invalidCmlcomp) {
+//            InputStream input = null;
+//            try {
+//                input = FileUtils.openInputStream(file);
+//            } catch (IOException e) {
+//                fail("should be able to create an InputStream from: " + file.getAbsolutePath());
+//            }
+//            try {
+//                assertFalse(file.getAbsolutePath() + " should be invalid", validator.validate(IOUtils.toString(input), false));
+//            } catch (IOException e) {
+//                fail("should be able to read the InputStream from: " + file);
+//            }
+//        }
+//    }
 }
