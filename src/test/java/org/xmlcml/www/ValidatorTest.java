@@ -93,7 +93,7 @@ public class ValidatorTest {
     }
 
     @Test
-    @Ignore
+    @Ignore    
     public void testInvalidCmlcompWithoutQNameChecks() {
         assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
         for (File file : invalidCmlcomp) {
