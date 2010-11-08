@@ -2,7 +2,6 @@ package org.xmlcml.www;
 
 import nu.xom.*;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -24,17 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SchemaValidator {
+public class SchemaValidator extends AbstractValidator {
 
+    private static Logger log = Logger.getLogger(SchemaValidator.class);
     private static Validator validator;
     private static DocumentBuilderFactory documentBuilderFactory;
     private static DocumentBuilder documentBuilder;
-
-    private static Logger log = Logger.getLogger(SchemaValidator.class);
-
-    private SchemaValidator() {
-        // private constructor
-    }
 
     public static synchronized SchemaValidator newInstance() {
         if (validator == null) {
@@ -52,8 +46,7 @@ public class SchemaValidator {
 
     private static Validator createValidator() {
         // create a SchemaFactory capable of understanding WXS schemas
-        SchemaFactory factory = SchemaFactory
-                .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
         // load a WXS schema, represented by a Schema instance
         URL schemaUrl = Thread.currentThread().getContextClassLoader().getResource("CMLSchema.xsd");
@@ -136,23 +129,5 @@ public class SchemaValidator {
         return list;
     }
 
-     /**
-     * Prints a XOM document to an OutputStream without having to remember the
-     * serializer voodoo. The encoding is always UTF-8.
-     *
-     * @param doc the XOM Document to print
-     */
-    public InputStream print(nu.xom.Document doc) {
-        Serializer serializer;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            serializer = new Serializer(baos, "UTF-8");
-            serializer.setIndent(0);
-            serializer.write(doc);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            throw new RuntimeException(e);
-		}
-        return IOUtils.toInputStream(baos.toString());
-	}
+
 }

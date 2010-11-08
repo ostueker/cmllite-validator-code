@@ -1,5 +1,6 @@
 package org.xmlcml.www;
 
+import java.io.File;
 import nu.xom.*;
 import nu.xom.xslt.XSLException;
 import nu.xom.xslt.XSLTransform;
@@ -18,66 +19,51 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 
  * Created by IntelliJ IDEA.
  * User: jat45
  * Date: 28-Oct-2010
  * Time: 17:15:55
  */
-public class ConventionValidator {
+public class ConventionValidator extends AbstractValidator {
 
     private static Logger log = Logger.getLogger(ConventionValidator.class);
-
-    private Builder builder = new Builder();
-
     private static Map<URI, XSLTransform> knownConventions = null;
-
     private final static String conventionNS = "http://www.xml-cml.org/convention/";
 
-    private ConventionValidator() {
-        // prevent public initialisation
+    static {
+        registerKnownConventionLocations();
     }
 
-    public static ConventionValidator newInstance() {
-        if (knownConventions == null) {
-            knownConventions = createKnownConventionLocations();
-        }
-        return new ConventionValidator();
-    }
-
-    private static Map<URI, XSLTransform> createKnownConventionLocations() {
+    private static void registerKnownConventionLocations() {
         knownConventions = new HashMap<URI, XSLTransform>();
         try {
-            knownConventions.put(new URI(conventionNS + "molecular"), createTransform("molecular-rules.xsl"));
-            knownConventions.put(new URI(conventionNS + "cmlcomp"), createTransform("cmlcomp-rules.xsl"));
+            knownConventions.put(new URI(conventionNS + "molecular"), createXSLTTransform(ConventionValidator.class, "molecular-rules.xsl"));
+            knownConventions.put(new URI(conventionNS + "cmlcomp"), createXSLTTransform(ConventionValidator.class, "cmlcomp-rules.xsl"));
         } catch (URISyntaxException e) {
-            e.printStackTrace();
-            log.fatal("can't create uris");
+            log.fatal("can't create uris", e);
             throw new RuntimeException(e);
-        }
-        return knownConventions;
-    }
-
-    private static XSLTransform createTransform(String name) {
-        Builder builder = new Builder();
-        URL xslt = Thread.currentThread().getContextClassLoader().getResource(name);
-        /* set up to use saxon 9 */
-        System.setProperty("javax.xml.transform.TransformerFactory",
-                "net.sf.saxon.TransformerFactoryImpl");
-        try {
-            Document stylesheet = builder.build(xslt.openStream());
-            return new XSLTransform(stylesheet);
-        } catch (Exception e) {
-            log.error(e);
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            log.fatal("unknown exception", ex);
+            throw new RuntimeException(ex);
         }
     }
 
-
+    @Override
     public boolean validate(String input) {
+        return validate(buildDocumentFromString(input));
+    }
+
+    @Override
+    public boolean validate(File file) {
+        return validate(buildDocumentFromFile(file));
+    }
+
+    @Override
+    public boolean validate(Document doc) {
         boolean valid = false;
-        Document document = build(IOUtils.toInputStream(input));
-        if (document != null) {
-            Map<URI, List<Element>> conventionsMap = findConventions(document);
+        if (doc != null) {
+            Map<URI, List<Element>> conventionsMap = findConventions(doc);
             if (conventionsMap != null) {
                 if (conventionsMap.isEmpty()) {
                     log.warn("no conventions found");
@@ -88,20 +74,6 @@ public class ConventionValidator {
             }
         }
         return valid;
-    }
-
-    private Document build(InputStream input) {
-        Document document = null;
-        try {
-            document = builder.build(input);
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return document;
     }
 
     private boolean validate(Map<URI, List<Element>> conventionToElement) {
@@ -142,30 +114,9 @@ public class ConventionValidator {
         return false;
     }
 
-    /**
-     * Prints a XOM document to an OutputStream without having to remember the
-     * serializer voodoo. The encoding is always UTF-8.
-     *
-     * @param doc the XOM Document to print
-     * @param out where to print to
-     */
-    public static void print(Document doc, OutputStream out) {
-        Serializer serializer;
-        try {
-            serializer = new Serializer(out, "UTF-8");
-            serializer.setIndent(2);
-            serializer.write(doc);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-
     private HashMap<URI, List<Element>> findConventions(Document document) {
         HashMap<URI, List<Element>> map = new HashMap<URI, List<Element>>();
-        Nodes nodes = document
-                .query("//*[namespace-uri()='" + Validator.CmlNS + "']/@convention");
+        Nodes nodes = document.query("//*[namespace-uri()='" + Validator.CmlNS + "']/@convention");
         for (int i = 0, length = nodes.size(); i < length; i++) {
             Attribute attribute = (Attribute) nodes.get(i);
             Element element = (Element) attribute.getParent();
@@ -175,8 +126,7 @@ public class ConventionValidator {
             try {
                 convention = new URI(ns + value[1]);
             } catch (URISyntaxException e) {
-                e.printStackTrace();
-                log.error("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
+                log.error("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'", e);
                 return null;
             } catch (Exception e) {
                 log.error(e);
@@ -195,11 +145,10 @@ public class ConventionValidator {
         return map;
     }
 
-
     private String generateFullPath(Element element) {
-        String name = "*[local-name()='" + element.getLocalName() + "' and namespace-uri()='" +
-                element.getNamespaceURI() + "']";
-        Nodes nodes =  element.query("preceding-sibling::*[local-name()=local-name(.) and namespace-uri() = namespace-uri(.)]");
+        String name = "*[local-name()='" + element.getLocalName() + "' and namespace-uri()='"
+                + element.getNamespaceURI() + "']";
+        Nodes nodes = element.query("preceding-sibling::*[local-name()=local-name(.) and namespace-uri() = namespace-uri(.)]");
         int position = nodes.size();
         if (element.getDocument().getRootElement() == element) {
             return "/" + name + "[" + (1 + position) + "]";

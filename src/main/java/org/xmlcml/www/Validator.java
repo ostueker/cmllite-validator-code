@@ -11,8 +11,8 @@ public class Validator {
 
     private XmlDocumentValidator xmlDocumentValidator = new XmlDocumentValidator();
     private SchemaValidator schemaValidator = SchemaValidator.newInstance();
-    private ConventionValidator conventionValidator = ConventionValidator.newInstance();    
-   private QNameValidator qnameValidator = new QNameValidator();
+    private ConventionValidator conventionValidator = new ConventionValidator();
+    private QNameValidator qnameValidator = new QNameValidator();
     public final static String CmlNS = "http://www.xml-cml.org/schema";
 
     /**
@@ -39,12 +39,11 @@ public class Validator {
                     if (checkQNamesAreURLs) {
                         valid = qnameValidator.validate(input);
                     } else {
-                    valid = true;
+                        valid = true;
                     }
                 }
             }
         }
         return valid;
     }
-
 }

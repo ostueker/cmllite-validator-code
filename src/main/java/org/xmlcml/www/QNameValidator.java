@@ -3,7 +3,6 @@ package org.xmlcml.www;
 import com.thoughtworks.xstream.XStream;
 import nu.xom.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -24,18 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class QNameValidator {
+public class QNameValidator extends AbstractValidator {
 
     static Logger log = Logger.getLogger(QNameValidator.class);
-
     private boolean logging = false;
-
     private File reachableUriStorageFile = null;
     private File unreachableUriStorageFile = null;
-
     private UriData reachableUrisFromCurrentDocument = new UriData();
     private UriData unreachableUrisFromCurrentDocument = new UriData();
-
     private UriData allReachableUris = new UriData();
     private UriData allUnreachableUris = new UriData();
 
@@ -59,7 +54,6 @@ public class QNameValidator {
      * Create a QNameValidator which will not log
      */
     public QNameValidator() {
-
     }
 
     /**
@@ -68,8 +62,7 @@ public class QNameValidator {
      * @param reachableUriStoragePath
      * @param unreachableUriStoragePath
      */
-    public QNameValidator(String reachableUriStoragePath,
-                          String unreachableUriStoragePath) {
+    public QNameValidator(String reachableUriStoragePath, String unreachableUriStoragePath) {
         this.reachableUriStorageFile = new File(reachableUriStoragePath);
         this.unreachableUriStorageFile = new File(unreachableUriStoragePath);
         setupLogging();
@@ -89,22 +82,17 @@ public class QNameValidator {
         String unreachableXml;
 
         try {
-            reachableXml = FileUtils
-                    .readFileToString(this.reachableUriStorageFile);
-            unreachableXml = FileUtils
-                    .readFileToString(this.unreachableUriStorageFile);
+            reachableXml = FileUtils.readFileToString(this.reachableUriStorageFile);
+            unreachableXml = FileUtils.readFileToString(this.unreachableUriStorageFile);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
         if (reachableXml.length() > 0) {
-            Collection<URI> reachableUrls = (Set<URI>) xstream
-                    .fromXML(reachableXml);
+            Collection<URI> reachableUrls = (Set<URI>) xstream.fromXML(reachableXml);
             this.allReachableUris.addAll(reachableUrls);
         }
         if (unreachableXml.length() > 0) {
-            Collection<URI> unreachableUrls = (Set<URI>) xstream
-                    .fromXML(unreachableXml);
+            Collection<URI> unreachableUrls = (Set<URI>) xstream.fromXML(unreachableXml);
             this.allUnreachableUris.addAll(unreachableUrls);
         }
     }
@@ -123,24 +111,21 @@ public class QNameValidator {
         }
     }
 
+    @Override
     public boolean validate(String input) {
-        try {
-            Document document = new Builder().build(IOUtils.toInputStream(input));
-            return validate(document);
-        } catch (ParsingException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return validate(buildDocumentFromString(input));
     }
 
+    @Override
+    public boolean validate(File file) {
+        return validate(buildDocumentFromFile(file));
+    }
+
+    @Override
     public boolean validate(Document document) {
         cleanCurrentStorage();
         boolean valid = true;
-        Nodes nodes = document
-                .query("//*[namespace-uri()='http://www.xml-cml.org/schema']/@*[local-name()='dictRef' and namespace-uri()='']");
+        Nodes nodes = document.query("//*[namespace-uri()='http://www.xml-cml.org/schema']/@*[local-name()='dictRef' and namespace-uri()='']");
         for (int i = 0, n = nodes.size(); i < n; i++) {
             Attribute att = (Attribute) nodes.get(i);
             String[] a = att.getValue().split(":");
@@ -190,7 +175,6 @@ public class QNameValidator {
         this.unreachableUrisFromCurrentDocument.clear();
     }
 
-
     // public String getData(URI uri) {
     // String data = "";
     // if (isReachable(uri)) {
@@ -236,7 +220,6 @@ public class QNameValidator {
     // return data;
     //
     // }
-
     public static Map<URI, Boolean> areReachable(Set<URI> uris) {
         Map<URI, Boolean> reachable = new HashMap<URI, Boolean>();
         Map<URI, Boolean> unreachable = new HashMap<URI, Boolean>();
@@ -273,7 +256,7 @@ public class QNameValidator {
             return false;
         } catch (IOException e) {
             log.debug(e);
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 }
