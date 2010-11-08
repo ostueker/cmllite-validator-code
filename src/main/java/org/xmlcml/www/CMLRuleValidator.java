@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 /**
  * Default XSLT rule validator.
  * @author jat45
- * @author wp214
+ * @author Weerapong Phadungsukanan
  */
 public class CMLRuleValidator extends AbstractValidator {
 

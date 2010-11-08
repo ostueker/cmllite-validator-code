@@ -23,6 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author jat45
+ * @author Weerapong Phadungsukanan
+ */
 public class QNameValidator extends AbstractValidator {
 
     static Logger log = Logger.getLogger(QNameValidator.class);

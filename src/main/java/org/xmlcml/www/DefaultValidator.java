@@ -1,6 +1,5 @@
 package org.xmlcml.www;
 
-import java.io.File;
 import nu.xom.Document;
 
 /**
@@ -9,17 +8,18 @@ import nu.xom.Document;
  * User: jat45
  * Date: 28-Oct-2010
  * Time: 15:48:36
+ * @author jat45
+ * @author Weerapong Phadungsukanan
  */
-public class Validator extends AbstractValidator {
+public class DefaultValidator extends AbstractValidator {
 
     private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
     private QNameValidator qnameValidator = new QNameValidator();
-    public final static String CmlNS = "http://www.xml-cml.org/schema";
     private final boolean checkQNamesAreURLs;
 
-    public Validator(boolean checkQNamesAreURLs) {
+    public DefaultValidator(boolean checkQNamesAreURLs) {
         this.checkQNamesAreURLs = checkQNamesAreURLs;
     }
 

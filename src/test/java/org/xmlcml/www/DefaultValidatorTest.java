@@ -11,9 +11,9 @@ import java.util.Collections;
 
 import static org.junit.Assert.*;
 
-public class ValidatorTest {
+public class DefaultValidatorTest {
 
-    Validator validator;
+    DefaultValidator validator;
     Collection<File> validMolecular = Collections.EMPTY_LIST;
     Collection<File> invalidMolecular = Collections.EMPTY_LIST;
     Collection<File> validCmlcomp = Collections.EMPTY_LIST;
@@ -21,7 +21,7 @@ public class ValidatorTest {
 
     @Before
     public void setUp() throws Exception {
-        validator = new Validator(false);
+        validator = new DefaultValidator(false);
         validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
         invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/invalid"), new String[]{"cml"}, false);
         validCmlcomp = FileUtils.listFiles(new File("./src/test/resources/cmllite/cmlcomp/valid"), new String[]{"cml"}, false);

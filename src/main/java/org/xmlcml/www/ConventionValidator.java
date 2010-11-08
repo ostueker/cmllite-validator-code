@@ -1,18 +1,12 @@
 package org.xmlcml.www;
 
-import java.io.File;
 import nu.xom.*;
 import nu.xom.xslt.XSLException;
 import nu.xom.xslt.XSLTransform;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +18,8 @@ import java.util.Map;
  * User: jat45
  * Date: 28-Oct-2010
  * Time: 17:15:55
+ * @author jat45
+ * @author Weerapong Phadungsukanan
  */
 public class ConventionValidator extends AbstractValidator {
 
@@ -106,7 +102,7 @@ public class ConventionValidator extends AbstractValidator {
 
     private HashMap<URI, List<Element>> findConventions(Document document) {
         HashMap<URI, List<Element>> map = new HashMap<URI, List<Element>>();
-        Nodes nodes = document.query("//*[namespace-uri()='" + Validator.CmlNS + "']/@convention");
+        Nodes nodes = document.query("//*[namespace-uri()='" + CML_NS + "']/@convention");
         for (int i = 0, length = nodes.size(); i < length; i++) {
             Attribute attribute = (Attribute) nodes.get(i);
             Element element = (Element) attribute.getParent();

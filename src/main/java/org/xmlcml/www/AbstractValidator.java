@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractValidator {
 
     private static Logger log = Logger.getLogger(AbstractValidator.class);
+    public final static String CML_NS = "http://www.xml-cml.org/schema";
 
     /**
      * Validate a string of XML document.
@@ -26,10 +27,9 @@ public abstract class AbstractValidator {
      * @param input a string of XML document.
      * @return true if valid, false otherwise.
      */
-    public boolean validate(String input) {
+    public final boolean validate(String input) {
         return validate(buildDocumentFromString(input));
     }
-
 
     /**
      * Validate an XML file object.
@@ -37,7 +37,7 @@ public abstract class AbstractValidator {
      * @param file an XML file object.
      * @return true if valid, false otherwise.
      */
-    public boolean validate(File file) {
+    public final boolean validate(File file) {
         return validate(buildDocumentFromFile(file));
     }
 
@@ -154,5 +154,4 @@ public abstract class AbstractValidator {
         Document stylesheet = builder.build(xslt.openStream());
         return new XSLTransform(stylesheet);
     }
-
 }

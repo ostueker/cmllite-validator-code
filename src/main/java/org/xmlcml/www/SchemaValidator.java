@@ -1,8 +1,6 @@
 package org.xmlcml.www;
 
-import java.io.File;
 import nu.xom.*;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -23,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author jat45
+ * @author Weerapong Phadungsukanan
+ */
 public class SchemaValidator extends AbstractValidator {
 
     private Logger log = Logger.getLogger(getClass());
@@ -107,7 +109,7 @@ public class SchemaValidator extends AbstractValidator {
 
     private List<InputStream> getEldestCmlChildren(nu.xom.Document document) {
         List<InputStream> list = Collections.emptyList();
-        Nodes nodes = document.query("//*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "' and not(ancestor::*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "'])]");
+        Nodes nodes = document.query("//*[namespace-uri()='" + CML_NS + "' and not(ancestor::*[namespace-uri()='" + CML_NS + "'])]");
         int size = nodes.size();
         list = new ArrayList<InputStream>(size);
         for (int i = 0; i < size; i++) {
