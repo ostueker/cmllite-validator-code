@@ -1,5 +1,6 @@
 package org.xmlcml.www;
 
+import java.io.File;
 import nu.xom.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -18,21 +19,20 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class SchemaValidator extends AbstractValidator {
 
-    private static Logger log = Logger.getLogger(SchemaValidator.class);
-    private static Validator validator;
-    private static DocumentBuilderFactory documentBuilderFactory;
-    private static DocumentBuilder documentBuilder;
+    private Logger log = Logger.getLogger(getClass());
+    private Validator validator;
+    private DocumentBuilderFactory documentBuilderFactory;
+    private DocumentBuilder documentBuilder;
 
-    public static synchronized SchemaValidator newInstance() {
+    public SchemaValidator() {
         if (validator == null) {
-            validator = createValidator();
+            validator = createCMLSchemaValidator();
         }
         if (documentBuilderFactory == null) {
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -41,39 +41,56 @@ public class SchemaValidator extends AbstractValidator {
         if (documentBuilder == null) {
             documentBuilder = createDocumentBuilder();
         }
-        return new SchemaValidator();
     }
 
-    private static Validator createValidator() {
+    private Validator createCMLSchemaValidator() {
         // create a SchemaFactory capable of understanding WXS schemas
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
         // load a WXS schema, represented by a Schema instance
-        URL schemaUrl = Thread.currentThread().getContextClassLoader().getResource("CMLSchema.xsd");
-        Source schemaFile;
-        try {
-            schemaFile = new StreamSource(schemaUrl.openStream());
-        } catch (IOException e) {
-            log.fatal("cannot load schema", e);
-            throw new RuntimeException(e);
-        }
-        Schema schema;
-        try {
-            schema = factory.newSchema(schemaFile);
-            return schema.newValidator();
-        } catch (SAXException e) {
-            log.fatal("can't create new validator", e);
-            throw new RuntimeException(e);
+        InputStream cmlSchemaInputStream = getClass().getResourceAsStream("CMLSchema.xsd");
+        if (cmlSchemaInputStream != null) {
+            Source schemaFile = new StreamSource(cmlSchemaInputStream);
+            try {
+                Schema schema = factory.newSchema(schemaFile);
+                return schema.newValidator();
+            } catch (SAXException e) {
+                log.fatal("can't create new validator", e);
+                throw new RuntimeException(e);
+            }
+        } else {
+            String msg = "CMLSchema.xsd is not found under " + getClass().getName();
+            log.fatal(msg);
+            throw new RuntimeException(msg);
         }
     }
 
-    private static DocumentBuilder createDocumentBuilder() {
+    private DocumentBuilder createDocumentBuilder() {
         try {
             return documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             log.fatal("can't create a document parser", e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean validate(nu.xom.Document doc) {
+        List<InputStream> inputs = getEldestCmlChildren(doc);
+        for (InputStream is : inputs) {
+            Document document = buildDocument(is);
+            if (document != null) {
+                try {
+                    validator.validate(new DOMSource(document));
+                } catch (SAXException e) {
+                    log.error("invalid document", e);
+                    return false;
+                } catch (IOException e) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private Document buildDocument(InputStream input) {
@@ -88,46 +105,17 @@ public class SchemaValidator extends AbstractValidator {
         return document;
     }
 
-
-    public boolean validate(String input) {        
-        List<InputStream> inputs = getEldestCmlChildren(input);
-        for (InputStream is : inputs) {
-            Document doc = buildDocument(is);
-            if (doc != null) {
-                try {
-                    validator.validate(new DOMSource(doc));
-                } catch (SAXException e) {
-                    log.error("invalid document", e);
-                    return false;
-                } catch (IOException e) {
-                    return false;
-                }
-            }
-
-        }
-        return true;
-    }
-
-    private List<InputStream> getEldestCmlChildren(String input) {
+    private List<InputStream> getEldestCmlChildren(nu.xom.Document document) {
         List<InputStream> list = Collections.emptyList();
-        try {
-            nu.xom.Document document = new Builder().build(IOUtils.toInputStream(input));            
-            Nodes nodes = document.query("//*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "' and not(ancestor::*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "'])]");
-            int size = nodes.size();
-            list = new ArrayList<InputStream>(size);
-            for (int i = 0; i < size; i++) {
-                Element e = new Element((Element) nodes.get(i));
-                nu.xom.Document d = new nu.xom.Document(e);
-                list.add(print(d));
-            }
-        } catch (ParsingException e) {
-            log.error("invalid document", e);
-        } catch (IOException e) {
-            log.error("invalid document", e);
+        Nodes nodes = document.query("//*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "' and not(ancestor::*[namespace-uri()='" + org.xmlcml.www.Validator.CmlNS + "'])]");
+        int size = nodes.size();
+        list = new ArrayList<InputStream>(size);
+        for (int i = 0; i < size; i++) {
+            Element e = new Element((Element) nodes.get(i));
+            nu.xom.Document d = new nu.xom.Document(e);
+            list.add(print(d));
         }
-
         return list;
     }
-
 
 }

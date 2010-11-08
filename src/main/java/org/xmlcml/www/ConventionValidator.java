@@ -50,16 +50,6 @@ public class ConventionValidator extends AbstractValidator {
     }
 
     @Override
-    public boolean validate(String input) {
-        return validate(buildDocumentFromString(input));
-    }
-
-    @Override
-    public boolean validate(File file) {
-        return validate(buildDocumentFromFile(file));
-    }
-
-    @Override
     public boolean validate(Document doc) {
         boolean valid = false;
         if (doc != null) {

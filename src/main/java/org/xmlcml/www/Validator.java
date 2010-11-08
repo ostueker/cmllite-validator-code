@@ -1,5 +1,8 @@
 package org.xmlcml.www;
 
+import java.io.File;
+import nu.xom.Document;
+
 /**
  * Entry point for validation of CML.
  * <p/>
@@ -7,13 +10,18 @@ package org.xmlcml.www;
  * Date: 28-Oct-2010
  * Time: 15:48:36
  */
-public class Validator {
+public class Validator extends AbstractValidator {
 
-    private XmlDocumentValidator xmlDocumentValidator = new XmlDocumentValidator();
-    private SchemaValidator schemaValidator = SchemaValidator.newInstance();
+    private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
+    private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
     private QNameValidator qnameValidator = new QNameValidator();
     public final static String CmlNS = "http://www.xml-cml.org/schema";
+    private final boolean checkQNamesAreURLs;
+
+    public Validator(boolean checkQNamesAreURLs) {
+        this.checkQNamesAreURLs = checkQNamesAreURLs;
+    }
 
     /**
      * Validate the input. The validation is done in stages:
@@ -27,17 +35,16 @@ public class Validator {
      * <p/>
      * The report @see getReport() contains all the errors and warnings found in the document.
      *
-     * @param input              the document to validate
-     * @param checkQNamesAreURLs - if true then all values which are QNames are reachable URLs
      * @return true if the document validates, false if there are any errors.
      */
-    public boolean validate(String input, boolean checkQNamesAreURLs) {
+    @Override
+    public boolean validate(Document doc) {
         boolean valid = false;
-        if (xmlDocumentValidator.validate(input)) {
-            if (schemaValidator.validate(input)) {
-                if (conventionValidator.validate(input)) {
+        if (xmlWellFormednessValidator.validate(doc)) {
+            if (schemaValidator.validate(doc)) {
+                if (conventionValidator.validate(doc)) {
                     if (checkQNamesAreURLs) {
-                        valid = qnameValidator.validate(input);
+                        valid = qnameValidator.validate(doc);
                     } else {
                         valid = true;
                     }

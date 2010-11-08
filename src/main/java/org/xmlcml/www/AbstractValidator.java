@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author wp214
+ * @author Weerapong Phadungsukanan
  */
 public abstract class AbstractValidator {
 
@@ -26,7 +26,10 @@ public abstract class AbstractValidator {
      * @param input a string of XML document.
      * @return true if valid, false otherwise.
      */
-    public abstract boolean validate(String input);
+    public boolean validate(String input) {
+        return validate(buildDocumentFromString(input));
+    }
+
 
     /**
      * Validate an XML file object.
@@ -34,7 +37,9 @@ public abstract class AbstractValidator {
      * @param file an XML file object.
      * @return true if valid, false otherwise.
      */
-    public abstract boolean validate(File file);
+    public boolean validate(File file) {
+        return validate(buildDocumentFromFile(file));
+    }
 
     /**
      * Validate a XOM Document object.
@@ -44,22 +49,32 @@ public abstract class AbstractValidator {
      */
     public abstract boolean validate(Document doc);
 
+    /**
+     * Try building a XOM Document object from string without validation.
+     *
+     * @param input 
+     * @return null if fails else return a document
+     */
     protected static Document buildDocumentFromString(String input) {
         Document doc = null;
         try {
             doc = new Builder().build(IOUtils.toInputStream(input));
-            return doc;
         } catch (Exception ex) {
             log.error(ex);
         }
         return doc;
     }
 
+    /**
+     * Try building a XOM Document object from file without validation.
+     *
+     * @param file
+     * @return null if fails else return a document
+     */
     protected static Document buildDocumentFromFile(File file) {
         Document doc = null;
         try {
             doc = new Builder().build(file);
-            return doc;
         } catch (Exception ex) {
             log.error(ex);
         }
