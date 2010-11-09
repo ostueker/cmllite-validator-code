@@ -24,8 +24,8 @@ public class DefaultValidatorTest {
         validator = new DefaultValidator(false);
         validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
         invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/invalid"), new String[]{"cml"}, false);
-        validCmlcomp = FileUtils.listFiles(new File("./src/test/resources/cmllite/cmlcomp/valid"), new String[]{"cml"}, false);
-        invalidCmlcomp = FileUtils.listFiles(new File("./src/test/resources/cmllite/cmlcomp/invalid"), new String[]{"cml"}, false);
+//        validCmlcomp = FileUtils.listFiles(new File("./src/test/resources/cmllite/cmlcomp/valid"), new String[]{"cml"}, false);
+//        invalidCmlcomp = FileUtils.listFiles(new File("./src/test/resources/cmllite/cmlcomp/invalid"), new String[]{"cml"}, false);
     }
 
     @After

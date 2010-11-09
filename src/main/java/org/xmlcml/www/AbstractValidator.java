@@ -42,6 +42,16 @@ public abstract class AbstractValidator {
     }
 
     /**
+     * Validate an XML from given input stream.
+     *
+     * @param ins an input stream of XML
+     * @return true if valid, false otherwise.
+     */
+    public final boolean validate(InputStream ins) {
+        return validate(buildDocumentFromInputStream(ins));
+    }
+
+    /**
      * Validate a XOM Document object.
      *
      * @param doc a XOM Document object.
@@ -52,13 +62,23 @@ public abstract class AbstractValidator {
     /**
      * Try building a XOM Document object from string without validation.
      *
-     * @param input 
+     * @param input
      * @return null if fails else return a document
      */
     protected static Document buildDocumentFromString(String input) {
+        return buildDocumentFromInputStream(IOUtils.toInputStream(input));
+    }
+
+    /**
+     * Try building a XOM Document object from input stream without validation.
+     *
+     * @param ins input stream of XML document.
+     * @return null if fails else return a document
+     */
+    protected static Document buildDocumentFromInputStream(InputStream ins) {
         Document doc = null;
         try {
-            doc = new Builder().build(IOUtils.toInputStream(input));
+            doc = new Builder().build(ins);
         } catch (Exception ex) {
             log.error(ex);
         }

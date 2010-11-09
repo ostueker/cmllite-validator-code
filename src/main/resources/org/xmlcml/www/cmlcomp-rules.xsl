@@ -8,7 +8,7 @@
         xmlns:svrl="http://www.a.com">
 
     <xsl:output method="xml" omit-xml-declaration="no" standalone="yes" indent="yes" />
-    <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
+    <xsl:variable name="conventionNS">http://www.xml-cml.org/conventions/</xsl:variable>
 
     <!-- Apply templates to root node. The matching pattern here apply to any root tag
          but we are expecting cml container -->

@@ -1,6 +1,5 @@
 package org.xmlcml.www;
 
-import java.io.File;
 
 import nu.xom.Document;
 import nu.xom.Node;

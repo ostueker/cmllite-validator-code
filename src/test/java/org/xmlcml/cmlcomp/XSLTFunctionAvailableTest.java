@@ -1,5 +1,6 @@
 package org.xmlcml.cmlcomp;
 
+import org.junit.Ignore;
 import nu.xom.Builder;
 import nu.xom.Document;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +21,7 @@ public class XSLTFunctionAvailableTest {
     Collection<Document> validCmlComp = new LinkedList<Document>();
 
     @Before
+    @Ignore
     public void setUp() throws Exception {
         validator = new CMLRuleValidator("xslt-function-available-test.xsl");
 
@@ -30,6 +32,7 @@ public class XSLTFunctionAvailableTest {
     }
 
     @Test
+    @Ignore
     public void testValidCmlComp() {
         assertFalse("there should be valid test documents", validCmlComp.isEmpty());
         for (Document document : validCmlComp) {
@@ -37,5 +40,4 @@ public class XSLTFunctionAvailableTest {
             boolean isValid = validator.validate(document);
         }
     }
-
 }
