@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml
     convention="conventions:cmlcomp"
-    cmlx:note="A cmlcomp joblist which contains an empty job with title is invalid"
+    cmlx:note="A cmlcomp joblist which contains two empty jobs with two same titles, is invalid"
     xmlns="http://www.xml-cml.org/schema"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:conventions="http://www.xml-cml.org/conventions/"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
 
     <module role="joblist">
+        <module role="job" title="job1"></module>
         <module role="job" title="job1"></module>
     </module>
 </cml>

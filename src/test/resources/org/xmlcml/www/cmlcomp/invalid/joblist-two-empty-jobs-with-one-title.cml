@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml
-    version="0.1.0.1"
     cmlx:note="A cmlcomp joblist which contains two empty jobs with one title is invalid"
     convention="conventions:cmlcomp"
     xmlns="http://www.xml-cml.org/schema"

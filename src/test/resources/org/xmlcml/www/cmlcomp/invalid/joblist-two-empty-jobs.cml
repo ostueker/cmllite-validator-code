@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml
-    version="0.1.0.1"
     convention="conventions:cmlcomp"
+    cmlx:note="A cmlcomp joblist which contains two empty jobs is invalid"
     xmlns="http://www.xml-cml.org/schema"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:conventions="http://www.xml-cml.org/conventions/">
-    <!-- A cmlcomp joblist which contains two empty jobs is invalid -->
+    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
     <module role="joblist">
         <module role="job"></module>
         <module role="job"></module>
