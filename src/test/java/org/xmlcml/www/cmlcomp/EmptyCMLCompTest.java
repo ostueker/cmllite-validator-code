@@ -5,7 +5,7 @@ import org.xmlcml.www.CMLRuleValidator;
 import org.xmlcml.www.CMLRuleValidator.Rule;
 
 
-public class EmptyCMLCompTest extends CMLCompTest {
+public class EmptyCMLCompTest extends CMLCompTester {
 
     public EmptyCMLCompTest() {
         assertionValue = true;

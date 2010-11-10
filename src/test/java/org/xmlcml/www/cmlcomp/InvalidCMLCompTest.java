@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
 import org.xmlcml.www.CMLRuleValidator.Rule;
 
-public class InvalidCMLCompTest extends CMLCompTest {
+public class InvalidCMLCompTest extends CMLCompTester {
 
     public InvalidCMLCompTest() {
         assertionValue = false;

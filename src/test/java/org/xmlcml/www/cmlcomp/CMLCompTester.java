@@ -22,9 +22,9 @@ import static org.junit.Assert.*;
  *
  * @author Weerapong Phadungsukanan
  */
-public class CMLCompTest {
+public class CMLCompTester {
 
-    private static Logger logger = Logger.getLogger(CMLCompTest.class);
+    private static Logger logger = Logger.getLogger(CMLCompTester.class);
     protected Logger log = Logger.getLogger(getClass());
     protected CMLRuleValidator validator = null;
     protected boolean assertionValue = true;
