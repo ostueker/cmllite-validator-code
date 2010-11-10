@@ -28,7 +28,19 @@
     <xsl:template match="cml:cml[@convention]" mode="cmlcomp">
         <xsl:choose>
             <xsl:when test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = 'cmlcomp'">
-                <xsl:apply-templates mode="cmlcomp" />
+                <xsl:choose>
+                    <xsl:when test="count(child::cml:module[@role='joblist']) = count(child::*)">
+                        <xsl:apply-templates mode="cmlcomp" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <o:error>
+                            <xsl:attribute name="location">
+                                <xsl:apply-templates select="." mode="get-full-path" />
+                            </xsl:attribute>
+                            CMLComp can only have children of module[@role='joblist']
+                        </o:error>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <o:warning>No cml element found with correct convention</o:warning>
@@ -37,9 +49,6 @@
     </xsl:template>
 
     <xsl:template match="cml:module[@role='joblist']" mode="cmlcomp">
-        <module>
-            <xsl:value-of select="@role" />
-        </module>
         <xsl:if test="not(parent::cml:cml)">
             <o:error>
                 <xsl:attribute name="location">

@@ -1,4 +1,4 @@
-package org.xmlcml.cmlcomp;
+package org.xmlcml.www.cmlcomp;
 
 import org.junit.Ignore;
 import nu.xom.Builder;
@@ -14,6 +14,13 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.assertFalse;
 
+/**
+ * Current not in use. This is for testing what functions are available for developing
+ * xslt.
+ * 
+ * @deprecated
+ * @author wp214
+ */
 public class XSLTFunctionAvailableTest {
 
     CMLRuleValidator validator;

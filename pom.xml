@@ -8,10 +8,10 @@
         <version>2-SNAPSHOT</version>
     </parent>
   
-    <groupId>CMLLiteValidator</groupId>
-    <artifactId>CMLLiteValidator</artifactId>
+    <groupId>cml</groupId>
+    <artifactId>cml-validator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>CMLLite Validator</name>
+    <name>CML Validator Utilities</name>
   
     <repositories>
         <repository>
