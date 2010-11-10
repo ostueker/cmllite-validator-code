@@ -3,16 +3,16 @@ package org.xmlcml.www.cmlcomp;
 import java.io.InputStream;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
-
+import org.xmlcml.www.CMLRuleValidator.Rule;
 
 import static org.junit.Assert.*;
 
 public class EmptyCMLCompTest {
 
-    CMLRuleValidator validator = new CMLRuleValidator("cmlcomp-rules.xsl");
+    CMLRuleValidator validator = new CMLRuleValidator(Rule.CMLComp);
 
     private static String cmlPathOf(String name) {
-        return "/cmlcomp/empty/" + name;
+        return "empty/" + name;
     }
 
     private void testValid(String name) {
