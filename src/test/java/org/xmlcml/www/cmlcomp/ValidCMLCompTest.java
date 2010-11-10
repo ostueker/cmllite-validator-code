@@ -1,5 +1,6 @@
 package org.xmlcml.www.cmlcomp;
 
+import org.junit.Ignore;
 import java.io.InputStream;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
@@ -23,6 +24,7 @@ public class ValidCMLCompTest {
     }
 
     @Test
+    @Ignore
     public void testAll() {
         test("cmlcomp-contain-undefined-module.cml");
         test("cmlcomp-contain-undefined-molecule.cml");

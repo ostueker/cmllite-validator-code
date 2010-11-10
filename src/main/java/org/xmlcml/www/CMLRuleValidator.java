@@ -1,6 +1,5 @@
 package org.xmlcml.www;
 
-
 import nu.xom.Document;
 import nu.xom.Node;
 import nu.xom.Nodes;
@@ -15,6 +14,20 @@ import org.apache.log4j.Logger;
  */
 public class CMLRuleValidator extends AbstractValidator {
 
+    public static enum Rule {
+
+        CMLLite("molecular-rules.xsl"),
+        CMLComp("cmlcomp-rules.xsl");
+        private final String name;
+
+        Rule(String name) {
+            this.name = name;
+        }
+
+        String ruleName() {
+            return name;
+        }
+    }
     private static Logger log = Logger.getLogger(SchemaValidator.class);
     private XSLTransform transform = null;
 
@@ -24,6 +37,10 @@ public class CMLRuleValidator extends AbstractValidator {
         } catch (Exception ex) {
             throw new RuntimeException("Exception thrown while creating XML tansformation", ex);
         }
+    }
+
+    public CMLRuleValidator(Rule rule) {
+        this(rule.ruleName());
     }
 
     @Override
