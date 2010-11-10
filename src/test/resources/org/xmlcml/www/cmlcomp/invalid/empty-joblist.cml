@@ -3,7 +3,6 @@
     convention="conventions:cmlcomp"
     cmlx:note="A cmlcomp containing empty joblist module is invalid"
     xmlns="http://www.xml-cml.org/schema"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:conventions="http://www.xml-cml.org/conventions/"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
 

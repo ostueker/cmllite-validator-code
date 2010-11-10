@@ -110,7 +110,7 @@ public abstract class AbstractValidator {
      * @param out
      *            where to print to
      */
-    protected static void print(Document doc, OutputStream out) {
+    public static void print(Document doc, OutputStream out) {
         Serializer serializer;
         try {
             serializer = new Serializer(out, "UTF-8");

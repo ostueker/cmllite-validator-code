@@ -162,7 +162,7 @@
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:attribute>
-                        exactly 1 molecule is allowed in module[@role='init']
+                        exactly one molecule is allowed in module[@role='init']
                 </o:error>
             </xsl:otherwise>
         </xsl:choose>
@@ -175,7 +175,7 @@
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:attribute>
-                    only 1 parameterList is allowed in module[@role='init'], an initialization module must contain
+                    exactly one parameterList must be in module[@role='init'], an initialization module must contain
                     parameters for setting up computational job.
                 </o:error>
             </xsl:otherwise>
@@ -288,7 +288,7 @@
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:attribute>
-                        exactly 1 molecule is allowed in module[@role='final']
+                        exactly one molecule is allowed in module[@role='final']
                 </o:error>
             </xsl:otherwise>
         </xsl:choose>

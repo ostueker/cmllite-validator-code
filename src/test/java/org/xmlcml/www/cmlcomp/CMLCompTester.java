@@ -6,6 +6,7 @@ import java.io.File;
 import nu.xom.Builder;
 import nu.xom.Document;
 import org.apache.log4j.Logger;
+import org.xmlcml.www.AbstractValidator;
 import org.xmlcml.www.CMLRuleValidator;
 
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ import static org.junit.Assert.*;
 public class CMLCompTester {
 
     private static Logger logger = Logger.getLogger(CMLCompTester.class);
-    protected Logger log = Logger.getLogger(getClass());
+    protected Logger log = Logger.getLogger(this.getClass());
     protected CMLRuleValidator validator = null;
     protected boolean assertionValue = true;
     protected final String CMLX_NS = "http://www.xml-cml.org/schema/cmlx";
@@ -82,19 +83,25 @@ public class CMLCompTester {
         Document doc = buildDocumentFromFile(file);
         assertNotNull(doc);
         String note = doc.getRootElement().getAttributeValue("note", CMLX_NS);
-        log.info("Test cml file   : " + file.toString());
-        log.info("#    for reason : " + note);
-        boolean validate = validator.validate(doc);
-        log.info("#    result is  : " + ((validate) ? "valid" : "invalid"));
+        log.info("Begin testing file : " + file.getPath());
+        log.info("# reason is  : " + note);
+         boolean validate = validator.validate(doc);
+        log.info("# result is  : " + ((validate) ? "valid" : "invalid"));
+        log.info("# report is  :\n");
         assertEquals(assertionValue, validate);
-        log.info("======== End of test ========");
+        Document report = validator.getShortReport();
+        assertNotNull(report);
+        AbstractValidator.print(report, System.out);
+        System.out.println();
+        log.info("End testing file : " + file.getPath());
+        System.out.println("================================================================================");
     }
 
     /**
      * Batch test for all files in the resource folder.
      */
     protected void testAll() {
-        System.out.println(getTestResourcePath());
+        System.out.println("================================================================================");
         File resourceDir = new File(getTestResourcePath());
         Collection<File> resources = FileUtils.listFiles(resourceDir, new String[]{"cml"}, false);
         for (File file : resources) {

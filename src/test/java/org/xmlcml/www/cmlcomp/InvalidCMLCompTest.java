@@ -19,12 +19,13 @@ public class InvalidCMLCompTest extends CMLCompTester {
 
     @Test
     @Ignore
-    public void testAllZ() {
-        testAll();
+    @Override
+    public void testAll() {
+        super.testAll();
     }
 
     @Test
     public void testIndividual() {
-        test("one-job-empty-init.cml");
+        test("one-job-empty-init-empty-final.cml");
     }
 }

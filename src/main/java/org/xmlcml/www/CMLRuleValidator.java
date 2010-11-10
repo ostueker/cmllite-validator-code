@@ -1,8 +1,11 @@
 package org.xmlcml.www;
 
+import nu.xom.Attribute;
 import nu.xom.Document;
+import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.Nodes;
+import nu.xom.XPathContext;
 import nu.xom.xslt.XSLException;
 import nu.xom.xslt.XSLTransform;
 import org.apache.log4j.Logger;
@@ -30,6 +33,7 @@ public class CMLRuleValidator extends AbstractValidator {
     }
     private static Logger log = Logger.getLogger(SchemaValidator.class);
     private XSLTransform transform = null;
+    private Document report = null;
 
     public CMLRuleValidator(String cmlrule) {
         try {
@@ -45,6 +49,7 @@ public class CMLRuleValidator extends AbstractValidator {
 
     @Override
     public boolean validate(Document document) {
+        report = null;
         Nodes nodes;
         try {
             nodes = transform.transform(document);
@@ -52,13 +57,25 @@ public class CMLRuleValidator extends AbstractValidator {
             log.info(e);
             return false;
         }
-        Document result = XSLTransform.toDocument(nodes);
-        print(result, System.out);
-        Nodes failures = result.query("//*[local-name()='error' and namespace-uri()='http://www.xml-cml.org/report']");
-        for (int index = 0, n = failures.size(); index < n; index++) {
-            Node node = failures.get(index);
-            //log.error("\n"+node.toXML());
-        }
+        report = XSLTransform.toDocument(nodes);
+        Nodes failures = report.query("//*[local-name()='error' and namespace-uri()='http://www.xml-cml.org/report']");
         return failures.size() == 0;
+    }
+
+    public Document getReport() {
+        return report;
+    }
+
+    public Document getShortReport() {
+        Document copyOfReport = new Document(report);
+        Nodes allNodes = copyOfReport.getRootElement().query("child::*");
+        for (int i = 0; i < allNodes.size(); i++) {
+            Element el = (Element) allNodes.get(i);
+            Attribute locAttr = el.getAttribute("location");
+            if (locAttr != null) {
+                el.removeAttribute(locAttr);
+            }
+        }
+        return copyOfReport;
     }
 }
