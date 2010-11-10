@@ -1,32 +1,50 @@
 package org.xmlcml.www.cmlcomp;
 
-import java.io.InputStream;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
 import org.xmlcml.www.CMLRuleValidator.Rule;
 
-import static org.junit.Assert.*;
+public class InvalidCMLCompTest extends CMLCompTest {
 
-public class InvalidCMLCompTest {
-
-    CMLRuleValidator validator = new CMLRuleValidator(Rule.CMLComp);
-
-    private static String cmlPathOf(String name) {
-        return "invalid/" + name;
+    public InvalidCMLCompTest() {
+        assertionValue = false;
+        validator = new CMLRuleValidator(Rule.CMLComp);
     }
 
-    private void test(String name) {
-        InputStream ins = getClass().getResourceAsStream(cmlPathOf(name));
-        assertNotNull(ins);
-        boolean validate = validator.validate(ins);
-        assertFalse(validate);
+    @Override
+    protected String getTestResourcePath() {
+        return super.getTestResourcePath() + "/invalid";
     }
 
     @Test
-    public void testAll() {
-        // test a cmlcomp which has a module of unknown role.
-        test("cmlcomp-contain-undefined-module.cml");
-        // test a cmlcomp which has a molecule under cml root
-        test("cmlcomp-contain-undefined-molecule.cml");
+    @Ignore
+    public void testAllZ() {
+        testAll();
     }
+
+    @Test
+    public void testIndividual() {
+        // test a cmlcomp joblist which contains two empty jobs with two unique titles.
+        test("joblist-two-empty-jobs-with-two-titles.cml");
+    }
+//
+//    @Test
+//    //@Ignore
+//    public void testAll() {
+//        // test a cmlcomp which has a module of unknown role.
+//        test("undefined-module.cml");
+//        // test a cmlcomp which has a molecule under cml root
+//        test("undefined-molecule.cml");
+//        // test a cmlcomp which has an empty joblist
+//        test("empty-joblist.cml");
+//        // test a cmlcomp joblist which contains an empty job (+no title).
+//        test("joblist-one-empty-job.cml");
+//        // test a cmlcomp joblist which contains an empty job but titled).
+//        test("joblist-one-empty-job-with-title.cml");
+//        // test a cmlcomp joblist which contains two empty jobs (no title).
+//        test("joblist-two-empty-jobs.cml");
+//        // test a cmlcomp joblist which contains two empty jobs with one title.
+//        test("joblist-two-empty-jobs-with-one-title.cml");
+//    }
 }

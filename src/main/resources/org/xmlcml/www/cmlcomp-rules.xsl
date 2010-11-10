@@ -79,9 +79,6 @@
 
     <!-- process the job list jobs -->
     <xsl:template match="cml:module[@role='job']" mode="cmlcomp">
-        <module>
-            <xsl:value-of select="@role" />
-        </module>
         <xsl:if test="not(parent::cml:module[@role='joblist'])">
             <o:error>
                 <xsl:attribute name="location">
