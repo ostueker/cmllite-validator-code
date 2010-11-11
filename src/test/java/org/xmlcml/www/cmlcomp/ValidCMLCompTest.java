@@ -1,33 +1,28 @@
 package org.xmlcml.www.cmlcomp;
 
-import org.junit.Ignore;
-import java.io.InputStream;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
 import org.xmlcml.www.CMLRuleValidator.Rule;
 
 
-import static org.junit.Assert.*;
 
-public class ValidCMLCompTest {
+public class ValidCMLCompTest extends CMLCompTester {
 
-    CMLRuleValidator validator = new CMLRuleValidator(Rule.CMLComp);
-
-    private static String cmlPathOf(String name) {
-        return "valid/" + name;
+    public ValidCMLCompTest() {
+        validator = new CMLRuleValidator(Rule.CMLComp);
+        assertionValue = true;
     }
 
-    private void test(String name) {
-        InputStream ins = getClass().getResourceAsStream(cmlPathOf(name));
-        assertNotNull(ins);
-        boolean validate = validator.validate(ins);
-        assertTrue(validate);
+    @Override
+    protected String getTestResourcePath() {
+        return super.getTestResourcePath() + "/valid";
     }
 
     @Test
-    @Ignore
+    //@Ignore
+    @Override
     public void testAll() {
-        test("cmlcomp-contain-undefined-module.cml");
-        test("cmlcomp-contain-undefined-molecule.cml");
+        super.testAll();
+
     }
 }

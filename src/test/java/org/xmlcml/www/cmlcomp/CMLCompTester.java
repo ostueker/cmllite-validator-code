@@ -21,15 +21,17 @@ import static org.junit.Assert.*;
  *
  * You can put any note in cmlx:note but preferably in a single line.
  *
+ * The derived class must initialise validator and assertionValue fields.
+ *
  * @author Weerapong Phadungsukanan
  */
-public class CMLCompTester {
+public abstract class CMLCompTester {
 
     private static Logger logger = Logger.getLogger(CMLCompTester.class);
-    protected Logger log = Logger.getLogger(this.getClass());
+    protected Logger log = Logger.getLogger(getClass());
+    protected final String CMLX_NS = "http://www.xml-cml.org/schema/cmlx";
     protected CMLRuleValidator validator = null;
     protected boolean assertionValue = true;
-    protected final String CMLX_NS = "http://www.xml-cml.org/schema/cmlx";
 
     /**
      * Get resource folder. This method must be overridden by its derived class.
@@ -85,20 +87,21 @@ public class CMLCompTester {
         String note = doc.getRootElement().getAttributeValue("note", CMLX_NS);
         log.info("Begin testing file : " + file.getPath());
         log.info("# reason is  : " + note);
-         boolean validate = validator.validate(doc);
+        boolean validate = validator.validate(doc);
         log.info("# result is  : " + ((validate) ? "valid" : "invalid"));
         log.info("# report is  :\n");
-        assertEquals(assertionValue, validate);
         Document report = validator.getShortReport();
         assertNotNull(report);
         AbstractValidator.print(report, System.out);
+        assertEquals(assertionValue, validate);
         System.out.println();
         log.info("End testing file : " + file.getPath());
         System.out.println("================================================================================");
     }
 
     /**
-     * Batch test for all files in the resource folder.
+     * Batch test for all files in the resource folder. This can be overridden in
+     * subclass.
      */
     protected void testAll() {
         System.out.println("================================================================================");

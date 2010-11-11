@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml
+    convention="conventions:cmlcomp"
+    cmlx:note="A job (valid joblist) contains empty init and empty final is invalid."
+    xmlns="http://www.xml-cml.org/schema"
+    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
+
+    <module role="joblist">
+        <module role="job" title="job1">
+            <module role="init"></module>
+            <module role="calculation"></module>
+            <module role="final"></module>
+        </module>
+    </module>
+</cml>

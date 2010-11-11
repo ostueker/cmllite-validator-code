@@ -26,6 +26,6 @@ public class InvalidCMLCompTest extends CMLCompTester {
 
     @Test
     public void testIndividual() {
-        test("one-job-empty-init-empty-final.cml");
+        test("one-job-final-init.cml");
     }
 }

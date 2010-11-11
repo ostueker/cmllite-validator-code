@@ -134,6 +134,18 @@
 
     <xsl:template match="cml:module[@role='init']" mode="cmlcomp">
         <!-- Contain : molecule [Must = 1?], parameterList [Must = 1?], propertyList [optional = 1] -->
+        <xsl:value-of select="position()"/>
+        <xsl:value-of select="attribute::role"/>
+        <xsl:value-of select="last()"/>
+        <xsl:value-of select="self::*[1]/attribute::role"/>
+        <xsl:if test="not(current()/position() = 1)">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='init'] must be the first module in module[@role='job']
+            </o:error>
+        </xsl:if>
         <xsl:if test="not(parent::cml:module[@role='job'])">
             <o:error>
                 <xsl:attribute name="location">
@@ -260,12 +272,23 @@
 
     <xsl:template match="cml:module[@role='final']" mode="cmlcomp">
         <!-- Contain : molecule [Must = 1?], parameterList [None], propertyList [Must = 1] -->
+        <xsl:value-of select="position()"/>
+        <xsl:value-of select="attribute::role"/>
+        <xsl:value-of select="last()"/>
         <xsl:if test="not(parent::cml:module[@role='job'])">
             <o:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="." mode="get-full-path" />
                 </xsl:attribute>
                 module[@role='final'] must be within module module[@role='job']
+            </o:error>
+        </xsl:if>
+        <xsl:if test="not(current()/position() = last())">
+            <o:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="." mode="get-full-path" />
+                </xsl:attribute>
+                module[@role='final'] must be the last module in module[@role='job']
             </o:error>
         </xsl:if>
         <xsl:if test="not(count(child::cml:molecule) + count(child::cml:parameterList) + count(child::cml:propertyList) = count(child::cml:*))">
@@ -472,9 +495,6 @@
     </xsl:template>
 
     <xsl:template match="cml:molecule" mode="cmllite">
-        <molecule>
-            <xsl:value-of select="@id" />
-        </molecule>
         <xsl:if test="not(parent::cml:cml or parent::cml:molecule or parent::cml:module)">
             <o:error>
                 <xsl:attribute name="location">
