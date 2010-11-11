@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import nu.xom.Builder;
 import nu.xom.Document;
@@ -110,7 +111,7 @@ public abstract class AbstractValidator {
      * @param out
      *            where to print to
      */
-    protected static void print(Document doc, OutputStream out) {
+    public static void print(Document doc, OutputStream out) {
         Serializer serializer;
         try {
             serializer = new Serializer(out, "UTF-8");

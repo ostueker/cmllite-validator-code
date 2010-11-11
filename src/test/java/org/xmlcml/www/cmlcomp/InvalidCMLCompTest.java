@@ -1,32 +1,31 @@
 package org.xmlcml.www.cmlcomp;
 
-import java.io.InputStream;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.www.CMLRuleValidator;
 import org.xmlcml.www.CMLRuleValidator.Rule;
 
-import static org.junit.Assert.*;
+public class InvalidCMLCompTest extends CMLCompTester {
 
-public class InvalidCMLCompTest {
-
-    CMLRuleValidator validator = new CMLRuleValidator(Rule.CMLComp);
-
-    private static String cmlPathOf(String name) {
-        return "invalid/" + name;
+    public InvalidCMLCompTest() {
+        assertionValue = false;
+        validator = new CMLRuleValidator(Rule.CMLComp);
     }
 
-    private void test(String name) {
-        InputStream ins = getClass().getResourceAsStream(cmlPathOf(name));
-        assertNotNull(ins);
-        boolean validate = validator.validate(ins);
-        assertFalse(validate);
+    @Override
+    protected String getTestResourcePath() {
+        return super.getTestResourcePath() + "/invalid";
     }
 
     @Test
+    @Ignore
+    @Override
     public void testAll() {
-        // test a cmlcomp which has a module of unknown role.
-        test("cmlcomp-contain-undefined-module.cml");
-        // test a cmlcomp which has a molecule under cml root
-        test("cmlcomp-contain-undefined-molecule.cml");
+        super.testAll();
+    }
+
+    @Test
+    public void testIndividual() {
+        test("one-job-final-init.cml");
     }
 }
