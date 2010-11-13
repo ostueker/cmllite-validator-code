@@ -18,13 +18,13 @@ public class InvalidCMLCompTest extends CMLCompTester {
     }
 
     @Test
-    @Ignore
     @Override
     public void testAll() {
         super.testAll();
     }
 
     @Test
+    @Ignore
     public void testIndividual() {
         test("one-job-final-init.cml");
     }
