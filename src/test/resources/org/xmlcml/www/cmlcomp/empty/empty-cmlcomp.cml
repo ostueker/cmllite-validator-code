@@ -5,6 +5,6 @@
     cmlx:note="An empty cmlcomp - this is a valid cmlcomp. A cmlcomp does not need to contain anything."
     xmlns="http://www.xml-cml.org/schema"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:conventions="http://www.xml-cml.org/convention/"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
 </cml>

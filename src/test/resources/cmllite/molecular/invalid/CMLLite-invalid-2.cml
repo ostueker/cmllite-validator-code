@@ -3,7 +3,7 @@
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:conventions="http://www.xml-cml.org/convention/"
      convention="conventions:molecular">
-    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/molecular convention</dc:title>
     <dc:description>invalid molecular - atom has a child from the CML namespace which is not one of the ones allowed by
         the molecular definition
     </dc:description>

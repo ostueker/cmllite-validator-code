@@ -3,7 +3,7 @@
     cmlx:note="A cmlcomp joblist which contains two empty jobs with one title is invalid"
     convention="conventions:cmlcomp"
     xmlns="http://www.xml-cml.org/schema"
-    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:conventions="http://www.xml-cml.org/convention/"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
 
     <module role="joblist">

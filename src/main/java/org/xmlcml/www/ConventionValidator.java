@@ -61,15 +61,14 @@ public class ConventionValidator {
                 }
             }
         }
-        Nodes errors = report.getReport().query("//*[local-name()='error' and namespace-uri()='"+ValidationReport.reportNS+"']");
+        Nodes errors = report.getReport().query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
         if (errors.size() > 0) {
             report.setValidationResult(ValidationResult.INVALID);
         } else {
-            if (report.getReport().query("//*[local-name()='warning' and namespace-uri()='"+ValidationReport.reportNS+"']").size() > 0) {
+            if (report.getReport().query("//*[local-name()='"+ValidationReport.warningElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']").size() > 0) {
                 report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
             }
         }
-
         return report;
     }
 

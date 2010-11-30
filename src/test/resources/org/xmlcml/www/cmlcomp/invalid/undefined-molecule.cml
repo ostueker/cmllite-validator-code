@@ -3,7 +3,7 @@
     convention="conventions:cmlcomp"
     cmlx:note="A cmlcomp containing undefined cmlcomp element, i.e. molecule, is invalid."
     xmlns="http://www.xml-cml.org/schema"
-    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:conventions="http://www.xml-cml.org/convention/"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
     <molecule></molecule>
 </cml>

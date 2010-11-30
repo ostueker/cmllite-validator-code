@@ -88,7 +88,6 @@ public class SchemaValidator {
             if (document != null) {
                 try {
                     validator.validate(new DOMSource(document));
-                    System.out.println("valid "+doc.toXML());
                 } catch (SAXException e) {
                     report.addError(e.getMessage());
                     report.setValidationResult(ValidationResult.INVALID);

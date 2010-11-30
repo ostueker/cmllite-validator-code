@@ -3,7 +3,7 @@
     cmlx:note="A long version of valid cmlcomp containing init and final in order is valid."
     convention="conventions:cmlcomp"
     xmlns="http://www.xml-cml.org/schema"
-    xmlns:conventions="http://www.xml-cml.org/conventions/"
+    xmlns:conventions="http://www.xml-cml.org/convention/"
     xmlns:units="http://www.xml-cml.org/units/units"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:cmlx="http://www.xml-cml.org/schema/cmlx">
