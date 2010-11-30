@@ -3,12 +3,12 @@
         version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:cml="http://www.xml-cml.org/schema"
-        xmlns:o="http://www.xml-cml.org/report"
+        xmlns:o="http://www.xml-cml.org/report/"
         xmlns:other="http://www.other.org/"
         xmlns:svrl="http://www.a.com">
 
     <xsl:output method="xml" omit-xml-declaration="no" standalone="yes" indent="yes" />
-    <xsl:variable name="conventionNS">http://www.xml-cml.org/conventions/</xsl:variable>
+    <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
 
     <!-- Apply templates to root node. The matching pattern here apply to any root tag
          but we are expecting cml container -->

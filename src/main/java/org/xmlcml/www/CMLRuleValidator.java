@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  * @author jat45
  * @author Weerapong Phadungsukanan
  */
-public class CMLRuleValidator extends AbstractValidator {
+public class CMLRuleValidator {
 
     public static enum Rule {
 
@@ -35,7 +35,7 @@ public class CMLRuleValidator extends AbstractValidator {
 
     public CMLRuleValidator(String cmlrule) {
         try {
-            transform = createXSLTTransform(cmlrule);
+//            transform = createXSLTTransform(cmlrule);
         } catch (Exception ex) {
             throw new RuntimeException("Exception thrown while creating XML tansformation", ex);
         }
@@ -45,7 +45,6 @@ public class CMLRuleValidator extends AbstractValidator {
         this(rule.ruleName());
     }
 
-    @Override
     public boolean validate(Document document) {
         report = null;
         Nodes nodes;
@@ -56,7 +55,7 @@ public class CMLRuleValidator extends AbstractValidator {
             return false;
         }
         report = XSLTransform.toDocument(nodes);
-        Nodes failures = report.query("//*[local-name()='error' and namespace-uri()='http://www.xml-cml.org/report']");
+        Nodes failures = report.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
         return failures.size() == 0;
     }
 

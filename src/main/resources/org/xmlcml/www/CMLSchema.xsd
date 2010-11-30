@@ -7871,7 +7871,7 @@
             <xsd:documentation>
                 <h:div class="summary">An electron.</h:div>
                 <h:div class="description">Since there is very little use of electrons in current chemical information
-                    this is a fluid concept. I expect it to be used for electron counting, input and output of theochem
+                    this is a fluid concept. I expect it to be used for electron counting, xml and output of theochem
                     operations, descriptions of orbitals, spin states, oxidation states, etc. Electrons can be
                     associated with atoms, bonds and combinations of these. At present there is no hardcoded semantics.
                     However, _atomRef_ and similar attributes can be used to associate electrons with atoms or bond.
@@ -9358,7 +9358,7 @@
                         of uncertainty.
                     </h:p>
                     <h:p>
-                        String/character parameters are often abbreviated in program input, and this
+                        String/character parameters are often abbreviated in program xml, and this
                         is supported through the
                         <h:tt>regex</h:tt>
                         and
@@ -9374,7 +9374,7 @@
                         Parameters can be used to describe additional constraints. This will probably
                         require the development of a microlanguage and until then may use program-specific
                         mechanisms. A common approach will be to use an array of values (or objects) to
-                        represent different input values for (parts of) the calculation. Thus a conformational
+                        represent different xml values for (parts of) the calculation. Thus a conformational
                         change could be specified by an array of several torsion angles.
                     </h:p>
                     <h:p>

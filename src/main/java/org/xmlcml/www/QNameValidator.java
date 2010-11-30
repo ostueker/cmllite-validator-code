@@ -27,7 +27,7 @@ import java.util.Set;
  * @author jat45
  * @author Weerapong Phadungsukanan
  */
-public class QNameValidator extends AbstractValidator {
+public class QNameValidator {
 
     static Logger log = Logger.getLogger(QNameValidator.class);
     private boolean logging = false;
@@ -115,7 +115,6 @@ public class QNameValidator extends AbstractValidator {
         }
     }
 
-    @Override
     public boolean validate(Document document) {
         cleanCurrentStorage();
         boolean valid = true;

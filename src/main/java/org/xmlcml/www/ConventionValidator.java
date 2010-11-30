@@ -7,21 +7,22 @@ import org.apache.log4j.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 
  * Created by IntelliJ IDEA.
  * User: jat45
  * Date: 28-Oct-2010
  * Time: 17:15:55
+ *
  * @author jat45
  * @author Weerapong Phadungsukanan
  */
-public class ConventionValidator extends AbstractValidator {
+public class ConventionValidator {
 
     private static Logger log = Logger.getLogger(ConventionValidator.class);
     private static Map<URI, XSLTransform> knownConventions = null;
@@ -45,64 +46,74 @@ public class ConventionValidator extends AbstractValidator {
         }
     }
 
-    @Override
-    public boolean validate(Document doc) {
-        boolean valid = false;
+
+    public ValidationReport validate(Document doc) {
+        ValidationReport report = new ValidationReport("convention-validation-test");
+        report.setValidationResult(ValidationResult.VALID);
         if (doc != null) {
-            Map<URI, List<Element>> conventionsMap = findConventions(doc);
+            Map<URI, List<Element>> conventionsMap = findConventions(doc, report);
             if (conventionsMap != null) {
                 if (conventionsMap.isEmpty()) {
-                    log.warn("no conventions found");
-                    valid = true;
+                    report.addWarning("no conventions found");
+                    report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
                 } else {
-                    return validate(conventionsMap);
+                    validate(conventionsMap, report);
                 }
             }
         }
-        return valid;
+        Nodes errors = report.getReport().query("//*[local-name()='error' and namespace-uri()='"+ValidationReport.reportNS+"']");
+        if (errors.size() > 0) {
+            report.setValidationResult(ValidationResult.INVALID);
+        } else {
+            if (report.getReport().query("//*[local-name()='warning' and namespace-uri()='"+ValidationReport.reportNS+"']").size() > 0) {
+                report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+            }
+        }
+
+        return report;
     }
 
-    private boolean validate(Map<URI, List<Element>> conventionToElement) {
+    private void validate(Map<URI, List<Element>> conventionToElement, ValidationReport report) {
         for (Map.Entry<URI, List<Element>> entry : conventionToElement.entrySet()) {
             for (Element element : entry.getValue()) {
-                boolean valid = validate(entry.getKey(), element);
-                if (!valid) {
-                    return false;
-                }
+                validate(entry.getKey(), element, report);
             }
         }
-        return true;
     }
 
-    private boolean validate(URI convention, Element start) {
+    private void validate(URI convention, Element start, ValidationReport report) {
         if (knownConventions.containsKey(convention)) {
             XSLTransform xslt = knownConventions.get(convention);
-            Nodes nodes;
+            Nodes nodes = null;
             try {
                 String absoluteXPathToStartElement = generateFullPath(start);
                 xslt.setParameter("absoluteXPathToStartElement", absoluteXPathToStartElement);
                 nodes = xslt.transform(start.getDocument());
             } catch (XSLException e) {
                 log.info(e);
-                return false;
+                report.addWarning(e.getMessage());
             }
-            Document result = XSLTransform.toDocument(nodes);
-            print(result, System.out);
-            Nodes failures = result.query("//*[local-name()='error' and namespace-uri()='http://www.xml-cml.org/report']");
-            for (int index = 0, n = failures.size(); index < n; index++) {
-                Node node = failures.get(index);
-                //log.error("\n"+node.toXML());
+            if (nodes != null) {
+                Document result = XSLTransform.toDocument(nodes);
+                Nodes failures = result.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
+                for (int index = 0, n = failures.size(); index < n; index++) {
+                    Element e = (Element) failures.get(index);
+                    report.addError(e);
+                }
+                Nodes warnings = result.query("//*[local-name()='"+ValidationReport.warningElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
+                for (int index = 0, n = warnings.size(); index < n; index++) {
+                    Element e = (Element) warnings.get(index);
+                    report.addWarning(e);
+                }
             }
-            return failures.size() == 0;
         } else {
-            log.info("the validation of convention: '" + convention + "' is not supported by this service");
+            report.addWarning("the validation of convention: '" + convention + "' is not supported by this service");
         }
-        return false;
     }
 
-    private HashMap<URI, List<Element>> findConventions(Document document) {
+    private HashMap<URI, List<Element>> findConventions(Document document, ValidationReport report) {
         HashMap<URI, List<Element>> map = new HashMap<URI, List<Element>>();
-        Nodes nodes = document.query("//*[namespace-uri()='" + CML_NS + "']/@convention");
+        Nodes nodes = document.query("//*[namespace-uri()='" + CmlLiteValidator.CML_NS + "']/@convention");
         for (int i = 0, length = nodes.size(); i < length; i++) {
             Attribute attribute = (Attribute) nodes.get(i);
             Element element = (Element) attribute.getParent();
@@ -112,10 +123,10 @@ public class ConventionValidator extends AbstractValidator {
             try {
                 convention = new URI(ns + value[1]);
             } catch (URISyntaxException e) {
-                log.error("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'", e);
+                report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
                 return null;
             } catch (Exception e) {
-                log.error(e);
+                report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
                 return null;
             }
             if (convention != null) {
@@ -150,5 +161,37 @@ public class ConventionValidator extends AbstractValidator {
         }
         Element element = (Element) node;
         return generateFullPath(element);
+    }
+
+    /**
+     * Create a saxon 9 XSLTransform from a given xslt name. Leading "/" in xsltName
+     * indicates absolute path in classpath, otherwise relative to derived Class's
+     * package.
+     *
+     * @param xsltName
+     * @return
+     * @throws Exception
+     */
+    protected XSLTransform createXSLTTransform(String xsltName) throws Exception {
+        return createXSLTTransform(getClass(), xsltName);
+    }
+
+    /**
+     * Create a saxon 9 XSLTransform from a given xslt name. Leading "/" in xsltName
+     * indicates absolute path in classpath, otherwise relative to derived Class's
+     * package.
+     *
+     * @param clzz     Class where the resource is belong to.
+     * @param xsltName
+     * @return
+     * @throws Exception
+     */
+    protected static XSLTransform createXSLTTransform(Class clzz, String xsltName) throws Exception {
+        Builder builder = new Builder();
+        URL xslt = clzz.getResource(xsltName);
+        /* set up to use saxon 9 */
+        System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
+        Document stylesheet = builder.build(xslt.openStream());
+        return new XSLTransform(stylesheet);
     }
 }

@@ -6,7 +6,7 @@ import java.io.File;
 import nu.xom.Builder;
 import nu.xom.Document;
 import org.apache.log4j.Logger;
-import org.xmlcml.www.AbstractValidator;
+import org.xmlcml.www.CmlLiteValidator;
 import org.xmlcml.www.CMLRuleValidator;
 
 import static org.junit.Assert.*;
@@ -92,7 +92,7 @@ public abstract class CMLCompTester {
         log.info("# report is  :\n");
         Document report = validator.getShortReport();
         assertNotNull(report);
-        AbstractValidator.print(report, System.out);
+        CmlLiteValidator.print(report, System.out);
         assertEquals(assertionValue, validate);
         System.out.println();
         log.info("End testing file : " + file.getPath());

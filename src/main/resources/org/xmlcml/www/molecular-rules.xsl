@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:cml="http://www.xml-cml.org/schema"
-                xmlns:o="http://www.xml-cml.org/report"
+                xmlns:report="http://www.xml-cml.org/report/"
                 xmlns:saxon="http://saxon.sf.net/"
 
         >
@@ -14,9 +14,9 @@
     <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
 
     <xsl:template match="/">
-        <o:result>
-           <xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)"/>
-        </o:result>
+        <report:result>
+           <xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)" mode="molecular"/>
+        </report:result>
     </xsl:template>
 
     <xsl:template match="cml:cml[@convention]">
@@ -27,7 +27,7 @@
                 <xsl:apply-templates mode="molecular"/>
             </xsl:when>
             <xsl:otherwise>
-                <o:warning>No cml element found with correct convention</o:warning>
+                <report:warning>No cml element found with correct convention</report:warning>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -44,36 +44,36 @@
             <xsl:value-of select="@id"/>
         </molecule>
         <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
-            <o:error>
+            <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
                                          mode="get-full-path"/>
                 </xsl:attribute>
                 molecule must be within molecule or cml elements
-            </o:error>
+            </report:error>
         </xsl:if>
         <xsl:if test="parent::cml:molecule">
             <xsl:if test="not(@count)">
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     child molecules must have a count specified
-                </o:error>
+                </report:error>
             </xsl:if>
         </xsl:if>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
     <xsl:template match="cml:atomArray" mode="molecular">
         <xsl:if test="count(child::cml:atom) = 0">
-            <o:error>
+            <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
                                          mode="get-full-path"/>
                 </xsl:attribute>
                 atomArray must contain atoms
-            </o:error>
+            </report:error>
         </xsl:if>
         <xsl:if test="index-of((cml:molecule, cml:formula), parent::*) = 0">
             <xsl:call-template name="error">
@@ -94,35 +94,36 @@
           formula
         -->
         <xsl:if test="not(@id) and ../../cml:formula">
-            <o:error>
+            <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
                                          mode="get-full-path"/>
                 </xsl:attribute>
                 atoms must have id unless they are part of an
                 atomArray in a formula
-            </o:error>
+            </report:error>
         </xsl:if>
 
         <!-- atoms must have elementType -->
         <xsl:if test="not(@elementType)">
-            <o:error>
+            <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
                                          mode="get-full-path"/>
                 </xsl:attribute>
                 atoms must have elementType specified
-            </o:error>
+            </report:error>
         </xsl:if>
         <!--
           the ids of atoms must be unique within the eldest containing
           molecule
         -->
+        <xsl:if test="@id">
         <xsl:choose>
             <xsl:when
-                    test="count(ancestor::cml:molecule//cml:atom[@id = current()/@id]) = 1"/>
+                    test="@id and count(ancestor::cml:molecule//cml:atom[@id = current()/@id]) = 1"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
@@ -133,19 +134,20 @@
                     <xsl:value-of select="@id"/>
                     <xsl:text/>
                     )
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
+         </xsl:if>
         <xsl:choose>
             <xsl:when test="not(@x2) or (@x2 and @y2)"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     if atom has @x2 then it must have @y2
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -153,13 +155,13 @@
         <xsl:choose>
             <xsl:when test="not(@y2) or (@x2 and @y2)"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     if atom has @y2 then it must have @x2
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -167,13 +169,13 @@
         <xsl:choose>
             <xsl:when test="not(@x3) or (@x3 and @y3 and @z3)"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     if atom has @x3 then it must have @y3 and @z3
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -181,13 +183,13 @@
         <xsl:choose>
             <xsl:when test="not(@y3) or (@x3 and @y3 and @z3)"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     if atom has @32 then it must have @x3 and @z3
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -195,13 +197,13 @@
         <xsl:choose>
             <xsl:when test="not(@z3) or (@x3 and @y3 and @z3)"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     if atom has @z3 then it must have @x3 and @y3
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates mode="molecular"/>
@@ -211,13 +213,13 @@
         <xsl:choose>
             <xsl:when test="@atomRefs2"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     bond must have atomRefs2
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
         <!--ASSERT -->
@@ -225,7 +227,7 @@
             <xsl:when
                     test="ancestor::cml:molecule[1]//cml:atom[@id = substring-before(current()/@atomRefs2, ' ')]"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
@@ -236,7 +238,7 @@
                     <xsl:value-of select="substring-before(@atomRefs2, ' ')"/>
                     <xsl:text/>
                     ])
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
         <!--ASSERT -->
@@ -244,7 +246,7 @@
             <xsl:when
                     test="ancestor::cml:molecule[1]//cml:atom[@id = substring-after(current()/@atomRefs2, ' ')]"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
@@ -255,7 +257,7 @@
                     <xsl:value-of select="substring-after(@atomRefs2, ' ')"/>
                     <xsl:text/>
                     ])
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -264,34 +266,44 @@
             <xsl:when
                     test="not(substring-before(@atomRefs2, ' ') = substring-after(@atomRefs2, ' '))"/>
             <xsl:otherwise>
-                <o:error>
+                <report:error>
                     <xsl:attribute name="location">
                         <xsl:apply-templates select="."
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     a bond must be between different atoms
-                </o:error>
+                </report:error>
             </xsl:otherwise>
         </xsl:choose>
 
-        <!--ASSERT -->
+        <!--if the bond has an id it must be unique within the eldest containing molecule
+            if it doesn't have an id it is a warning-->
         <xsl:choose>
-            <xsl:when
-                    test="count(ancestor::cml:molecule[1]//cml:bond[@id = current()/@id]) = 1"/>
-            <xsl:otherwise>
-                <o:error>
-                    <xsl:attribute name="location">
-                        <xsl:apply-templates select="."
-                                             mode="get-full-path"/>
-                    </xsl:attribute>
-                    the id of a bond must be unique within the eldest containing
-                    molecule (duplicate found:
-                    <xsl:text/>
-                    <xsl:value-of select="@id"/>
-                    <xsl:text/>
-                    )
-                </o:error>
-            </xsl:otherwise>
+                   <xsl:when test="@id">
+                       <xsl:choose>
+                           <xsl:when
+                                   test="count(ancestor::cml:molecule[1]//cml:bond[@id = current()/@id]) = 1"/>
+                           <xsl:otherwise>
+                               <report:error>
+                                   <xsl:attribute name="location">
+                                       <xsl:apply-templates select="."
+                                                            mode="get-full-path"/>
+                                   </xsl:attribute>
+                                   the id of a bond must be unique within the eldest containing
+                                   molecule (duplicate found: <xsl:value-of select="@id"/>)
+                               </report:error>
+                           </xsl:otherwise>
+                       </xsl:choose>
+                   </xsl:when>
+                    <xsl:otherwise>
+                        <report:warning>
+                            <xsl:attribute name="location">
+                                    <xsl:apply-templates select="."
+                                                            mode="get-full-path"/>
+                            </xsl:attribute>
+                            it is recommended that bonds have id attributes
+                        </report:warning>
+                    </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates select="@*|*|comment()|processing-instruction()"
                              mode="M13"/>
@@ -301,11 +313,11 @@
     <xsl:template name="error">
         <xsl:param name="location"/>
         <xsl:param name="text"/>
-        <o:error>
+        <report:error>
             <xsl:attribute name="location" select="$location">
             </xsl:attribute>
             <xsl:value-of select="$text"/>
-        </o:error>
+        </report:error>
     </xsl:template>
 
     <!--MODE: SCHEMATRON-FULL-PATH-->

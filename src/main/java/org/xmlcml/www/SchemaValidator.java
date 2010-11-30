@@ -1,6 +1,9 @@
 package org.xmlcml.www;
 
-import nu.xom.*;
+import nu.xom.Element;
+import nu.xom.Nodes;
+import nu.xom.Serializer;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -15,17 +18,17 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author jat45
  * @author Weerapong Phadungsukanan
  */
-public class SchemaValidator extends AbstractValidator {
+public class SchemaValidator {
 
     private Logger log = Logger.getLogger(getClass());
     private Validator validator;
@@ -76,23 +79,29 @@ public class SchemaValidator extends AbstractValidator {
         }
     }
 
-    @Override
-    public boolean validate(nu.xom.Document doc) {
+    public ValidationReport validate(nu.xom.Document doc) {
+        ValidationReport report = new ValidationReport("schema-validation-test");
+        report.setValidationResult(ValidationResult.VALID);
         List<InputStream> inputs = getEldestCmlChildren(doc);
         for (InputStream is : inputs) {
             Document document = buildDocument(is);
             if (document != null) {
                 try {
                     validator.validate(new DOMSource(document));
+                    System.out.println("valid "+doc.toXML());
                 } catch (SAXException e) {
-                    log.error("invalid document", e);
-                    return false;
+                    report.addError(e.getMessage());
+                    report.setValidationResult(ValidationResult.INVALID);
                 } catch (IOException e) {
-                    return false;
+                    report.addError(e.getMessage());
+                    report.setValidationResult(ValidationResult.INVALID);
+                } catch (Exception e) {
+                    report.addError(e.getMessage());
+                    report.setValidationResult(ValidationResult.INVALID);
                 }
             }
         }
-        return true;
+        return report;
     }
 
     private Document buildDocument(InputStream input) {
@@ -108,16 +117,36 @@ public class SchemaValidator extends AbstractValidator {
     }
 
     private List<InputStream> getEldestCmlChildren(nu.xom.Document document) {
-        List<InputStream> list = Collections.emptyList();
-        Nodes nodes = document.query("//*[namespace-uri()='" + CML_NS + "' and not(ancestor::*[namespace-uri()='" + CML_NS + "'])]");
+        Nodes nodes = document.query("//*[namespace-uri()='" + CmlLiteValidator.CML_NS + "' and not(ancestor::*[namespace-uri()='" + CmlLiteValidator.CML_NS + "'])]");
         int size = nodes.size();
-        list = new ArrayList<InputStream>(size);
+        List<InputStream> list = new ArrayList<InputStream>(size);
         for (int i = 0; i < size; i++) {
             Element e = new Element((Element) nodes.get(i));
             nu.xom.Document d = new nu.xom.Document(e);
-            list.add(print(d));
+            list.add(toInputStream(d));
         }
         return list;
+    }
+
+    /**
+     * Prints a XOM document to an OutputStream without having to remember the
+     * serializer voodoo. The encoding is always UTF-8.
+     *
+     * @param doc the XOM Document to convert to an InputStream
+     * @return
+     */
+    public InputStream toInputStream(nu.xom.Document doc) {
+        Serializer serializer;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            serializer = new Serializer(baos, "UTF-8");
+            serializer.setIndent(0);
+            serializer.write(doc);
+        } catch (Exception e) {
+            log.error(e);
+            throw new RuntimeException(e);
+        }
+        return IOUtils.toInputStream(baos.toString());
     }
 
 }
