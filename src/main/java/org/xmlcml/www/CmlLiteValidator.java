@@ -56,11 +56,16 @@ public class CmlLiteValidator {
                 return createFinalReport(schemaReport.getValidationResult(), xmlWellFormedReport, schemaReport);
             }
             default: {
+                schemaReport.addValid("document conforms to the schema");
                 ValidationReport conventionsReport = conventionValidator.validate(document);
                 ValidationReport qnameReachableReport = qNameValidator.validate(document);
+                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
+                    qnameReachableReport.addValid("all dictRefs are resolvable");
+                }
                 switch (conventionsReport.getValidationResult()) {
                     case VALID: {
-                       return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+                        conventionsReport.addValid("document conforms to the convention(s) specified");
+                        return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
                     }
                     default : {
                         return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
