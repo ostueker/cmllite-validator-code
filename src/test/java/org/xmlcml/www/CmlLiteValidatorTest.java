@@ -26,7 +26,7 @@ public class CmlLiteValidatorTest {
     }
 
     @Test
-    public void testValidMolecularWithoutQNameChecks() {
+    public void testValidMolecular() {
         Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
@@ -41,7 +41,7 @@ public class CmlLiteValidatorTest {
     }
 
     @Test
-    public void testInvalidMolecularWithoutQNameChecks() {
+    public void testInvalidMolecular() {
         Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/invalid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", invalidMolecular.isEmpty());
         for (File file : invalidMolecular) {
@@ -73,7 +73,7 @@ public class CmlLiteValidatorTest {
 //    }
 
     @Test   
-    public void testInvalidCmlcompWithoutQNameChecks() {
+    public void testInvalidCmlcomp() {
         Collection<File> invalidCmlcomp = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/cmlcomp/invalid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
         for (File file : invalidCmlcomp) {

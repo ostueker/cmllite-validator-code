@@ -21,8 +21,9 @@ public class CmlLiteValidator {
     private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
+    private QNameValidator qNameValidator = new QNameValidator();
 
-    /**
+     /**
      * Validate an XML from given input stream.
      *
      * @param ins an input stream of XML
@@ -40,7 +41,6 @@ public class CmlLiteValidator {
         return validate(input);
     }
 
-
     /**
      * Validate a XOM Document object.
      *
@@ -57,7 +57,15 @@ public class CmlLiteValidator {
             }
             default: {
                 ValidationReport conventionsReport = conventionValidator.validate(document);
-                return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport);
+                ValidationReport qnameReachableReport = qNameValidator.validate(document);
+                switch (conventionsReport.getValidationResult()) {
+                    case VALID: {
+                       return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+                    }
+                    default : {
+                        return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+                    }
+                }
             }
         }
     }
