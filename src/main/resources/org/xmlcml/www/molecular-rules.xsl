@@ -46,8 +46,7 @@
         <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
             <report:error>
                 <xsl:attribute name="location">
-                    <xsl:apply-templates select="."
-                                         mode="get-full-path"/>
+                    <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:attribute>
                 molecule must be within molecule or cml elements
             </report:error>
@@ -93,7 +92,7 @@
           atoms must have id unless they are part of an atomArray in a
           formula
         -->
-        <xsl:if test="not(@id) and ../../cml:formula">
+        <xsl:if test="not(@id) and ../cml:atomArray/cml:formula">
             <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
@@ -129,12 +128,7 @@
                                              mode="get-full-path"/>
                     </xsl:attribute>
                     the id of a atom must be unique within the eldest containing
-                    molecule (duplicate found:
-                    <xsl:text/>
-                    <xsl:value-of select="@id"/>
-                    <xsl:text/>
-                    )
-                </report:error>
+                    molecule (duplicate found: <xsl:value-of select="@id"/>)</report:error>
             </xsl:otherwise>
         </xsl:choose>
          </xsl:if>
@@ -305,8 +299,7 @@
                         </report:warning>
                     </xsl:otherwise>
         </xsl:choose>
-        <xsl:apply-templates select="@*|*|comment()|processing-instruction()"
-                             mode="M13"/>
+        <xsl:apply-templates mode="molecular"/>
     </xsl:template>
 
     <!-- error report -->
