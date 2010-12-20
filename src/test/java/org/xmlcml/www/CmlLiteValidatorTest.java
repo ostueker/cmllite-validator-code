@@ -40,7 +40,20 @@ public class CmlLiteValidatorTest {
             assertEquals(file.getAbsolutePath() + " should be valid", ValidationResult.VALID, result.getValidationResult());
         }
     }
-
+       @Test
+    public void testWarningMolecular() {
+        Collection<File> warningMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/warning"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", warningMolecular.isEmpty());
+        for (File file : warningMolecular) {
+            ValidationReport report = null;
+            try {
+                report = validator.validate(new FileInputStream(file));
+            } catch (FileNotFoundException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            }
+            assertEquals(file.getAbsolutePath() + " should have warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        }
+    }
     @Test
     public void testInvalidMolecular() {
         Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/invalid"), new String[]{"cml"}, false);
@@ -52,6 +65,7 @@ public class CmlLiteValidatorTest {
             } catch (FileNotFoundException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
+            System.out.println(file.getName()+" "+report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
         }
     }

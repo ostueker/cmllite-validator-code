@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml:cml xmlns:cml="http://www.xml-cml.org/schema"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
+    <dc:title>test file for http://www.xml-cml.org/convention/molecular convention</dc:title>
+    <dc:description>the should only be one atomArray in a molecule</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
+    <dc:date>2009-01-21</dc:date>
+    <cml:molecule id="m1">
+        <cml:atomArray>
+            <cml:atom elementType="H" id="a1" />
+        </cml:atomArray>
+        <cml:atomArray>
+            <cml:atom elementType="He" id="a2" />
+        </cml:atomArray>
+    </cml:molecule>
+</cml:cml>

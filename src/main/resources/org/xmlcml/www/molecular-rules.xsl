@@ -85,6 +85,24 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
+        <xsl:if test="count(ancestor::cml:molecule/cml:atomArray) > 1">
+            <report:error>
+                                <xsl:attribute name="location">
+                                    <xsl:apply-templates select="."
+                                                         mode="get-full-path"/>
+                                </xsl:attribute>
+                                there should only be one atomArray child in a molecule
+                            </report:error>
+        </xsl:if>
+        <xsl:if test="count(ancestor::cml:formula/cml:atomArray) > 1">
+            <report:error>
+                                <xsl:attribute name="location">
+                                    <xsl:apply-templates select="."
+                                                         mode="get-full-path"/>
+                                </xsl:attribute>
+                                there should only be one atomArray child in a formula
+                            </report:error>
+        </xsl:if>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
     <xsl:template match="cml:atom" mode="molecular">
@@ -92,8 +110,13 @@
           atoms must have id unless they are part of an atomArray in a
           formula
         -->
-        <xsl:if test="not(@id) and ../cml:atomArray/cml:formula">
-            <report:error>
+        <xsl:if test="not(@id)">
+            <xsl:choose>
+                <xsl:when test="ancestor::cml:atomArray[ancestor::cml:formula]">
+
+                </xsl:when>
+                <xsl:otherwise>
+                    <report:error>
                 <xsl:attribute name="location">
                     <xsl:apply-templates select="."
                                          mode="get-full-path"/>
@@ -101,6 +124,8 @@
                 atoms must have id unless they are part of an
                 atomArray in a formula
             </report:error>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:if>
 
         <!-- atoms must have elementType -->

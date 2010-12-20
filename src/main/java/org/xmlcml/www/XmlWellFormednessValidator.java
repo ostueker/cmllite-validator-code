@@ -24,7 +24,7 @@ public class XmlWellFormednessValidator {
     public ValidationReport validate(String xml) {
         ValidationReport report = new ValidationReport(reportTitle);
         try {
-            new Builder().build(IOUtils.toInputStream(xml));
+            new Builder().build(IOUtils.toInputStream(xml, "UTF-8"));
             report.setValidationResult(ValidationResult.VALID);
             report.addValid("xml is well formed");
         } catch (Exception ex) {

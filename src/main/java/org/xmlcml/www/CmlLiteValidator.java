@@ -32,7 +32,7 @@ public class CmlLiteValidator {
     public ValidationReport validate(InputStream ins) {
         String input;
         try {
-            input = IOUtils.toString(ins);
+            input = IOUtils.toString(ins, "UTF-8");
         } catch (IOException e) {
             ValidationReport report = new ValidationReport("exception");
             report.addError(e.getMessage());
@@ -96,7 +96,7 @@ public class CmlLiteValidator {
 
     private Document buildDocument(String xml) {
         try {
-            return new Builder().build(IOUtils.toInputStream(xml));
+            return new Builder().build(IOUtils.toInputStream(xml, "UTF-8"));
         } catch (ParsingException e) {
             e.printStackTrace();
         } catch (IOException e) {

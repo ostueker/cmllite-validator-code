@@ -81,22 +81,29 @@ public class SchemaValidator {
 
     public ValidationReport validate(nu.xom.Document doc) {
         ValidationReport report = new ValidationReport("schema-validation-test");
-        report.setValidationResult(ValidationResult.VALID);
-        List<InputStream> inputs = getEldestCmlChildren(doc);
-        for (InputStream is : inputs) {
-            Document document = buildDocument(is);
-            if (document != null) {
-                try {
-                    validator.validate(new DOMSource(document));
-                } catch (SAXException e) {
-                    report.addError(e.getMessage());
-                    report.setValidationResult(ValidationResult.INVALID);
-                } catch (IOException e) {
-                    report.addError(e.getMessage());
-                    report.setValidationResult(ValidationResult.INVALID);
-                } catch (Exception e) {
-                    report.addError(e.getMessage());
-                    report.setValidationResult(ValidationResult.INVALID);
+        // check that there are CML elements present
+        Nodes nodes = doc.query("//*[namespace-uri()='" + CmlLiteValidator.CML_NS + "']");
+        if (nodes.size() == 0) {
+            report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+            report.addWarning("no elements from the CML namespace are present");
+        } else {
+            report.setValidationResult(ValidationResult.VALID);
+            List<InputStream> inputs = getEldestCmlChildren(doc);
+            for (InputStream is : inputs) {
+                Document document = buildDocument(is);
+                if (document != null) {
+                    try {
+                        validator.validate(new DOMSource(document));
+                    } catch (SAXException e) {
+                        report.addError(e.getMessage());
+                        report.setValidationResult(ValidationResult.INVALID);
+                    } catch (IOException e) {
+                        report.addError(e.getMessage());
+                        report.setValidationResult(ValidationResult.INVALID);
+                    } catch (Exception e) {
+                        report.addError(e.getMessage());
+                        report.setValidationResult(ValidationResult.INVALID);
+                    }
                 }
             }
         }
@@ -145,7 +152,11 @@ public class SchemaValidator {
             log.error(e);
             throw new RuntimeException(e);
         }
-        return IOUtils.toInputStream(baos.toString());
+        try {
+            return IOUtils.toInputStream(baos.toString(), "UTF-8");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
