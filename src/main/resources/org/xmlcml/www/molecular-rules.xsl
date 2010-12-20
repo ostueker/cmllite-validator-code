@@ -240,7 +240,7 @@
                bondArray must contain bonds
             </report:error>
         </xsl:if>
-        <xsl:if test="not(../cml:molecule)">
+        <xsl:if test="not(parent::cml:molecule)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="."
