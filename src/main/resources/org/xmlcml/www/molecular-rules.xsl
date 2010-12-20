@@ -16,6 +16,7 @@
     <xsl:template match="/">
         <report:result>
            <xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)" mode="molecular"/>
+            <xsl:apply-templates />
         </report:result>
     </xsl:template>
 
@@ -361,8 +362,6 @@
         </xsl:choose>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
-
-
 
     <!-- error report -->
     <xsl:template name="error">

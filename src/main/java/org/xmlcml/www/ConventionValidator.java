@@ -55,7 +55,9 @@ public class ConventionValidator {
             if (conventionsMap != null) {
                 if (conventionsMap.isEmpty()) {
                     report.addWarning("no conventions found");
-                    report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+                    if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
+                        report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+                    }
                 } else {
                     validate(conventionsMap, report);
                 }
@@ -66,7 +68,9 @@ public class ConventionValidator {
             report.setValidationResult(ValidationResult.INVALID);
         } else {
             if (report.getReport().query("//*[local-name()='"+ValidationReport.warningElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']").size() > 0) {
-                report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+                if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
+                    report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+                }
             }
         }
         return report;
@@ -118,24 +122,29 @@ public class ConventionValidator {
             Element element = (Element) attribute.getParent();
             String[] value = attribute.getValue().split(":");
             String ns = element.getNamespaceURI(value[0]);
-            URI convention;
-            try {
-                convention = new URI(ns + value[1]);
-            } catch (URISyntaxException e) {
-                report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
-                return null;
-            } catch (Exception e) {
-                report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
-                return null;
-            }
-            if (convention != null) {
-                if (map.containsKey(convention)) {
-                    map.get(convention).add(element);
-                } else {
-                    List<Element> list = new ArrayList<Element>();
-                    list.add(element);
-                    map.put(convention, list);
+            if (null != ns) {
+                URI convention;
+                try {
+                    convention = new URI(ns + value[1]);
+                } catch (URISyntaxException e) {
+                    report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
+                    return null;
+                } catch (Exception e) {
+                    report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
+                    return null;
                 }
+                if (convention != null) {
+                    if (map.containsKey(convention)) {
+                        map.get(convention).add(element);
+                    } else {
+                        List<Element> list = new ArrayList<Element>();
+                        list.add(element);
+                        map.put(convention, list);
+                    }
+                }
+            } else {
+                report.addError("no namespace declared for the prefix: " + value[0]);
+                report.setValidationResult(ValidationResult.INVALID);
             }
         }
         return map;

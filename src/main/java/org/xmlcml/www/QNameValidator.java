@@ -38,7 +38,7 @@ public class QNameValidator {
     public ValidationReport validate(Document document) {
         ValidationReport report = new ValidationReport("qname-reachable-test");
         report.setValidationResult(ValidationResult.VALID);
-        Nodes nodes = document.query("//*[namespace-uri()='" + CmlLiteValidator.CML_NS + "']/@*[local-name()='dictRef' and namespace-uri()='']");
+        Nodes nodes = document.query("//*[namespace-uri()='" + CmlLiteValidator.CML_NS + "']/@*[namespace-uri()='' and (local-name()='dictRef' or local-name()='convention')]");
         Set<URI> uris = new HashSet<URI>(nodes.size());
         for (int i = 0, n = nodes.size(); i < n; i++) {
             Attribute att = (Attribute) nodes.get(i);
