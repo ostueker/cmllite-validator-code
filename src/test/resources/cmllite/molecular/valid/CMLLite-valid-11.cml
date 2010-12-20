@@ -10,7 +10,7 @@
    <molecule id="m1">
         <formula>
             <atomArray>
-            <atom elementType="H" isotope="2" />
+                <atom elementType="H" isotope="2" />
             </atomArray>
         </formula>
     </molecule>

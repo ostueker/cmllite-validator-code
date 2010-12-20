@@ -62,8 +62,18 @@
                 </report:error>
             </xsl:if>
         </xsl:if>
+        <xsl:if test="cml:molecule and cml:atomArray">
+            <report:error>
+                    <xsl:attribute name="location">
+                        <xsl:apply-templates select="."
+                                             mode="get-full-path"/>
+                    </xsl:attribute>molecules with child molecules must not contain an atomArray
+                </report:error>
+        </xsl:if>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
+
+
     <xsl:template match="cml:atomArray" mode="molecular">
         <xsl:if test="count(child::cml:atom) = 0">
             <report:error>
@@ -85,23 +95,15 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
-        <xsl:if test="count(ancestor::cml:molecule/cml:atomArray) > 1">
+        <xsl:if test="count(../cml:atomArray) > 1">
             <report:error>
                                 <xsl:attribute name="location">
                                     <xsl:apply-templates select="."
                                                          mode="get-full-path"/>
                                 </xsl:attribute>
-                                there should only be one atomArray child in a molecule
+                                there should only be one atomArray child in a <xsl:value-of select="name(..)" /> element
                             </report:error>
-        </xsl:if>
-        <xsl:if test="count(ancestor::cml:formula/cml:atomArray) > 1">
-            <report:error>
-                                <xsl:attribute name="location">
-                                    <xsl:apply-templates select="."
-                                                         mode="get-full-path"/>
-                                </xsl:attribute>
-                                there should only be one atomArray child in a formula
-                            </report:error>
+
         </xsl:if>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
@@ -227,6 +229,39 @@
         </xsl:choose>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
+
+    <xsl:template match="cml:bondArray" mode="molecular">
+        <xsl:if test="count(child::cml:bond) = 0">
+            <report:error>
+                <xsl:attribute name="location">
+                    <xsl:apply-templates select="."
+                                         mode="get-full-path"/>
+                </xsl:attribute>
+               bondArray must contain bonds
+            </report:error>
+        </xsl:if>
+        <xsl:if test="not(../cml:molecule)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="."
+                                         mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">bondArray must be within a molecule element</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+         <xsl:if test="count(../cml:bondArray) > 1">
+            <report:error>
+                                <xsl:attribute name="location">
+                                    <xsl:apply-templates select="."
+                                                         mode="get-full-path"/>
+                                </xsl:attribute>
+                                there should only be one bondArray child in a <xsl:value-of select="name(..)" /> element
+                            </report:error>
+
+        </xsl:if>
+        <xsl:apply-templates mode="molecular"/>
+    </xsl:template>
+
     <xsl:template match="cml:bond" mode="molecular">
         <!--ASSERT -->
         <xsl:choose>
@@ -326,6 +361,8 @@
         </xsl:choose>
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
+
+
 
     <!-- error report -->
     <xsl:template name="error">
