@@ -3,21 +3,13 @@
          xmlns:dc="http://purl.org/dc/elements/1.1/"
          xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
     <dc:title>test file for http://www.xml-cml.org/convention/molecular convention</dc:title>
-    <dc:description>the should only be one bondArray in a molecule</dc:description>
+    <dc:description>if an atom has x3 it must also have y3 and z3</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-01-21</dc:date>
     <cml:molecule id="m1">
-        <cml:atomArray>
-            <cml:atom elementType="H" id="a1" />
-            <cml:atom elementType="He" id="a2" />
-            <cml:atom elementType="Li" id="a3" />
+         <cml:atomArray>
+             <cml:atom id="a1" elementType="H" x3="0.0" />
         </cml:atomArray>
-        <cml:bondArray>
-            <cml:bond id="b1" atomRefs2="a1 a2" order="unknown" />
-        </cml:bondArray>
-        <cml:bondArray>
-            <cml:bond id="b2" atomRefs2="a2 a3" order="unknown" />
-        </cml:bondArray>
     </cml:molecule>
 </cml:cml>

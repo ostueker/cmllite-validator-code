@@ -3,15 +3,17 @@
          xmlns:dc="http://purl.org/dc/elements/1.1/"
          xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
     <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
-    <dc:description>should not fail because atoms in formula/atomArray do not need ids</dc:description>
+    <dc:description>should give a warning because the bond order of "other" does not have further semantics given using dictRef</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-04-05</dc:date>
    <molecule id="m1">
-        <formula>
-            <atomArray>
-                <atom elementType="H" isotopeNumber="2" />
-            </atomArray>
-        </formula>
+       <atomArray>
+           <atom id="a1" elementType="H" />
+           <atom id="a2" elementType="He" />
+       </atomArray>
+       <bondArray>
+           <bond id="b1" atomRefs2="a1 a2" order="other" />
+       </bondArray>
     </molecule>
 </cml>

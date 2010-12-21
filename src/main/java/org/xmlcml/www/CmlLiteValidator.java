@@ -58,6 +58,7 @@ public class CmlLiteValidator {
             default: {
                 schemaReport.addValid("document conforms to the schema");
                 ValidationReport conventionsReport = conventionValidator.validate(document);
+
                 ValidationReport qnameReachableReport = qNameValidator.validate(document);
                 if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
                     qnameReachableReport.addValid("all dictRefs are resolvable");

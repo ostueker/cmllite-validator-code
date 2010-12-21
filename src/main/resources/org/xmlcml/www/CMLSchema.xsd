@@ -7467,6 +7467,7 @@
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="stereoType">
+                    <xsd:attributeGroup ref="atomRefs2"/>
                     <xsd:attributeGroup ref="atomRefs4"/>
                     <xsd:attributeGroup ref="atomRefArray"/>
                     <xsd:attributeGroup ref="title"/>

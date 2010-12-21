@@ -51,6 +51,7 @@ public class CmlLiteValidatorTest {
             } catch (FileNotFoundException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
+            System.out.println(report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should have warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
         }
     }

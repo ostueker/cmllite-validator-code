@@ -10,7 +10,7 @@
     <dc:date>2009-01-21</dc:date>
     <cml:molecule id="m1">
         <cml:bondArray>
-            <cml:bond id="b1" atomRefs2="a1 a2"/>
+            <cml:bond id="b1" atomRefs2="a1 a2" order="unknown"/>
         </cml:bondArray>
     </cml:molecule>
 </cml:cml>
