@@ -40,18 +40,32 @@
     <xsl:template match="*|@*|text()" mode="molecular">
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
+
     <xsl:template match="cml:molecule" mode="molecular">
         <molecule>
             <xsl:value-of select="@id"/>
         </molecule>
-        <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
-            <report:error>
-                <xsl:attribute name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:attribute>
-                molecule must be within molecule or cml elements
-            </report:error>
+
+        <xsl:if test="..">
+            <xsl:choose>
+                <xsl:when test="parent::cml:*">
+                    parent: <xsl:value-of select="parent"/>
+                    <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
+                    <report:error>
+                        <xsl:attribute name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:attribute>
+                        the only valid cml elements which can be parents of molecule are: molecule and cml
+                    </report:error>
+                </xsl:if>
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- cml molecule elements can be children of non cml elements -->
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:if>
+
+
         <xsl:if test="parent::cml:molecule">
             <xsl:if test="not(@count)">
                 <report:error>
