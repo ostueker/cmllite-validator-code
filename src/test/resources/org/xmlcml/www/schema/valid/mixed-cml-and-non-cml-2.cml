@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<other:foreign-element xmlns:cml="http://www.xml-cml.org/schema"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:other="http://www.example.net">
+    <dc:title>test file for http://www.xml-cml.org/</dc:title>
+    <dc:description>valid CML - every CML element can have any foreign namespaced child</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
+    <dc:date>2009-04-06</dc:date>
+    <cml:cml />
+</other:foreign-element>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<cml xmlns="http://www.xml-cml.org/schema"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>test file for http://www.xml-cml.org/</dc:title>
+    <dc:description>invalid CML - there is no "foreign-element" element in the CML namespace
+    </dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
+    <dc:date>2009-04-06</dc:date>
+    <foreign-element/>
+</cml>

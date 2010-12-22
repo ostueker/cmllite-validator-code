@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<foo xmlns:cml="http://www.xml-cml.org/schema"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:conventions="http://www.xml-cml.org/convention/"
-     convention="conventions:molecular">
+<foo xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
     <dc:description>should be a warning as no cml is present</dc:description>
     <dc:author>J A Townsend</dc:author>

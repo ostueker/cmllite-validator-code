@@ -16,14 +16,16 @@
 
 	<xsl:variable name="other-value">other</xsl:variable>
 
+    <!--
 	<xsl:template match="/">
 		<report:result>
+            <xsl:variable name="root" select="saxon:evaluate($absoluteXPathToStartElement)" />
+            <root><xsl:value-of select="$root"/> </root>
 			<xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)" mode="molecular"/>
 			<xsl:apply-templates />
 		</report:result>
 	</xsl:template>
-
-    <!--
+     -->
     <xsl:template match="/">
         <report:result>
             <xsl:apply-templates />
@@ -31,7 +33,6 @@
     </xsl:template>
 
     <xsl:template match="*[namespace-uri()='http://www.xml-cml.org/schema'][@convention]">
-
         <xsl:choose>
             <xsl:when
                     test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName"
@@ -43,9 +44,8 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-        -->
+
 	<xsl:template match="*|@*|text()">
-        <other-mode/>
 		<xsl:apply-templates />
 	</xsl:template>
 
@@ -54,6 +54,7 @@
 	</xsl:template>
 
 	<xsl:template match="cml:molecule" mode="molecular">
+        <testing-molecule/>
 		<xsl:if test="..">
 			<xsl:if test="parent::cml:*">
                 <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
@@ -77,6 +78,7 @@
                 </xsl:call-template>
 			</xsl:if>
 		</xsl:if>
+
 		<xsl:if test="cml:molecule and cml:atomArray">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">

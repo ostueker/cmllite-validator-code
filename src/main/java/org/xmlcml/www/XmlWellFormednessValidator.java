@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class XmlWellFormednessValidator {
 
-    public static final String reportTitle =    "well-formed-test";
+    public static final String reportTitle = "well-formed-test";
 
     /**
      * An XML document is well-formed if it is not null.
@@ -33,4 +33,27 @@ public class XmlWellFormednessValidator {
         }
         return report;
     }
+
+//    /**
+//     * An XML document is well-formed if it is not null.
+//     * Method validate(InputStream xml) and validate(File file) in the CmlLiteValidator
+//     * try to create XOM document first and pass it as argument to this method. If
+//     * XOM document cannot be created by any reason it is considered malformed.
+//     *
+//     * @param xml
+//     * @return
+//     */
+//    public ValidationReport validate(InputStream xml) {
+//        ValidationReport report = new ValidationReport(reportTitle);
+//        try {
+//            new Builder().build(xml);
+//            report.setValidationResult(ValidationResult.VALID);
+//            report.addValid("xml is well formed");
+//        } catch (Exception ex) {
+//            report.addError(ex.getMessage());
+//            report.setValidationResult(ValidationResult.INVALID);
+//        }
+//        return report;
+//    }
+
 }
