@@ -7,7 +7,7 @@
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-04-06</dc:date>
-    <cml:cml>
+    <cml:molecule>
         <other:foreign-element />
-    </cml:cml>
+    </cml:molecule>
 </other:foreign-element>

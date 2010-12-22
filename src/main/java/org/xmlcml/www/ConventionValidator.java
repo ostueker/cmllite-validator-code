@@ -151,11 +151,12 @@ public class ConventionValidator {
     }
 
     private String generateFullPath(Element element) {
-        String name = "*[local-name()='" + element.getLocalName() + "' and namespace-uri()='"
-                + element.getNamespaceURI() + "']";
-        Nodes nodes = element.query("preceding-sibling::*[local-name()=local-name(.) and namespace-uri() = namespace-uri(.)]");
+        String localName = element.getLocalName();
+        String namespaceUri = element.getNamespaceURI();
+        String name = "*[local-name()='" + localName + "' and namespace-uri()='" + namespaceUri + "']";
+        Nodes nodes = element.query("preceding-sibling::*[local-name()='"+localName+"' and namespace-uri() = '"+namespaceUri+"']");
         int position = nodes.size();
-        if (element.getDocument().getRootElement() == element) {
+        if (element.getDocument().getRootElement().equals(element)) {
             return "/" + name + "[" + (1 + position) + "]";
         }
         return generateFullPath(element.getParent()) + "/" + name + "[" + (1 + position) + "]";

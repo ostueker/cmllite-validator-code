@@ -54,7 +54,7 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreWellFormedXml() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -71,7 +71,7 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreSchemaCompliant() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -92,7 +92,7 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreConventionValid() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -113,7 +113,7 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularQNamesAreURLs() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -135,9 +135,10 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testValidMolecular() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/valid"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
+            System.out.println("file "+file.getName());
             ValidationReport result = null;
             try {
                 result = validator.validate(new FileInputStream(file));
@@ -150,7 +151,7 @@ public class CmlLiteValidatorTest {
     }
        @Test
     public void testWarningMolecular() {
-        Collection<File> warningMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/warning"), new String[]{"cml"}, false);
+        Collection<File> warningMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", warningMolecular.isEmpty());
         for (File file : warningMolecular) {
             ValidationReport report = null;
@@ -166,7 +167,7 @@ public class CmlLiteValidatorTest {
 
      @Test
     public void testWarningMolecularAreWellFormedXml() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/warning"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -183,7 +184,7 @@ public class CmlLiteValidatorTest {
 
      @Test
     public void testWarningMolecularAreSchemaCompliant() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/warning"), new String[]{"cml"}, false);
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
             ValidationReport report = null;
@@ -205,7 +206,7 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testInvalidMolecular() {
-        Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/cmllite/molecular/invalid"), new String[]{"cml"}, false);
+        Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", invalidMolecular.isEmpty());
         for (File file : invalidMolecular) {
             ValidationReport report = null;

@@ -36,4 +36,13 @@ public class WarningsSchemaValidatorTest {
         report = schemaValidator.validate(input);
         assertEquals(location+" should be valid with warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
+
+    @Test
+    public void testNoCmlNamespacePresent1() {
+        String location = "schema/warning/no-cml-namespace-present.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = schemaValidator.validate(input);
+        assertEquals(location+" should be valid with warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
 }
