@@ -90,7 +90,6 @@ public class ConventionValidator {
             Nodes nodes = null;
             try {
                 String absoluteXPathToStartElement = generateFullPath(start);
-                System.out.println("xpath to element: "+absoluteXPathToStartElement);
                 xslt.setParameter("absoluteXPathToStartElement", absoluteXPathToStartElement);
                 nodes = xslt.transform(start.getDocument());
             } catch (XSLException e) {
@@ -99,7 +98,6 @@ public class ConventionValidator {
             }
             if (nodes != null) {
                 Document result = XSLTransform.toDocument(nodes);
-                System.out.println("result:\n"+result.toXML());
                 Nodes failures = result.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
                 for (int index = 0, n = failures.size(); index < n; index++) {
                     Element e = (Element) failures.get(index);

@@ -4,11 +4,14 @@ import nu.xom.Builder;
 import nu.xom.Document;
 import nu.xom.ParsingException;
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +23,20 @@ import static org.junit.Assert.fail;
 public class TestUtils {
 
     public Builder builder = new Builder();
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
+    }
+
+    @Test
+    public void DummyTest() {
+        assertTrue("dummy test so class builds", true);
+    }
+
      public String getFileAsString(String location) {
         InputStream stream = getClass().getResourceAsStream(location);
         String input = "";
@@ -27,10 +44,10 @@ public class TestUtils {
             try {
                 input = IOUtils.toString(stream);
             } catch (IOException e) {
-                fail("should be able to convert from stream to string: "+location);
+                throw new RuntimeException("should be able to convert from stream to string: "+location);
             }
         } else {
-            fail("couldn't read from: "+location);
+            throw new RuntimeException("couldn't read from: "+location);
         }
         return input;
     }
@@ -42,13 +59,13 @@ public class TestUtils {
             try {
                 document = builder.build(stream);
             } catch (ParsingException e) {
-                fail("should be able to construct document from: "+location);
+                throw new RuntimeException("should be able to construct document from: "+location);
             } catch (IOException e) {
-                fail("should be able to construct document from: "+location);
+                throw new RuntimeException("should be able to construct document from: "+location);
             }
 
         } else {
-            fail("couldn't read from: "+location);
+            throw new RuntimeException("couldn't read from: "+location);
         }
         return document;
     }

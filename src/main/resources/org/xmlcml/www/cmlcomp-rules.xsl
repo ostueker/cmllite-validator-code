@@ -14,11 +14,32 @@
     <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
     <xsl:variable name="conventionName">cmlcomp</xsl:variable>
 
+
       <xsl:template match="/">
         <report:result>
            <xsl:apply-templates select="saxon:evaluate($absoluteXPathToStartElement)" mode="cmlcomp"/>
         </report:result>
     </xsl:template>
+    <!--
+     <xsl:template match="/">
+        <report:result>
+            <xsl:apply-templates />
+        </report:result>
+    </xsl:template>
+
+    <xsl:template match="*[namespace-uri()='http://www.xml-cml.org/schema'][@convention]">
+        <xsl:choose>
+            <xsl:when
+                    test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName"
+                    >
+                <xsl:apply-templates mode="cmlcomp"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+        -->
 
     <!-- Match top level text data in xml and apply templates -->
     <xsl:template match="*|@*|text()">
