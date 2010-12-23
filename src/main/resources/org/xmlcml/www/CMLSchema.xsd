@@ -43,17 +43,16 @@
         </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="angleUnitsType" id="st.angleUnitsType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <h:div class="summary">An enumeration of allowed angle units.</h:div>
-                <h:div class="description">May be obsolete.</h:div>
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="degrees"/>
-            <xsd:enumeration value="radians"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xsd:annotation>
+      <xsd:documentation>
+        <h:div class="summary">An enumeration of allowed angle units.</h:div>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="degrees"/>
+      <xsd:enumeration value="radians"/>
+    </xsd:restriction>
+  </xsd:simpleType>
     <xsd:simpleType name="atomIDType" id="st.atomIDType">
         <xsd:annotation>
             <xsd:documentation>
@@ -1220,27 +1219,6 @@
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:union>
-    </xsd:simpleType>
-    <xsd:simpleType name="line3Type" id="st.line3Type">
-        <xsd:annotation>
-            <xsd:documentation>
-                <h:div class="summary">An unbounded line in 3-space.</h:div>
-                <h:div class="description">
-                    Defined by 6 real numbers, conventionally an arbitrary
-                    point on the line and a vector3. There is no significance to the point
-                    (i.e. it is not the "end of the line") and there are an infinite number of
-                    ways of representing the line. DANGER. Line3 now uses the point3 and vector3 attributes
-                    and the line3Type may be OBSOLETED.
-                </h:div>
-                <h:div class="example" href="line31.xml"/>
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:restriction>
-            <xsd:simpleType>
-                <xsd:list itemType="xsd:double"/>
-            </xsd:simpleType>
-            <xsd:length value="6"/>
-        </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType id="st.linkTypeType" name="linkTypeType">
         <xsd:annotation>
@@ -2910,36 +2888,6 @@
             <xsd:pattern value="([A-Za-z_][A-Za-z0-9_\.\-]*:)?[A-Za-z_][A-Za-z0-9_\.\-]*"/>
         </xsd:restriction>
     </xsd:simpleType>
-    <xsd:simpleType id="st.relatedEntryTypeType" name="relatedEntryTypeType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <h:div class="summary">Type of relatedEntry.</h:div>
-                <h:div class="description">Type represents a the type of relationship in a relatedEntry element.</h:div>
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
-                <xsd:restriction base="xsd:string">
-                    <xsd:enumeration value="parent"/>
-                    <xsd:enumeration value="partitiveParent"/>
-                    <xsd:enumeration value="child"/>
-                    <xsd:enumeration value="partitiveChild"/>
-                    <xsd:enumeration value="related"/>
-                    <xsd:enumeration value="synonym"/>
-                    <xsd:enumeration value="quasi-synonym"/>
-                    <xsd:enumeration value="antonym"/>
-                    <xsd:enumeration value="homonym"/>
-                    <xsd:enumeration value="see"/>
-                    <xsd:enumeration value="seeAlso"/>
-                    <xsd:enumeration value="abbreviation"/>
-                    <xsd:enumeration value="acronym"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
-    </xsd:simpleType>
     <xsd:simpleType name="repeatType" id="st.repeatType">
         <xsd:annotation>
             <xsd:documentation>
@@ -3571,30 +3519,17 @@
             </xsd:annotation>
         </xsd:attribute>
     </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.alternativeType" name="alternativeType">
-        <!-- Note: name differs from attributeGroup name -->
-        <xsd:attribute name="type" id="att.alternativeType" type="alternativeTypeType">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">The type of an alternative.</h:div>
-                    <h:div class="general">This adds semantics to an _alternative_ and might be used by an RDF or
-                        related engine.
-                    </h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.angleUnits" name="angleUnits">
-        <!-- Note: name differs from attributeGroup name -->
-        <xsd:attribute id="att.angleUnits" name="units" type="angleUnitsType">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">Restricts units to radians or degrees.</h:div>
-                    <h:div class="description"/>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
+     <xsd:attributeGroup id="attGp.angleUnits" name="angleUnits">
+    <!-- Note: name differs from attributeGroup name -->
+    <xsd:attribute id="att.angleUnits" name="units" type="angleUnitsType">
+      <xsd:annotation>
+        <xsd:documentation>
+          <h:div class="summary">Restricts units to radians or degrees.</h:div>
+          <h:div class="description"/>
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:attributeGroup>
     <xsd:attributeGroup id="attGp.atomIDArray" name="atomIDArray">
         <!-- Note: name differs from attributeGroup name -->
         <xsd:attribute name="atomID" id="att.atomIDArray" type="atomRefArrayType">
@@ -3996,23 +3931,6 @@
                         whitespace) its value is given by the default. If the scalar in the instance is empty and no
                         enumerations have a default attribute, an application may throw an error.
                     </h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.delete" name="delete">
-        <xsd:attribute name="delete" id="att.delete" type="xsd:string">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">A flag indicated that the element can detach/delete itself.</h:div>
-                    <h:div class="description">
-                        An element containg this attribute may only have a transient existence
-                        (e.g. a template to create other elements) and this attribute shows that
-                        the element can be deleted at the appropriate stage. The time at which this
-                        is called is application dependent. At present the presence of the attribute
-                        is sufficient to trigger this; later a controlled vocabulary will be developed.
-                    </h:div>
-                    <h:div class="summary">2006-05-21: PMR added attribute.</h:div>
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -4604,16 +4522,6 @@
                     <h:div class="description">No fixed semantics, though we may provide a controlled-extensible list in
                         the future.
                     </h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.isotope" name="isotope">
-        <xsd:attribute id="att.isotope" name="isotope" type="xsd:double">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">The isotope for an element.</h:div>
-                    <h:div class="description">A real number describing the isotope. Probably obsolet.</h:div>
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -5467,18 +5375,6 @@
             </xsd:annotation>
         </xsd:attribute>
     </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.relatedEntryType" name="relatedEntryType">
-        <!-- Note: name differs from attributeGroup name -->
-        <xsd:attribute id="att.relatedEntryType" name="type" type="relatedEntryTypeType">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">Type of relatedEntry.</h:div>
-                    <h:div class="description">Type represents a the type of relationship in a relatedEntry element.
-                    </h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
     <xsd:attributeGroup id="attGp.role" name="role">
         <xsd:attribute id="att.role" name="role" type="xsd:string">
             <xsd:annotation>
@@ -6016,16 +5912,6 @@
                         0.25. The lowest value possible is probably 1/48.0 (in m3m).
                     </h:div>
                     <h:div class="curation">2003-09-15 (added at suggestion of Jon Wakelin).</h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.whiteSpace" name="whiteSpace">
-        <xsd:attribute id="att.whiteSpace" name="whiteSpace" type="xsd:string">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">Whitespace.</h:div>
-                    <h:div class="description">Attached to entry. This may be obsolete.</h:div>
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -6604,8 +6490,8 @@
                     <xsd:attributeGroup ref="id"/>
                     <xsd:attributeGroup ref="convention"/>
                     <xsd:attributeGroup ref="dictRef"/>
-                    <xsd:attributeGroup ref="atomRefs3"/>
                     <xsd:attributeGroup ref="angleUnits"/>
+                    <xsd:attributeGroup ref="atomRefs3"/>
                     <xsd:attributeGroup ref="errorValue"/>
                     <xsd:attributeGroup ref="errorBasis"/>
                     <xsd:attributeGroup ref="min"/>
@@ -6834,7 +6720,6 @@
             <xsd:attributeGroup ref="elementType"/>
             <xsd:attributeGroup ref="formalCharge"/>
             <xsd:attributeGroup ref="hydrogenCount"/>
-            <xsd:attributeGroup ref="isotope"/>
             <xsd:attributeGroup ref="isotopeNumber"/>
             <xsd:attributeGroup ref="isotopeRef"/>
             <xsd:attributeGroup ref="isotopeListRef"/>
@@ -7938,7 +7823,6 @@
             <xsd:attributeGroup ref="minLength"/>
             <xsd:attributeGroup ref="maxLength"/>
             <xsd:attributeGroup ref="units"/>
-            <xsd:attributeGroup ref="whiteSpace"/>
             <xsd:attributeGroup ref="pattern"/>
             <xsd:attributeGroup ref="term"/>
             <xsd:anyAttribute namespace="##other" processContents="lax"/>
@@ -8464,26 +8348,23 @@
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">A line in 3-space.</h:div>
-                <h:div class="description">A line characterised by one or two endpoints.</h:div>
-                <h:div class="curation">
-                    2006-01-02: the 6-number content has caused much confusion and
-                    will be obsoleted in favour of the point3 and vector3 attributes
-                </h:div>
+                <h:div class="description">A line characterised by a point3 and a vector3</h:div>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
-            <xsd:simpleContent>
-                <xsd:extension base="line3Type">
-                    <xsd:attributeGroup ref="convention"/>
-                    <xsd:attributeGroup ref="dictRef"/>
-                    <xsd:attributeGroup ref="id"/>
-                    <xsd:attributeGroup ref="title"/>
-                    <xsd:attributeGroup ref="units"/>
-                    <xsd:attributeGroup ref="point3"/>
-                    <xsd:attributeGroup ref="vector3"/>
-                    <xsd:anyAttribute namespace="##other" processContents="lax"/>
-                </xsd:extension>
-            </xsd:simpleContent>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="anyCml"/>
+                <xsd:any namespace="##other" processContents="lax"/>
+                <xsd:any namespace="##local" processContents="lax"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="convention"/>
+            <xsd:attributeGroup ref="dictRef"/>
+            <xsd:attributeGroup ref="id"/>
+            <xsd:attributeGroup ref="title"/>
+            <xsd:attributeGroup ref="units"/>
+            <xsd:attributeGroup ref="point3"/>
+            <xsd:attributeGroup ref="vector3"/>
+            <xsd:anyAttribute namespace="##other" processContents="lax"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="link" id="el.link" substitutionGroup="anyCml">
@@ -8564,8 +8445,6 @@
 
                             <h:p>
                                 Note: several other specific linking mechanisms are defined elsewhere in STM.
-                                <h:a href="el.relatedEntry">relatedEntry</h:a>
-                                should be used in dictionaries, and
                                 <h:a href="st.dictRef">dictRef</h:a>
                                 should be used to link to dictionaries. There are no required uses of
                                 <h:tt>link</h:tt>
@@ -11584,9 +11463,9 @@
                     <xsd:attributeGroup ref="title"/>
                     <xsd:attributeGroup ref="id"/>
                     <xsd:attributeGroup ref="convention"/>
+                    <xsd:attributeGroup ref="angleUnits"/>
                     <xsd:attributeGroup ref="dictRef"/>
                     <xsd:attributeGroup ref="atomRefs4"/>
-                    <xsd:attributeGroup ref="angleUnits"/>
                     <xsd:attributeGroup ref="errorValue"/>
                     <xsd:attributeGroup ref="errorBasis"/>
                     <xsd:attributeGroup ref="min"/>
@@ -11739,16 +11618,6 @@
                 </xsd:annotation>
             </xsd:attributeGroup>
             <xsd:attributeGroup ref="title"/>
-            <xsd:attributeGroup ref="abbreviation">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <h:div class="summary">Abbreviation for the unit.</h:div>
-                        <h:div class="description">
-                            <h:p>This may be obsolete and symbol should be preferred.</h:p>
-                        </h:div>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:attributeGroup>
             <xsd:attributeGroup ref="symbol">
                 <xsd:annotation>
                     <xsd:documentation>

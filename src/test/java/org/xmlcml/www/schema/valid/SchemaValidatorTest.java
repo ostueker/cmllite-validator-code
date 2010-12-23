@@ -1,9 +1,14 @@
-package org.xmlcml.www;
+package org.xmlcml.www.schema.valid;
 
 import nu.xom.Document;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xmlcml.www.SchemaValidator;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,14 +18,14 @@ import static org.junit.Assert.assertEquals;
  * Date: 22/12/10
  * Time: 10:12
  */
-public class ValidSchemaValidatorTest {
+public class SchemaValidatorTest {
 
     TestUtils testUtils = new TestUtils();
     SchemaValidator schemaValidator = new SchemaValidator();
     ValidationReport report = null;
 
 
-     @Before
+    @Before
     public void setUp() throws Exception {
     }
 
@@ -34,7 +39,7 @@ public class ValidSchemaValidatorTest {
         String location = "schema/valid/foreign-namespaced-attributes-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test

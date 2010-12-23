@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cml xmlns="http://www.xml-cml.org/schema"
+     xmlns:html="http://www.w3.org/1999/xhtml"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:conventions="http://www.xml-cml.org/convention/"
+        convention="conventions:dictionary">
+    <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
+    <dc:description>a schema valid dictionary</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
+    <dc:date>2010-12-23</dc:date>
+    <dictionary title="fundamental chemistry concepts" namespace="http://www.xml-cml.org/dictionary/cml">
+        <entry id="e1" term="first entry" title="first entry" dataType="xsd:string">
+            <description>
+                <html:p>
+                    the first entry in the dictionary
+                </html:p>
+            </description>
+        </entry>
+        <entry id="e2" term="second entry" title="second entry" dataType="xsd:string">
+            <description>
+                <html:p>
+                    the second entry in the dictionary
+                </html:p>
+            </description>
+        </entry>
+        <entry id="last" term="last entry" title="last entry" dataType="xsd:string">
+            <description>
+                <html:p>
+                    the last entry in the dictionary
+                </html:p>
+            </description>
+        </entry>
+    </dictionary>
+</cml>

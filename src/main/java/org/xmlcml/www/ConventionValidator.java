@@ -27,7 +27,7 @@ public class ConventionValidator {
     private static Logger log = Logger.getLogger(ConventionValidator.class);
     private static Map<URI, XSLTransform> knownConventions = null;
     private final static String conventionNS = "http://www.xml-cml.org/convention/";
-
+    private static URI dummy = null;
     static {
         registerKnownConventionLocations();
     }
@@ -35,6 +35,7 @@ public class ConventionValidator {
     private static void registerKnownConventionLocations() {
         knownConventions = new HashMap<URI, XSLTransform>();
         try {
+            knownConventions.put(new URI(conventionNS + "dictionary"), createXSLTTransform(ConventionValidator.class, "dictionary-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "molecular"), createXSLTTransform(ConventionValidator.class, "molecular-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "cmlcomp"), createXSLTTransform(ConventionValidator.class, "cmlcomp-rules.xsl"));
         } catch (URISyntaxException e) {
@@ -43,6 +44,13 @@ public class ConventionValidator {
         } catch (Exception ex) {
             log.fatal("unknown exception", ex);
             throw new RuntimeException(ex);
+        }
+
+        try {
+            dummy = new URI("http://www.xml-cml.org/dictionary/dummy");
+        } catch (URISyntaxException e) {
+             log.fatal("can't create uris", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -98,6 +106,7 @@ public class ConventionValidator {
             }
             if (nodes != null) {
                 Document result = XSLTransform.toDocument(nodes);
+                CmlLiteValidator.print(result, System.out);
                 Nodes failures = result.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
                 for (int index = 0, n = failures.size(); index < n; index++) {
                     Element e = (Element) failures.get(index);
@@ -110,7 +119,9 @@ public class ConventionValidator {
                 }
             }
         } else {
-            report.addWarning("the validation of convention: '" + convention + "' is not supported by this service");
+            if (!dummy.equals(convention)) {
+                report.addWarning("the validation of convention: '" + convention + "' is not supported by this service");
+            }
         }
     }
 

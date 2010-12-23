@@ -95,6 +95,7 @@ public class CmlLiteValidatorTest {
         Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", validMolecular.isEmpty());
         for (File file : validMolecular) {
+            System.out.println("file "+file.getName());
             ValidationReport report = null;
             try {
                 report = conventionValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -107,7 +108,8 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            assertEquals(file.getAbsolutePath() + " should be schema valid", ValidationResult.VALID, report.getValidationResult());
+            System.out.println(report.getReport().toXML());
+            assertEquals(file.getAbsolutePath() + " should be convention valid", ValidationResult.VALID, report.getValidationResult());
         }
     }
 
@@ -133,37 +135,37 @@ public class CmlLiteValidatorTest {
     }
 
 
-    @Test
-    public void testValidMolecular() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
-            System.out.println("file "+file.getName());
-            ValidationReport result = null;
-            try {
-                result = validator.validate(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                fail("should be able to read from "+file.getAbsolutePath());
-            }
-            System.out.println(file.getName()+"\n"+result.getReport().toXML());
-            assertEquals(file.getAbsolutePath() + " should be valid", ValidationResult.VALID, result.getValidationResult());
-        }
-    }
-       @Test
-    public void testWarningMolecular() {
-        Collection<File> warningMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", warningMolecular.isEmpty());
-        for (File file : warningMolecular) {
-            ValidationReport report = null;
-            try {
-                report = validator.validate(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                fail("should be able to read from "+file.getAbsolutePath());
-            }
-            System.out.println(report.getReport().toXML());
-            assertEquals(file.getAbsolutePath() + " should have warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
-        }
-    }
+//    @Test
+//    public void testValidMolecular() {
+//        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
+//        assertFalse("there should be test documents", validMolecular.isEmpty());
+//        for (File file : validMolecular) {
+//            System.out.println("file "+file.getName());
+//            ValidationReport result = null;
+//            try {
+//                result = validator.validate(new FileInputStream(file));
+//            } catch (FileNotFoundException e) {
+//                fail("should be able to read from "+file.getAbsolutePath());
+//            }
+//            System.out.println(file.getName()+"\n"+result.getReport().toXML());
+//            assertEquals(file.getAbsolutePath() + " should be valid", ValidationResult.VALID, result.getValidationResult());
+//        }
+//    }
+//       @Test
+//    public void testWarningMolecular() {
+//        Collection<File> warningMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
+//        assertFalse("there should be test documents", warningMolecular.isEmpty());
+//        for (File file : warningMolecular) {
+//            ValidationReport report = null;
+//            try {
+//                report = validator.validate(new FileInputStream(file));
+//            } catch (FileNotFoundException e) {
+//                fail("should be able to read from "+file.getAbsolutePath());
+//            }
+//            System.out.println(report.getReport().toXML());
+//            assertEquals(file.getAbsolutePath() + " should have warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+//        }
+//    }
 
      @Test
     public void testWarningMolecularAreWellFormedXml() {
@@ -204,21 +206,107 @@ public class CmlLiteValidatorTest {
         }
     }
 
-    @Test
-    public void testInvalidMolecular() {
-        Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", invalidMolecular.isEmpty());
-        for (File file : invalidMolecular) {
+      @Test
+    public void testWarningMolecularAreConventionWarning() {
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", validMolecular.isEmpty());
+        for (File file : validMolecular) {
             ValidationReport report = null;
             try {
-                report = validator.validate(new FileInputStream(file));
+                report = conventionValidator.validate(new Builder().build(new FileInputStream(file)));
             } catch (FileNotFoundException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
+            } catch (IOException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ValidityException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ParsingException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println(file.getName()+" "+report.getReport().toXML());
-            assertEquals(file.getAbsolutePath() + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+            System.out.println("file "+file.getName()+"\n"+report.getReport().toXML());
+            assertEquals(file.getAbsolutePath() + " should be convention warnings "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
         }
     }
+
+//    @Test
+//    public void testInvalidMolecular() {
+//        Collection<File> invalidMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+//        assertFalse("there should be test documents", invalidMolecular.isEmpty());
+//        for (File file : invalidMolecular) {
+//            ValidationReport report = null;
+//            try {
+//                report = validator.validate(new FileInputStream(file));
+//            } catch (FileNotFoundException e) {
+//                fail("should be able to read from "+file.getAbsolutePath());
+//            }
+//            System.out.println(file.getName()+" "+report.getReport().toXML());
+//            assertEquals(file.getAbsolutePath() + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+//        }
+//    }
+
+
+        @Test
+    public void testInvalidMolecularAreWellFormedXml() {
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", validMolecular.isEmpty());
+        for (File file : validMolecular) {
+            ValidationReport report = null;
+            try {
+                report = xmlWellFormednessValidator.validate(IOUtils.toString(new FileInputStream(file)));
+            } catch (FileNotFoundException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (IOException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            }
+            assertEquals(file.getAbsolutePath() + " should be well formed xml", ValidationResult.VALID, report.getValidationResult());
+        }
+    }
+
+    @Test
+    public void testInvalidMolecularAreSchemaCompliant() {
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", validMolecular.isEmpty());
+        for (File file : validMolecular) {
+            ValidationReport report = null;
+            try {
+                report = schemaValidator.validate(new Builder().build(new FileInputStream(file)));
+            } catch (FileNotFoundException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (IOException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ValidityException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ParsingException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            }
+            System.out.println("file " + file.getName() + "\n" + report.getReport().toXML());
+            assertEquals(file.getAbsolutePath() + " should be schema valid", ValidationResult.VALID, report.getValidationResult());
+        }
+    }
+
+     @Test
+    public void testInvalidMolecularAreConventionInvalid() {
+        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", validMolecular.isEmpty());
+        for (File file : validMolecular) {
+            ValidationReport report = null;
+            try {
+                report = conventionValidator.validate(new Builder().build(new FileInputStream(file)));
+            } catch (FileNotFoundException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (IOException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ValidityException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            } catch (ParsingException e) {
+                fail("should be able to read from "+file.getAbsolutePath());
+            }
+            System.out.println("file "+file.getName());
+            CmlLiteValidator.print(report.getReport(), System.out);
+            assertEquals(file.getAbsolutePath() + " should be convention invalid", ValidationResult.INVALID, report.getValidationResult());
+        }
+    }
+
 
 //    @Test
 //    public void testValidCmlcompWithoutQNameChecks() {
@@ -237,18 +325,18 @@ public class CmlLiteValidatorTest {
 //        }
 //    }
 
-    @Test   
-    public void testInvalidCmlcomp() {
-        Collection<File> invalidCmlcomp = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/cmlcomp/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
-        for (File file : invalidCmlcomp) {
-            ValidationReport report = null;
-            try {
-                report = validator.validate(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                fail("should be able to read from "+file.getAbsolutePath());
-            }            
-            assertEquals(file.getAbsolutePath() + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
-        }
-    }
+//    @Test
+//    public void testInvalidCmlcomp() {
+//        Collection<File> invalidCmlcomp = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/cmlcomp/invalid"), new String[]{"cml"}, false);
+//        assertFalse("there should be test documents", invalidCmlcomp.isEmpty());
+//        for (File file : invalidCmlcomp) {
+//            ValidationReport report = null;
+//            try {
+//                report = validator.validate(new FileInputStream(file));
+//            } catch (FileNotFoundException e) {
+//                fail("should be able to read from "+file.getAbsolutePath());
+//            }
+//            assertEquals(file.getAbsolutePath() + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+//        }
+//    }
 }

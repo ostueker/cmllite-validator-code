@@ -1,8 +1,13 @@
-package org.xmlcml.www;
+package org.xmlcml.www.xml.valid;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.XmlWellFormednessValidator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 22/12/10
  * Time: 10:12
  */
-public class ValidXmlWellFormednessTest {
+public class XmlWellFormednessTest {
 
     TestUtils testUtils = new TestUtils();
     XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
@@ -31,7 +36,7 @@ public class ValidXmlWellFormednessTest {
         String location = "xml/valid/wellformed-xml-1.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
     }
     @Test
     public void testValidXml2() {
@@ -55,4 +60,14 @@ public class ValidXmlWellFormednessTest {
         assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
     }
 
+    //
+    // Test a document which has greek utf8 characters as part of hte element names - taken out as failing to run
+    // under maven though ok through intelliJ
+//    @Test
+//    public void testValidXml5() {
+//        String location = "xml/valid/wellformed-xml-5.cml";
+//        String input = testUtils.getFileAsString(location);
+//        report = xmlWellFormednessValidator.validate(input);
+//        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+//    }
 }

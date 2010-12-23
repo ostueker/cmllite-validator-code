@@ -1,8 +1,13 @@
-package org.xmlcml.www;
+package org.xmlcml.www.xml.invalid;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.XmlWellFormednessValidator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +17,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 22/12/10
  * Time: 10:12
  */
-public class InvalidXmlWellFormednessTest {
+public class XmlWellFormednessTest {
 
     TestUtils testUtils = new TestUtils();
     XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
@@ -31,7 +36,7 @@ public class InvalidXmlWellFormednessTest {
         String location = "xml/valid/wellformed-xml-4.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test

@@ -32,19 +32,108 @@
         </report:result>
     </xsl:template>
 
+    <!--
+    <xsl:template match="cml:cml[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+        <xsl:apply-templates mode="molecular" />
+    </xsl:template>
+
+    <xsl:template match="cml:molecule[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+        <xsl:apply-templates mode="molecular" />
+    </xsl:template>
+    -->
+
+    <xsl:template match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+        <xsl:choose>
+            <xsl:when test="self::cml:cml or self::cml:molecule">
+                <xsl:apply-templates mode="molecular" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="@convention" mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">the only valid cml elements which specify the molecular convention are "cml" and "molecule"</xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="cml:*" mode="molecular">
+        <matched-priority>
+            element name: <xsl:value-of select="name(.)"/>
+        <xsl:choose>
+            <xsl:when test="@convention">
+                <has-convention />
+                <xsl:choose>
+                    <xsl:when test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName">
+                        <is-molecular />
+                        <xsl:apply-templates mode="molecular"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <not-molecular />
+                        <xsl:apply-templates />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="warning">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="@convention" mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">the <xsl:value-of select="$conventionName" /> convention does not include the element "<xsl:value-of select="name(.)" />". A different convention should be specified on this element</xsl:with-param>
+                </xsl:call-template>
+                <xsl:apply-templates mode="molecular" />
+            </xsl:otherwise>
+        </xsl:choose>
+        </matched-priority>
+    </xsl:template>
+ <!--
+    <xsl:template match="*[namespace-uri()='http://www.xml-cml.org/schema'][@convention]">
+        <xsl:choose>
+            <xsl:when test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName">
+                   <xsl:
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates />
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="not(@convention)">
+            <xsl:call-template name="warning">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text"></xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+-->
+
+     <!--
     <xsl:template match="*[namespace-uri()='http://www.xml-cml.org/schema'][@convention]">
         <xsl:choose>
             <xsl:when
                     test="namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName"
                     >
-                <xsl:apply-templates mode="molecular"/>
+                <xsl:choose>
+                    <xsl:when test=". = cml:cml or . = cml:molecule">
+                        <xsl:apply-templates mode="molecular" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="error">
+                            <xsl:with-param name="location">
+                                <xsl:apply-templates select="@convention" mode="get-full-path"/>
+                            </xsl:with-param>
+                            <xsl:with-param name="text">the only valid cml elements which specify the molecular convention are "cml" and "molecule"</xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
+    -->
 	<xsl:template match="*|@*|text()">
 		<xsl:apply-templates />
 	</xsl:template>
@@ -54,7 +143,6 @@
 	</xsl:template>
 
 	<xsl:template match="cml:molecule" mode="molecular">
-        <testing-molecule/>
 		<xsl:if test="..">
 			<xsl:if test="parent::cml:*">
                 <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
@@ -92,7 +180,7 @@
 
 
 	<xsl:template match="cml:atomArray" mode="molecular">
-		<xsl:if test="empty(child::cml:atom)">
+        <xsl:if test="not(cml:atom)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -444,6 +532,41 @@
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
 
+    <xsl:template match="cml:formula" mode="molecular">
+        <xsl:choose>
+            <xsl:when test="parent::cml:molecule">
+                <!-- molecule can be the child of formula -->
+            </xsl:when>
+            <xsl:when test="parent::cml:formula">
+                <xsl:if test="not(@count)">
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">a formula that is a child of formula must have a count attribute specified</xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">formula must be a child of molecule or formula</xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="not(cml:atomArray or @concise or @inline)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">formula must have at least one of: an atomArray child, a concise attribute, a inline attribute</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:apply-templates mode="molecular"/>
+    </xsl:template>
+
     <xsl:template match="cml:property" mode="molecular">
         <xsl:if test="not(@dictRef)">
             <xsl:call-template name="error">
@@ -492,13 +615,29 @@
         <xsl:apply-templates mode="molecular"/>
     </xsl:template>
 
+    <xsl:template match="cml:label" mode="molecular">
+          <xsl:apply-templates mode="molecular"/>
+    </xsl:template>
+
+    <xsl:template match="cml:name" mode="molecular">
+        <xsl:if test="not(@dictRef)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">names must have dataType specified</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:apply-templates mode="molecular"/>
+    </xsl:template>
+
     <xsl:template name="check-all-atomRefs-values-are-different">
         <xsl:param name="atomRefsX"/>
         <xsl:variable name="atomRefTokens" select="tokenize($atomRefsX, ' ')"/>
         <xsl:if test="not(count($atomRefTokens) = count(distinct-values($atomRefTokens)))">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
-                   <xsl:apply-templates select="$atomRefsX" mode="get-full-path"/>
+                    <xsl:apply-templates select="$atomRefsX" mode="get-full-path"/>
                 </xsl:with-param>
                 <xsl:with-param name="text">the atoms in an atomRefs<xsl:value-of select="count($atomRefTokens)" /> must not contain duplicates</xsl:with-param>
             </xsl:call-template>

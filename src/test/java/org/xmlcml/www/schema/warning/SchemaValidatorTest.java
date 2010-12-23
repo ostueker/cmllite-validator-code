@@ -1,9 +1,14 @@
-package org.xmlcml.www;
+package org.xmlcml.www.schema.warning;
 
 import nu.xom.Document;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.xmlcml.www.SchemaValidator;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 22/12/10
  * Time: 10:12
  */
-public class WarningsSchemaValidatorTest {
+public class SchemaValidatorTest {
 
     TestUtils testUtils = new TestUtils();
     SchemaValidator schemaValidator = new SchemaValidator();
@@ -34,7 +39,7 @@ public class WarningsSchemaValidatorTest {
         String location = "schema/warning/no-cml-present.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location+" should be valid with warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid with warnings", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test

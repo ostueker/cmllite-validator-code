@@ -8,8 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -59,13 +58,35 @@ public class TestUtils {
             try {
                 document = builder.build(stream);
             } catch (ParsingException e) {
-                throw new RuntimeException("should be able to construct document from: "+location);
+                throw new RuntimeException("should be able to construct document from: "+location,e);
             } catch (IOException e) {
-                throw new RuntimeException("should be able to construct document from: "+location);
+                throw new RuntimeException("should be able to construct document from: "+location,e);
+            }
+        } else {
+            throw new RuntimeException("couldn't read from: "+location);
+        }
+        return document;
+    }
+
+    public Document getFileAsDocument(File file) {
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+                throw new RuntimeException("should be able to construct document from: "+file.getAbsolutePath(),e);
+        }
+        Document document = null;
+        if (stream != null) {
+            try {
+                document = builder.build(stream);
+            } catch (ParsingException e) {
+                throw new RuntimeException("should be able to construct document from: "+file.getAbsolutePath(), e);
+            } catch (IOException e) {
+                throw new RuntimeException("should be able to construct document from: "+file.getAbsolutePath(),e);
             }
 
         } else {
-            throw new RuntimeException("couldn't read from: "+location);
+            throw new RuntimeException("couldn't read from: "+file.getAbsolutePath());
         }
         return document;
     }
