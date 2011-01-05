@@ -106,6 +106,7 @@ public class ConventionValidator {
             }
             if (nodes != null) {
                 Document result = XSLTransform.toDocument(nodes);
+
                 CmlLiteValidator.print(result, System.out);
                 Nodes failures = result.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
                 for (int index = 0, n = failures.size(); index < n; index++) {
@@ -146,7 +147,7 @@ public class ConventionValidator {
                 }
                 if (convention != null) {
                     if (map.containsKey(convention)) {
-                        map.get(convention).add(element);
+//                        map.get(convention).add(element);
                     } else {
                         List<Element> list = new ArrayList<Element>();
                         list.add(element);

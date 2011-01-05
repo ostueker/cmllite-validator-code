@@ -18,17 +18,73 @@
         </report:result>
     </xsl:template>
 
-    <xsl:template match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+    <xsl:template match="*|@*|text()">
+        <xsl:apply-templates />
+    </xsl:template>
+
+    <xsl:template match="*|@*|text()" mode="dictionary">
+        <xsl:apply-templates mode="dictionary"/>
+    </xsl:template>
+
+     <xsl:template
+            match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
         <xsl:choose>
-            <xsl:when test="self::cml:cml or self::cml:dictionary">
-                <xsl:apply-templates mode="dictionary" />
+            <xsl:when test="self::cml:cml">
+                <xsl:choose>
+                    <xsl:when test="not(cml:dictionary)">
+                        <!-- no dictionary children -->
+                        <xsl:call-template name="error">
+                            <xsl:with-param name="location">
+                                <xsl:apply-templates select="." mode="get-full-path"/>
+                            </xsl:with-param>
+                            <xsl:with-param name="text">there must be at least one "dictionary" element as a child of the
+                                "cml" element declaring the molecular convention
+                            </xsl:with-param>
+                        </xsl:call-template>
+                        <xsl:apply-templates mode="dictionary"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- there are dictionary children -->
+                        <xsl:choose>
+                            <xsl:when test="cml:dictionary[@convention]">
+                                <!-- which have convention specified -->
+                                <xsl:choose>
+                                    <xsl:when
+                                            test="cml:dictionary[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+                                        <!-- the dictionary elements are in the dictionary convention -->
+                                        <xsl:apply-templates mode="dictionary"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:call-template name="error">
+                                            <xsl:with-param name="location">
+                                                <xsl:apply-templates select="." mode="get-full-path"/>
+                                            </xsl:with-param>
+                                            <xsl:with-param name="text">there must be at least one "dictionary" element in
+                                                the dictionary convention
+                                            </xsl:with-param>
+                                        </xsl:call-template>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <!-- without any convention specified therefore they must be in the dictionary convention -->
+                                <xsl:apply-templates mode="dictionary"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="self::cml:dictionary">
+                <xsl:call-template name="dictionary-template"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="@convention" mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">the only valid cml elements which specify the dictionary convention are "cml" and "dictionary"</xsl:with-param>
+                    <xsl:with-param name="text">the only valid cml elements which specify the dictionary convention are
+                        "cml" and "dictionary"
+                    </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -58,25 +114,15 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()">
-        <xsl:apply-templates />
-    </xsl:template>
-
-    <xsl:template match="*|@*|text()" mode="dictionary">
-        <xsl:apply-templates mode="dictionary"/>
-    </xsl:template>
-
-    <xsl:template match="cml:dictionary" mode="dictionary">
+    <xsl:template match="cml:dictionary" mode="dictionary" name="dictionary-template">
         <xsl:if test="..">
-            <xsl:if test="parent::cml:*">
-                <xsl:if test="not(parent::cml:cml)">
-                    <xsl:call-template name="error">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="." mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the dictionary element can be the root node or a child of a "cml" element only</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
+            <xsl:if test="parent::cml:* and not(parent::cml:cml)">
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">the dictionary element can be the root node or a child of a "cml" element only</xsl:with-param>
+                </xsl:call-template>
             </xsl:if>
         </xsl:if>
 

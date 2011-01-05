@@ -9,4 +9,5 @@
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-04-05</dc:date>
     <foreign-element/>
+    <cml:molecule id="m1" />
 </cml:cml>

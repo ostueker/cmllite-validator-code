@@ -32,7 +32,7 @@ public class TestUtils {
     }
 
     @Test
-    public void DummyTest() {
+    public void dummyTest() {
         assertTrue("dummy test so class builds", true);
     }
 
@@ -44,6 +44,8 @@ public class TestUtils {
                 input = IOUtils.toString(stream);
             } catch (IOException e) {
                 throw new RuntimeException("should be able to convert from stream to string: "+location);
+            } finally {
+                IOUtils.closeQuietly(stream);
             }
         } else {
             throw new RuntimeException("couldn't read from: "+location);
@@ -61,6 +63,8 @@ public class TestUtils {
                 throw new RuntimeException("should be able to construct document from: "+location,e);
             } catch (IOException e) {
                 throw new RuntimeException("should be able to construct document from: "+location,e);
+            } finally {
+                IOUtils.closeQuietly(stream);
             }
         } else {
             throw new RuntimeException("couldn't read from: "+location);
@@ -83,7 +87,9 @@ public class TestUtils {
                 throw new RuntimeException("should be able to construct document from: "+file.getAbsolutePath(), e);
             } catch (IOException e) {
                 throw new RuntimeException("should be able to construct document from: "+file.getAbsolutePath(),e);
-            }
+            } finally {
+            IOUtils.closeQuietly(stream);
+        }
 
         } else {
             throw new RuntimeException("couldn't read from: "+file.getAbsolutePath());

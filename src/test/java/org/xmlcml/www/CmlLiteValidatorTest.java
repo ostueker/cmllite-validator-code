@@ -54,9 +54,9 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreWellFormedXml() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = xmlWellFormednessValidator.validate(IOUtils.toString(new FileInputStream(file)));
@@ -71,9 +71,9 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreSchemaCompliant() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = schemaValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -92,9 +92,9 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testMolecularAreConventionValid() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             System.out.println("file "+file.getName());
             ValidationReport report = null;
             try {
@@ -108,16 +108,15 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println(report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be convention valid", ValidationResult.VALID, report.getValidationResult());
         }
     }
 
     @Test
     public void testMolecularQNamesAreURLs() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/valid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = qNameValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -169,9 +168,9 @@ public class CmlLiteValidatorTest {
 
      @Test
     public void testWarningMolecularAreWellFormedXml() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = xmlWellFormednessValidator.validate(new IOUtils().toString(new FileInputStream(file)));
@@ -186,9 +185,9 @@ public class CmlLiteValidatorTest {
 
      @Test
     public void testWarningMolecularAreSchemaCompliant() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = schemaValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -201,16 +200,16 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println("file "+file.getName()+"\n"+report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be schema  compliant "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
         }
     }
 
       @Test
     public void testWarningMolecularAreConventionWarning() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/warning"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
+            System.out.println("file "+file.getName());
             ValidationReport report = null;
             try {
                 report = conventionValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -223,7 +222,6 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println("file "+file.getName()+"\n"+report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be convention warnings "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
         }
     }
@@ -247,9 +245,9 @@ public class CmlLiteValidatorTest {
 
         @Test
     public void testInvalidMolecularAreWellFormedXml() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = xmlWellFormednessValidator.validate(IOUtils.toString(new FileInputStream(file)));
@@ -264,9 +262,9 @@ public class CmlLiteValidatorTest {
 
     @Test
     public void testInvalidMolecularAreSchemaCompliant() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
             ValidationReport report = null;
             try {
                 report = schemaValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -279,16 +277,16 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println("file " + file.getName() + "\n" + report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be schema valid", ValidationResult.VALID, report.getValidationResult());
         }
     }
 
      @Test
     public void testInvalidMolecularAreConventionInvalid() {
-        Collection<File> validMolecular = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", validMolecular.isEmpty());
-        for (File file : validMolecular) {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/molecular/invalid"), new String[]{"cml"}, false);
+        assertFalse("there should be test documents", files.isEmpty());
+        for (File file : files) {
+            System.out.println("file "+file.getName());
             ValidationReport report = null;
             try {
                 report = conventionValidator.validate(new Builder().build(new FileInputStream(file)));
@@ -301,8 +299,7 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
-            System.out.println("file "+file.getName());
-            CmlLiteValidator.print(report.getReport(), System.out);
+            System.out.println("file "+file.getName()+" \n\n\n "+report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be convention invalid", ValidationResult.INVALID, report.getValidationResult());
         }
     }
