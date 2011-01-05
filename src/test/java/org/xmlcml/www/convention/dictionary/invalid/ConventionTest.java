@@ -36,24 +36,41 @@ public class ConventionTest {
 
     @Test
     public void testNoDictionaryElementPresent1() {
-        String location = root+"no-dictionary-element-present-1.cml";
+        String location = root + "no-dictionary-element-present-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
+
     @Test
     public void testNoDictionaryElementPresent2() {
-        String location = root+"no-dictionary-element-present-2.cml";
+        String location = root + "no-dictionary-element-present-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNoDictionaryElementPresent3() {
+        String location = root + "no-dictionary-element-present-3.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNoDictionaryElementPresent4() {
+        String location = root + "no-dictionary-element-present-4.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
     public void testNoEntryInDictionary() {
-        String location = root+"no-entry-in-dictionary.cml";
+        String location = root + "no-entry-in-dictionary.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 }

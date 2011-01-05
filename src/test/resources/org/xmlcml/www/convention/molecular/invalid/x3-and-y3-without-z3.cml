@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml:cml xmlns:cml="http://www.xml-cml.org/schema"
          xmlns:dc="http://purl.org/dc/elements/1.1/"
-         convention="conventions:molecular">
+         xmlns:conventions="http://www.xml-cml.org/convention/" convention="conventions:molecular">
     <dc:title>test file for http://www.xml-cml.org/convention/molecular convention</dc:title>
-    <dc:description>conventions must have the prefix bound to a namespace</dc:description>
+    <dc:description>if an atom has x3 and y3 it must also have z3</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-01-21</dc:date>
+    <cml:molecule id="m1">
+         <cml:atomArray>
+             <cml:atom id="a1" elementType="H" x3="0.0" y3="1.0" />
+        </cml:atomArray>
+    </cml:molecule>
 </cml:cml>

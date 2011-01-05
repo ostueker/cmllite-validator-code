@@ -49,8 +49,12 @@
                     <xsl:otherwise>
                         <!-- there are molecule children -->
                         <xsl:choose>
-                            <xsl:when test="cml:molecule[@convention]">
-                                <!-- which have convention specified -->
+                            <xsl:when test="cml:molecule[not(@convention)]">
+                                <!-- without any convention specified therefore they must be in the molecular convention -->
+                                <xsl:apply-templates mode="molecular"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <!-- there are molecule children which have convention specified -->
                                 <xsl:choose>
                                     <xsl:when
                                             test="cml:molecule[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
@@ -68,17 +72,15 @@
                                         </xsl:call-template>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <!-- without any convention specified therefore they must be in the molecular convention -->
-                                <xsl:apply-templates mode="molecular"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="self::cml:molecule">
-                <xsl:call-template name="molecule-template"/>
+                <xsl:call-template name="molecule-template">
+                    <xsl:with-param name="is-first-element-in-molecular" select="true()"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
@@ -122,29 +124,33 @@
     </xsl:template>
 
     <xsl:template match="cml:molecule" mode="molecular" name="molecule-template">
-        <xsl:if test="..">
-            <xsl:if test="parent::cml:*">
-                <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
+        <xsl:param name="is-first-element-in-molecular" select="false()"/>
+        <xsl:if test="not($is-first-element-in-molecular)">
+            <xsl:if test="..">
+                <xsl:if test="parent::cml:*">
+                    <xsl:if test="not(parent::cml:cml or parent::cml:molecule)">
+                        <xsl:call-template name="error">
+                            <xsl:with-param name="location">
+                                <xsl:apply-templates select="." mode="get-full-path"/>
+                            </xsl:with-param>
+                            <xsl:with-param name="text">the only valid cml elements which can be parents of molecule
+                                are:
+                                molecule and cml
+                            </xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+
+            <xsl:if test="parent::cml:molecule">
+                <xsl:if test="not(@count)">
                     <xsl:call-template name="error">
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="." mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the only valid cml elements which can be parents of molecule are:
-                            molecule and cml
-                        </xsl:with-param>
+                        <xsl:with-param name="text">child molecules must have a count specified</xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
-            </xsl:if>
-        </xsl:if>
-
-        <xsl:if test="parent::cml:molecule">
-            <xsl:if test="not(@count)">
-                <xsl:call-template name="error">
-                    <xsl:with-param name="location">
-                        <xsl:apply-templates select="." mode="get-full-path"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="text">child molecules must have a count specified</xsl:with-param>
-                </xsl:call-template>
             </xsl:if>
         </xsl:if>
 

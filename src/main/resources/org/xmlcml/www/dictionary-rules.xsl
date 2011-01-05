@@ -38,10 +38,13 @@
                                 <xsl:apply-templates select="." mode="get-full-path"/>
                             </xsl:with-param>
                             <xsl:with-param name="text">there must be at least one "dictionary" element as a child of the
-                                "cml" element declaring the molecular convention
+                                "cml" element declaring the dictionary convention
                             </xsl:with-param>
                         </xsl:call-template>
                         <xsl:apply-templates mode="dictionary"/>
+                    </xsl:when>
+                    <xsl:when test="cml:dictionary[not(@convention)]">
+                        <xsl:apply-templates mode="dictionary" />
                     </xsl:when>
                     <xsl:otherwise>
                         <!-- there are dictionary children -->
@@ -50,8 +53,9 @@
                                 <!-- which have convention specified -->
                                 <xsl:choose>
                                     <xsl:when
-                                            test="cml:dictionary[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
-                                        <!-- the dictionary elements are in the dictionary convention -->
+                                            test="count(cml:dictionary[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]) > 0">
+                                        <!-- there are dictionary elements in the dictionary convention -->
+                                        <count><xsl:value-of select="count(cml:dictionary[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName])" /></count>
                                         <xsl:apply-templates mode="dictionary"/>
                                     </xsl:when>
                                     <xsl:otherwise>

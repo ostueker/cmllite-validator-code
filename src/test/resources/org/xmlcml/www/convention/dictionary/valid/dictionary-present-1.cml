@@ -9,7 +9,7 @@
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
-    <dictionary title="fundamental chemistry concepts" namespace="http://www.xml-cml.org/dictionary/cml">
+    <dictionary title="test dictionary" namespace="http://www.xml-cml.org/dictionary/cml">
         <entry id="e1" term="first entry" title="first entry" dataType="xsd:string">
             <description>
                 <html:p>

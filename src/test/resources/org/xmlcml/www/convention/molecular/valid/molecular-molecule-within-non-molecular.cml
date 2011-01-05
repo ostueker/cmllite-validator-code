@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<foo   xmlns="http://www.example.org"
+<cml:cml   xmlns="http://www.example.org"
         xmlns:cml="http://www.xml-cml.org/schema"
         xmlns:cmlDict="http://www.xml-cml.org/dictionary/cml/"
         xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -9,14 +9,13 @@
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2009-01-21</dc:date>
-    <cml:molecule id="non_cmlllite">
-        <cml:cml id="c1" convention="conventions:molecular">
-            <cml:molecule id="m1">
+    <cml:molecule id="non_molecular">
+            <cml:molecule id="m1" convention="conventions:molecular">
                 <cml:atomArray>
                     <cml:atom id="a1" elementType="H"/>
                 </cml:atomArray>
             </cml:molecule>
-        </cml:cml>
+        <cml:atomArray/>
     </cml:molecule>
-</foo>
+</cml:cml>
 
