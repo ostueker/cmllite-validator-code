@@ -14,7 +14,7 @@
     <dc:date>2010-12-23</dc:date>
     <foreign-element>
         <cml:dictionary convention="cmlDictionary:dummy" title="a dummy dictionary"
-                        namespace="http://www.xml-cml.org/dictionary/cml">
+                        namespace="http://www.xml-cml.org/dictionary/cml/">
             <cml:entry id="e1" term="first entry" title="first entry" dataType="xsd:string">
                 <cml:description>
                     <html:p>

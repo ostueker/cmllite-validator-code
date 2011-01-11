@@ -5,9 +5,9 @@
      xmlns:conventions="http://www.xml-cml.org/convention/"
         convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>dictionary must contain at least one element</dc:description>
+    <dc:description>the namespace on the dictionary can end in a slash</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
-    <dictionary title="fundamental chemistry concepts" namespace="http://www.xml-cml.org/dictionary/cml/" />
+    <dictionary title="test dictionary" namespace="http://www.xml-cml.org/dictionary/cml/" />
 </cml>

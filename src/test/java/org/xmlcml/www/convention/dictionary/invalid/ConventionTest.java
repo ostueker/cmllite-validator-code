@@ -10,6 +10,7 @@ import org.xmlcml.www.ValidationReport;
 import org.xmlcml.www.ValidationResult;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,6 +34,21 @@ public class ConventionTest {
     public void tearDown() throws Exception {
         report = null;
     }
+
+    @Test
+    public void testInfinity() {
+
+        double d1 = Double.NaN;
+        double d4 = Double.parseDouble("NaN");
+
+        assertTrue(Double.isInfinite(Double.POSITIVE_INFINITY));
+        assertTrue(Double.isInfinite(Double.NEGATIVE_INFINITY));
+        assertEquals(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 1E-10);
+        assertEquals(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, 1E-10);
+        assertEquals(Double.NaN, Double.NaN, 1E-10);
+        assertEquals(d1, d4, 1E-10);
+    }
+
 
     @Test
     public void testNoDictionaryElementPresent1() {

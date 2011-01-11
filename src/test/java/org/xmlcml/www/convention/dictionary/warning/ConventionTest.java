@@ -38,7 +38,6 @@ public class ConventionTest {
         String location = root+"no-dictionary-convention-present.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        System.out.println("report: "+report.getReport().toXML());
         assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 }

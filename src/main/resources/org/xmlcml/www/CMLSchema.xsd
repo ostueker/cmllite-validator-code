@@ -2190,7 +2190,7 @@
                     </h:div>
                 </xsd:documentation>
             </xsd:annotation>
-            <xsd:pattern value="http://[A-Za-z][A-Za-z0-9_\.\-]*(/[A-Za-z0-9_\.\-]+)+"/>
+            <xsd:pattern value="http://[A-Za-z][A-Za-z0-9_\.\-]*(/[A-Za-z0-9_\.\-]+)+/?"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="nonHydrogenCountType" id="st.nonHydrogenCountType">
