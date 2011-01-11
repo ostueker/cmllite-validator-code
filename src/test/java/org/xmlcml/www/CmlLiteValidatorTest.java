@@ -54,6 +54,7 @@ public class CmlLiteValidatorTest {
             } catch (ParsingException e) {
                 fail("should be able to read from "+file.getAbsolutePath());
             }
+            System.out.println(file.getName()+"\n"+report.getReport().toXML());
             assertEquals(file.getAbsolutePath() + " should be schema valid", ValidationResult.VALID, report.getValidationResult());
         }
     }

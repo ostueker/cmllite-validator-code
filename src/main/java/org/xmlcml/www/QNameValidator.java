@@ -29,6 +29,7 @@ public class QNameValidator {
 
     static Logger log = Logger.getLogger(QNameValidator.class);
 
+    private URI dummy = createUri("http://www.xml-cml.org/dictionary/", "dummy", null);
     /**
      * Create a QNameValidator which will not log
      */
@@ -67,6 +68,7 @@ public class QNameValidator {
 
     private Set<URI> findUnreachableURIs(Set<URI> uris) {
         Set<URI> reachableURIs = new HashSet<URI>(uris.size());
+        reachableURIs.add(dummy);
         Set<URI> unreachableURIs = new HashSet<URI>(uris.size());
         for (URI uri : uris) {
             if (reachableURIs.contains(uri)) {
