@@ -134,9 +134,14 @@ public class ConventionValidator {
             String[] value = attribute.getValue().split(":");
             String ns = element.getNamespaceURI(value[0]);
             if (null != ns) {
+
+
                 URI convention;
                 try {
-                    convention = new URI(ns + value[1]);
+                    if (!ns.endsWith("/")) {
+                        ns = ns + "/";
+                    }
+                    convention = new URI(ns+value[1]);
                 } catch (URISyntaxException e) {
                     report.addError("Not a valid convention value, it should be a URI: '" + ns + value[1] + "'");
                     return null;
