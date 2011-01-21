@@ -659,7 +659,7 @@ if it doesn't have an id it is a warning-->
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">names must have dataType specified</xsl:with-param>
+                <xsl:with-param name="text">names must have dictRef specified</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
         <xsl:apply-templates mode="molecular"/>
