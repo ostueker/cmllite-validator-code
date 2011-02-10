@@ -9,8 +9,13 @@
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
-    <dictionary title="fundamental chemistry concepts" namespace="http://www.xml-cml.org/dictionary/cml">
+    <dictionary title="fundamental chemistry concepts" namespace="http://www.xml-cml.org/dictionary/cml/">
         <entry id="e1" term="first entry" title="first entry">
+            <definition>
+                <html:p>
+                    A definition
+                </html:p>
+            </definition>
             <description>
                 <html:p>
                     the first entry in the dictionary
@@ -18,6 +23,11 @@
             </description>
         </entry>
         <entry id="e2" term="second entry" title="second entry">
+            <definition>
+                <html:p>
+                    A definition
+                </html:p>
+            </definition>
             <description>
                 <html:p>
                     the second entry in the dictionary
@@ -25,6 +35,11 @@
             </description>
         </entry>
         <entry id="last" term="last entry" title="last entry">
+            <definition>
+                <html:p>
+                    A definition
+                </html:p>
+            </definition>
             <description>
                 <html:p>
                     the last entry in the dictionary

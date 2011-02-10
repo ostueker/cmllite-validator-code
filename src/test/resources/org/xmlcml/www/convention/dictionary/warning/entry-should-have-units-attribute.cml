@@ -6,7 +6,8 @@
      xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
      convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>a dictionary must have at least one entry</dc:description>
+    <dc:description>When applicable to the concept defined, an entry SHOULD have a units
+                    attribute, the value of which is a QName referencing the default units</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
@@ -16,5 +17,17 @@
                 A dummy dictionary for testing
             </xhtml:p>
         </description>
+        <entry id="e1" term="first entry" title="first entry" dataType="xsd:string" unitType="dictionaries:dummy">
+            <definition>
+                <xhtml:p>
+                    Fist definition
+                </xhtml:p>
+            </definition>
+            <description>
+                <xhtml:p>
+                    the first entry in the dictionary
+                </xhtml:p>
+            </description>
+        </entry>
     </dictionary>
 </cml>

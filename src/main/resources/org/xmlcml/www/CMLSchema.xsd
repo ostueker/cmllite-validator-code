@@ -2190,7 +2190,7 @@
                     </h:div>
                 </xsd:documentation>
             </xsd:annotation>
-            <xsd:pattern value="http://[A-Za-z][A-Za-z0-9_\.\-]*(/[A-Za-z0-9_\.\-]+)+/?"/>
+            <xsd:pattern value="http://[A-Za-z][A-Za-z0-9_\.\-]*(/[A-Za-z0-9_\.\-]+)+[/#]?"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="nonHydrogenCountType" id="st.nonHydrogenCountType">
@@ -5691,7 +5691,7 @@
         </xsd:attribute>
     </xsd:attributeGroup>
     <xsd:attributeGroup id="attGp.term" name="term">
-        <xsd:attribute id="att.term" name="term" type="xsd:string" use="required">
+        <xsd:attribute id="att.term" name="term" type="xsd:string">
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">A term in a dictionary.</h:div>

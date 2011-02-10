@@ -33,11 +33,86 @@ public class ConventionTest {
         report = null;
     }
 
+
     @Test
-    public void testNoDictionaryConventionPresent() {
-        String location = root+"no-dictionary-convention-present.cml";
+    public void testEntryShouldHaveDataTypeAttribute() {
+        String location = root + "entry-should-have-dataType-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
+
+    @Test
+    public void testEntryShouldHaveUnitsAttribute() {
+        String location = root + "entry-should-have-units-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryShouldHaveUnitTypeAttribute() {
+        String location = root + "entry-should-have-unitType-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testMissingDictionaryConvention() {
+        String location = root + "missing-dictionary-convention.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testMissingDictionaryDescription() {
+        String location = root + "missing-dictionary-description.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testMissingDictionaryPrefixAttribute() {
+        String location = root + "missing-dictionaryPrefix-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testMissingTitleAttribute() {
+        String location = root + "missing-title-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testNamespaceShouldEndInSlashOrHash() {
+        String location = root + "namespace-should-end-in-slash-or-hash.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testTermAttributeShouldOnlyContainAscii1() {
+        String location = root + "term-attribute-should-only-contain-ascii-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testTermAttributeShouldOnlyContainAscii2() {
+        String location = root + "term-attribute-should-only-contain-ascii-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+
 }

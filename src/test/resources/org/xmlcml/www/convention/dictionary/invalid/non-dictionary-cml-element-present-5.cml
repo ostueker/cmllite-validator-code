@@ -6,7 +6,7 @@
      xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
      convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>a valid dictionary</dc:description>
+    <dc:description>there should only be "cml", "dictionary", "entry", "description" and "definition" elements form the cml namespace present in a dictionary</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
@@ -18,6 +18,7 @@
         </description>
         <entry id="e1" term="first entry" title="first entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
             <definition>
+                <molecule id="m1"/>
                 <xhtml:p>
                     Fist definition
                 </xhtml:p>

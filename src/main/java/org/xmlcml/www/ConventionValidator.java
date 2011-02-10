@@ -102,10 +102,12 @@ public class ConventionValidator {
                 nodes = xslt.transform(start.getDocument());
             } catch (XSLException e) {
                 log.info(e);
+                e.printStackTrace();
                 report.addWarning(e.getMessage());
             }
             if (nodes != null) {
                 Document result = XSLTransform.toDocument(nodes);
+
 //                CmlLiteValidator.print(result, System.out);
                 Nodes failures = result.query("//*[local-name()='"+ValidationReport.errorElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
                 for (int index = 0, n = failures.size(); index < n; index++) {

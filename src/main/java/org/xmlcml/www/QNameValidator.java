@@ -36,6 +36,9 @@ public class QNameValidator {
     public QNameValidator() {
     }
 
+    // we currently check dictRef and convention attributes but we need to add
+    // namespace attribute, units, unitType
+
     public ValidationReport validate(Document document) {
         ValidationReport report = new ValidationReport("qname-reachable-test");
         report.setValidationResult(ValidationResult.VALID);

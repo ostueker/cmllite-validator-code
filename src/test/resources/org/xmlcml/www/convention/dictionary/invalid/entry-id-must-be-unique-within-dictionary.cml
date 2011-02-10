@@ -6,7 +6,7 @@
      xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
      convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>a valid dictionary</dc:description>
+    <dc:description>the id of an entry must be unique within the dictionary</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
@@ -28,7 +28,7 @@
                 </xhtml:p>
             </description>
         </entry>
-        <entry id="e2" term="second entry" title="second entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
+        <entry id="e1" term="second entry" title="second entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
             <definition>
                 <xhtml:p>
                     Second definition
@@ -37,18 +37,6 @@
             <description>
                 <xhtml:p>
                     the second entry in the dictionary
-                </xhtml:p>
-            </description>
-        </entry>
-        <entry id="last" term="last entry" title="last entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
-            <definition>
-                <xhtml:p>
-                    Final definition
-                </xhtml:p>
-            </definition>
-            <description>
-                <xhtml:p>
-                    the last entry in the dictionary
                 </xhtml:p>
             </description>
         </entry>

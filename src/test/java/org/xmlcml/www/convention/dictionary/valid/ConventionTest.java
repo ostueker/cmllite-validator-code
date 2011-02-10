@@ -4,10 +4,7 @@ import nu.xom.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,6 +32,15 @@ public class ConventionTest {
     }
 
     @Test
+    public void testExampleDictionary() {
+        String location = root+"example-dictionary.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
+        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+    }
+
+    @Test
     public void testDictionaryPresent1() {
         String location = root+"dictionary-present-1.cml";
         Document input = testUtils.getFileAsDocument(location);
@@ -42,11 +48,4 @@ public class ConventionTest {
         assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
     }
 
-    @Test
-    public void testDictionaryPresent2() {
-        String location = root+"dictionary-present-2.cml";
-        Document input = testUtils.getFileAsDocument(location);
-        report = conventionValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
-    }
 }

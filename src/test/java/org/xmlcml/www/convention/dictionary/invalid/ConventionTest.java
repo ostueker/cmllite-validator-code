@@ -4,13 +4,9 @@ import nu.xom.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,20 +31,130 @@ public class ConventionTest {
         report = null;
     }
 
+
     @Test
-    public void testInfinity() {
-
-        double d1 = Double.NaN;
-        double d4 = Double.parseDouble("NaN");
-
-        assertTrue(Double.isInfinite(Double.POSITIVE_INFINITY));
-        assertTrue(Double.isInfinite(Double.NEGATIVE_INFINITY));
-        assertEquals(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 1E-10);
-        assertEquals(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, 1E-10);
-        assertEquals(Double.NaN, Double.NaN, 1E-10);
-        assertEquals(d1, d4, 1E-10);
+    public void testDefinitionMustBeChildOfEntry() {
+        String location = root + "definition-must-be-child-of-entry.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
+
+    @Test
+    public void testDefinitionMustHaveXhtmlChild() {
+        String location = root + "definition-must-have-xhtml-child.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testDescriptionMustBeChildOfDictionaryOrEntry1() {
+        String location = root + "description-must-be-child-of-dictionary-or-entry-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testDescriptionMustBeChildOfDictionaryOrEntry2() {
+        String location = root + "description-must-be-child-of-dictionary-or-entry-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testDescriptionMustHaveXhtmlChild() {
+        String location = root + "description-must-have-xhtml-child.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+
+    @Test
+    public void testEntryCannotHaveMultipleDescriptions() {
+        String location = root + "entry-cannot-have-multiple-descriptions.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+
+    @Test
+    public void testEntryIdMustBeUniqueWithinDictionary() {
+        String location = root + "entry-id-must-be-unique-within-dictionary.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryMustBeChildOfDictionary() {
+        String location = root + "entry-must-be-child-of-dictionary.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryMustHaveIdAttribute() {
+        String location = root + "entry-must-have-id-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryMustSingleDefinitionChild1() {
+        String location = root + "entry-must-have-single-definition-child-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryMustSingleDefinitionChild2() {
+        String location = root + "entry-must-have-single-definition-child-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryMustHaveTermAttribute() {
+        String location = root + "entry-must-have-term-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testMissingNamespaceAttribute() {
+        String location = root + "missing-namespace-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testMultipleDesciptionsOfDictionaryPresent() {
+        String location = root + "multiple-descriptions-of-dictionary-present.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+
+    @Test
+    public void testMultipleDictionaryElementsPresent() {
+        String location = root + "multiple-dictionary-elements-present.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
 
     @Test
     public void testNoDictionaryElementPresent1() {
@@ -63,7 +169,7 @@ public class ConventionTest {
         String location = root + "no-dictionary-element-present-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -71,7 +177,7 @@ public class ConventionTest {
         String location = root + "no-dictionary-element-present-3.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -79,7 +185,7 @@ public class ConventionTest {
         String location = root + "no-dictionary-element-present-4.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -89,4 +195,87 @@ public class ConventionTest {
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
+
+
+    @Test
+    public void testNonDictionaryCmlElementPresent1() {
+        String location = root + "non-dictionary-cml-element-present-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent2() {
+        String location = root + "non-dictionary-cml-element-present-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent3() {
+        String location = root + "non-dictionary-cml-element-present-3.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent4() {
+        String location = root + "non-dictionary-cml-element-present-4.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent5() {
+        String location = root + "non-dictionary-cml-element-present-5.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent6() {
+        String location = root + "non-dictionary-cml-element-present-6.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent7() {
+        String location = root + "non-dictionary-cml-element-present-7.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testNonDictionaryCmlElementPresent8() {
+        String location = root + "non-dictionary-cml-element-present-8.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+   @Test
+    public void testOnlyXhtmlElementsCanBeChildrenOfDefinition() {
+        String location = root + "only-xhtml-elements-can-be-children-of-definition.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+     public void testOnlyXhtmlElementsCanBeChildrenOfDescription() {
+         String location = root + "only-xhtml-elements-can-be-children-of-description.cml";
+         Document input = testUtils.getFileAsDocument(location);
+         report = conventionValidator.validate(input);
+         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+     }
+
 }
+

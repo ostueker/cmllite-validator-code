@@ -11,11 +11,6 @@
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
     <dictionary title="dummy test dictionary" namespace="http://www.xml-cml.org/dictionary/dummy/" dictionaryPrefix="dummy">
-        <description>
-            <xhtml:p>
-                A dummy dictionary for testing
-            </xhtml:p>
-        </description>
         <entry id="e1" term="first entry" title="first entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
             <definition>
                 <xhtml:p>

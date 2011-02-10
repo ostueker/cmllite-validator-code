@@ -3,10 +3,9 @@
      xmlns:xhtml="http://www.w3.org/1999/xhtml"
      xmlns:dc="http://purl.org/dc/elements/1.1/"
      xmlns:conventions="http://www.xml-cml.org/convention/"
-     xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
      convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>a valid dictionary</dc:description>
+    <dc:description>there is only allowed to be a single dictionary element as a child of the cml element declaring the dictionary convention</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>
@@ -49,6 +48,49 @@
             <description>
                 <xhtml:p>
                     the last entry in the dictionary
+                </xhtml:p>
+            </description>
+        </entry>
+    </dictionary>
+    <dictionary title="dummy test dictionary" namespace="http://www.xml-cml.org/dictionary/dummy2/" dictionaryPrefix="dummy2">
+        <description>
+            <xhtml:p>
+                A second dummy dictionary for testing
+            </xhtml:p>
+        </description>
+        <entry id="e1" term="first entry" title="first entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
+            <definition>
+                <xhtml:p>
+                    Fist definition
+                </xhtml:p>
+            </definition>
+            <description>
+                <xhtml:p>
+                    the first entry in the second dictionary
+                </xhtml:p>
+            </description>
+        </entry>
+        <entry id="e2" term="second entry" title="second entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
+            <definition>
+                <xhtml:p>
+                    Second definition
+                </xhtml:p>
+            </definition>
+            <description>
+                <xhtml:p>
+                    the second entry in the second dictionary
+                </xhtml:p>
+            </description>
+        </entry>
+        <entry id="last" term="last entry" title="last entry" dataType="xsd:string" unitType="dictionaries:dummy" units="dictionaries:dummy">
+            <definition>
+                <xhtml:p>
+                    Final definition
+                </xhtml:p>
+            </definition>
+            <description>
+                <xhtml:p>
+                    the last entry in the second dictionary
                 </xhtml:p>
             </description>
         </entry>

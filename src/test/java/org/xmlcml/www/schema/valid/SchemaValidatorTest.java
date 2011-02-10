@@ -74,6 +74,14 @@ public class SchemaValidatorTest {
         assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
     }
 
+    @Test
+    public void testMixedCmlAndNonCml5() {
+        String location = root+"mixed-cml-and-non-cml-5.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = schemaValidator.validate(input);
+        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+    }
+
 
        @Test
     public void testNamespaceCanEndInSlash() {
@@ -82,6 +90,13 @@ public class SchemaValidatorTest {
         report = schemaValidator.validate(input);
         assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
     }
+    @Test
+ public void testNamespaceCanEndInHash() {
+     String location = root+"namespace-can-end-in-hash.cml";
+     Document input = testUtils.getFileAsDocument(location);
+     report = schemaValidator.validate(input);
+     assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+ }
 
     @Test
     public void testNamespaceDoesNotHaveToEndInSlash() {

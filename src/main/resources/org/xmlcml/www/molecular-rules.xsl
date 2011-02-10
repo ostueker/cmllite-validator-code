@@ -111,7 +111,7 @@
             <xsl:otherwise>
                 <xsl:call-template name="warning">
                     <xsl:with-param name="location">
-                        <xsl:apply-templates select="@convention" mode="get-full-path"/>
+                        <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
                     <xsl:with-param name="text">the
                         <xsl:value-of select="$conventionName"/> convention does not include the element "<xsl:value-of
