@@ -91,6 +91,14 @@ public class ConventionTest {
     }
 
     @Test
+    public void testNamespaceShouldBeResolvableUrl() {
+        String location = root + "namespace-should-be-resolvable-url.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
     public void testNamespaceShouldEndInSlashOrHash() {
         String location = root + "namespace-should-end-in-slash-or-hash.cml";
         Document input = testUtils.getFileAsDocument(location);

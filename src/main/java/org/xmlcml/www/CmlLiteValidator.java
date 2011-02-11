@@ -21,7 +21,7 @@ public class CmlLiteValidator {
     private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
-    private QNameValidator qNameValidator = new QNameValidator();
+    private URIValidator uriValidator = new URIValidator();
 
      /**
      * Validate an XML from given input stream.
@@ -58,20 +58,21 @@ public class CmlLiteValidator {
             default: {
                 schemaReport.addValid("document conforms to the schema");
                 ValidationReport conventionsReport = conventionValidator.validate(document);
+                return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport,schemaReport,conventionsReport);
 
-                ValidationReport qnameReachableReport = qNameValidator.validate(document);
-                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
-                    qnameReachableReport.addValid("all dictRefs are resolvable");
-                }
-                switch (conventionsReport.getValidationResult()) {
-                    case VALID: {
-                        conventionsReport.addValid("document conforms to the convention(s) specified");
-                        return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
-                    }
-                    default : {
-                        return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
-                    }
-                }
+//                ValidationReport qnameReachableReport = uriValidator.validate(document);
+//                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
+//                    qnameReachableReport.addValid("all dictRefs are resolvable");
+//                }
+//                switch (conventionsReport.getValidationResult()) {
+//                    case VALID: {
+//                        conventionsReport.addValid("document conforms to the convention(s) specified");
+//                        return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+//                    }
+//                    default : {
+//                        return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+//                    }
+//                }
             }
         }
     }

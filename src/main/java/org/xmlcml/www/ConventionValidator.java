@@ -28,6 +28,7 @@ public class ConventionValidator {
     private static Map<URI, XSLTransform> knownConventions = null;
     private final static String conventionNS = "http://www.xml-cml.org/convention/";
     private static URI dummy = null;
+    private URIValidator uriValidator = new URIValidator();
     static {
         registerKnownConventionLocations();
     }
@@ -80,6 +81,9 @@ public class ConventionValidator {
                     report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
                 }
             }
+        }
+        if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
+            uriValidator.validate(doc, report);
         }
         return report;
     }

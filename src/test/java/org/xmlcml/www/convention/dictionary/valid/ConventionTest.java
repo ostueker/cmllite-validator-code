@@ -32,20 +32,11 @@ public class ConventionTest {
     }
 
     @Test
-    public void testExampleDictionary() {
-        String location = root+"example-dictionary.cml";
-        Document input = testUtils.getFileAsDocument(location);
-        report = conventionValidator.validate(input);
-        CmlLiteValidator.print(report.getReport(), System.out);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
-    }
-
-    @Test
     public void testDictionaryPresent1() {
         String location = root+"dictionary-present-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
 
 }
