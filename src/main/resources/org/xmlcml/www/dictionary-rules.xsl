@@ -355,6 +355,25 @@
                 <xsl:with-param name="text">definition must be the child of entry</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
+
+        <xsl:if test="string-length(.) = 0">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">definition MUST contain text</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
+        <xsl:if test="string-length(normalize-space(.)) = 0">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">definition MUST contain non whitespace text</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
         <xsl:if test="not(xhtml:*)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">

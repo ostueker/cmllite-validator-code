@@ -40,6 +40,22 @@ public class ConventionTest {
         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
+    @Test
+    public void testDefinitionMustContainNonWhitespaceText() {
+        String location = root + "definition-must-contain-non-whitespace-text.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testDefinitionMustContainText() {
+        String location = root + "definition-must-contain-text.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
 
     @Test
     public void testDefinitionMustHaveXhtmlChild() {
