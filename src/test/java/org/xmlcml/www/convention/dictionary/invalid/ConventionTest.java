@@ -56,7 +56,6 @@ public class ConventionTest {
         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
 
-
     @Test
     public void testDefinitionMustHaveXhtmlChild() {
         String location = root + "definition-must-have-xhtml-child.cml";
@@ -80,6 +79,23 @@ public class ConventionTest {
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
     }
+
+    @Test
+    public void testDescriptionMustContainNonWhitespaceText() {
+        String location = root + "description-must-contain-non-whitespace-text.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testDescriptionMustContainText() {
+        String location = root + "description-must-contain-text.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+    }
+
 
     @Test
     public void testDescriptionMustHaveXhtmlChild() {
