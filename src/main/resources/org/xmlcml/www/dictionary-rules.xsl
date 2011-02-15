@@ -260,6 +260,15 @@
 
         <xsl:choose>
             <xsl:when test="@term">
+                <xsl:if test="string-length(normalize-space(@term)) = 0">
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="@term" mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">the term attribute MUST NOT be empty and MUST contain non-whitespace characters
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
                 <xsl:if test="not(translate(@term, $ascii-chars, '') = '')">
                     <xsl:call-template name="warning">
                         <xsl:with-param name="location">

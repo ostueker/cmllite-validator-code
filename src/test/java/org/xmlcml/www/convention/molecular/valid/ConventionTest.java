@@ -272,7 +272,7 @@ public class ConventionTest {
             String location = root+"formula-must-have-atomArray-or-concise-or-inline-5.cml";
             Document input = testUtils.getFileAsDocument(location);
             report = conventionValidator.validate(input);
-            assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+            assertEquals(location+" should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
         }
     @Test
         public void testFormulaMustHaveAtomArrayOrConciseOrInline6() {

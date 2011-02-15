@@ -277,5 +277,22 @@ public class ConventionTest {
          assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
      }
 
+    @Test
+     public void testTermCannotContainOnlyWhitespace() {
+         String location = root + "term-cannot-contain-only-whitespace.cml";
+         Document input = testUtils.getFileAsDocument(location);
+         report = conventionValidator.validate(input);
+         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+     }
+
+    @Test
+     public void testTermMustNotBeEmpty() {
+         String location = root + "term-must-not-be-empty.cml";
+         Document input = testUtils.getFileAsDocument(location);
+         report = conventionValidator.validate(input);
+         assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+     }
+
+
 }
 
