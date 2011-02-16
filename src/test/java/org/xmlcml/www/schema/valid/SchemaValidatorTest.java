@@ -39,7 +39,7 @@ public class SchemaValidatorTest {
         String location = root + "foreign-namespaced-attributes-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class SchemaValidatorTest {
         String location = root + "mixed-cml-and-non-cml-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class SchemaValidatorTest {
         String location = root + "mixed-cml-and-non-cml-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class SchemaValidatorTest {
         String location = root + "mixed-cml-and-non-cml-3.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class SchemaValidatorTest {
         String location = root + "mixed-cml-and-non-cml-4.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SchemaValidatorTest {
         String location = root + "mixed-cml-and-non-cml-5.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
 
@@ -88,7 +88,7 @@ public class SchemaValidatorTest {
         String location = root + "namespace-can-end-in-slash.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class SchemaValidatorTest {
         String location = root + "namespace-can-end-in-hash.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -104,6 +104,6 @@ public class SchemaValidatorTest {
         String location = root + "namespace-does-not-have-to-end-in-slash.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 }

@@ -39,7 +39,7 @@ public class SchemaValidatorTest {
         String location = "schema/invalid/invalid-attribute-present-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        Assert.assertEquals(location + " should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class SchemaValidatorTest {
         String location = "schema/invalid/invalid-element-present-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -55,6 +55,6 @@ public class SchemaValidatorTest {
         String location = "schema/invalid/invalid-element-present-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = schemaValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 }

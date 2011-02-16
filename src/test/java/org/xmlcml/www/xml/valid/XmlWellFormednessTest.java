@@ -36,28 +36,28 @@ public class XmlWellFormednessTest {
         String location = "xml/valid/wellformed-xml-1.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
     @Test
     public void testValidXml2() {
         String location = "xml/valid/wellformed-xml-2.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location+" should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
     @Test
     public void testValidXml3() {
         String location = "xml/valid/wellformed-xml-3.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location+" should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
     @Test
     public void testValidXml4() {
         String location = "xml/valid/wellformed-xml-4.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+        assertEquals(location+" should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     //
@@ -68,6 +68,6 @@ public class XmlWellFormednessTest {
 //        String location = "xml/valid/wellformed-xml-5.cml";
 //        String input = testUtils.getFileAsString(location);
 //        report = xmlWellFormednessValidator.validate(input);
-//        assertEquals(location+" should be valid", ValidationResult.VALID, report.getValidationResult());
+//        assertEquals(location+" should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
 //    }
 }

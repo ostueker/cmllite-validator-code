@@ -39,7 +39,7 @@ public class ConventionTest {
         String location = root + "entry-should-have-dataType-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ConventionTest {
         String location = root + "entry-should-have-units-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ConventionTest {
         String location = root + "entry-should-have-unitType-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ConventionTest {
         String location = root + "missing-dictionary-convention.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ConventionTest {
         String location = root + "missing-dictionary-description.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ConventionTest {
         String location = root + "missing-dictionaryPrefix-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ConventionTest {
         String location = root + "missing-title-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ConventionTest {
         String location = root + "namespace-should-be-resolvable-url.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ConventionTest {
         String location = root + "namespace-should-end-in-slash-or-hash.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ConventionTest {
         String location = root + "term-attribute-should-only-contain-ascii-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -119,7 +119,7 @@ public class ConventionTest {
         String location = root + "term-attribute-should-only-contain-ascii-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
 

@@ -38,27 +38,27 @@ public class ConventionTest {
         String location = root+"non-molecular-elements-should-have-different-convention.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location+" should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
     @Test
     public void testBondOrderOtherShouldHaveDictRef() {
         String location = root+"bond-order-other-should-have-dictRef.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location+" should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
     @Test
     public void testBondStereoOtherShouldHaveDictRef() {
         String location = root+"bondStereo-other-should-have-dictRef.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location+" should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
     @Test
     public void testPropertyShouldHaveTitle() {
         String location = root+"property-should-have-title.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location+" should be warning", ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        assertEquals(location+" should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 }

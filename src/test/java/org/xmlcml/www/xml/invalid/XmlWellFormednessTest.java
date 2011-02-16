@@ -36,7 +36,7 @@ public class XmlWellFormednessTest {
         String location = "xml/valid/wellformed-xml-4.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        Assert.assertEquals(location + " should be valid", ValidationResult.VALID, report.getValidationResult());
+        Assert.assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class XmlWellFormednessTest {
         String location = "xml/invalid/non-xml-1.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class XmlWellFormednessTest {
         String location = "xml/invalid/non-xml-2.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class XmlWellFormednessTest {
         String location = "xml/invalid/non-xml-3.cml";
         String input = testUtils.getFileAsString(location);
         report = xmlWellFormednessValidator.validate(input);
-        assertEquals(location+" should be invalid", ValidationResult.INVALID, report.getValidationResult());
+        assertEquals(location+" should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
 }
