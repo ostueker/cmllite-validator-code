@@ -474,6 +474,16 @@
         </report:warning>
     </xsl:template>
 
+    <!-- info report -->
+    <xsl:template name="info">
+        <xsl:param name="location"/>
+        <xsl:param name="text"/>
+        <report:info>
+            <xsl:attribute name="location" select="$location">
+            </xsl:attribute>
+            <xsl:value-of select="$text"/>
+        </report:info>
+    </xsl:template>
 
     <!--MODE: FULL-PATH-->
     <xsl:template match="*" mode="get-full-path">
