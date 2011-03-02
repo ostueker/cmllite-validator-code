@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dictionary xmlns="http://www.xml-cml.org/schema"
+            xmlns:convention="http://www.xml-cml.org/convention/"
+            xmlns:unit="http://www.xml-cml.org/dictionary/unit/"
+            xmlns:unitType="http://www.xml-cml.org/dictionary/unitType/"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            convention="convention:dictionary"
+            title="fundamental chemistry concepts"
+            namespace="http://www.xml-cml.org/dictionary/dummy/"
+            dictionaryPrefix="dummy">
+
+    <entry id="molecmass" term="Molecular Mass"
+           dataType="xsd:double" unitType="unitType:amount" units="unit:amu">
+        <definition>
+            <xhtml:p>
+                The mass of one mole of a substance in unified atomic mass units.
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                The molecular mass (m) of a substance is the mass of one molecule of that substance,
+                in unified atomic mass unit(s) u (equal to 1/12 the mass of one atom of the isotope
+                carbon-12). This is numerically equivalent to the relative molecular mass (Mr) of a
+                molecule, frequently referred to by the term molecular weight, which is the ratio of
+                the mass of that molecule to 1/12 of the mass of carbon-12 and is a dimensionless
+                number. Thus, it is incorrect to express relative molecular mass (molecular weight)
+                in daltons (Da). Unfortunately, the terms molecular weight and molecular mass have
+                been confused on numerous websites, which often state that molecular weight was used
+                in the past as another term for molecular mass.
+            </xhtml:p>
+            <xhtml:p>
+                Molecular mass differs from more common measurements of the mass of chemicals, such
+                as molar mass, by taking into account the isotopic composition of a molecule rather
+                than the average isotopic distribution of many molecules. As a result, molecular mass
+                is a more precise number than molar mass; however it is more accurate to use molar
+                mass on bulk samples. This means that molar mass is appropriate most of the time
+                except when dealing with single molecules.
+            </xhtml:p>
+        </description>
+    </entry>
+
+    <entry id="molarmass" term="Molar Mass"
+           dataType="xsd:double" unitType="unitType:amount" units="unit:amu">
+        <definition>
+            <xhtml:p>
+                The mass per amount of substance.
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                Molar mass, symbol M, is a physical property characteristic of a given substance
+                (chemical element or chemical compound), namely its mass per amount of substance.
+                The base SI unit for mass is the kilogram and that for amount of substance is
+                the mole. Thus, the derived unit for molar mass is kg/mol. However, for both
+                practical and historical reasons, molar masses are almost always quoted in grams
+                per mole (g/mol or g mol−1), especially in chemistry.
+            </xhtml:p>
+            <xhtml:p>
+                Molar mass is closely related to the relative molar mass (Mr) of a compound, the
+                older term formula weight and to the standard atomic masses of its constituent
+                elements. However, it should be distinguished from the molecular mass (also
+                known as molecular weight), which is the mass of one molecule (of any single
+                isotopic composition) and is not directly related to the atomic mass, the mass
+                of one atom (of any single isotope). The dalton, symbol Da, is also sometimes
+                used as a unit of molar mass, especially in biochemistry, with the definition
+                1 Da = 1 g/mol, despite the fact that it is strictly a unit of molecular mass
+                (1 Da = 1.660 538 782(83)×10−27 kg).
+            </xhtml:p>
+        </description>
+    </entry>
+
+</dictionary>

@@ -14,6 +14,7 @@ import nu.xom.Elements;
 public class ValidationReport {
 
     public static final String reportNS = "http://www.xml-cml.org/report/";
+    public static final String infoElementName = "info";
     public static final String warningElementName = "warning";
     public static final String errorElementName = "error";
 
@@ -73,6 +74,18 @@ public class ValidationReport {
         warning.detach();
         element.appendChild(warning);
     }
+
+    public void addInfo(String message) {
+        Element e = new Element(infoElementName, reportNS);
+        e.appendChild(message);
+        element.appendChild(e);
+    }
+
+     public void addInfo(Element info) {
+        info.detach();
+        element.appendChild(info);
+    }
+
 
     public void addValid(String message) {
         Element e = new Element("valid", reportNS);

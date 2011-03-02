@@ -21,7 +21,6 @@ public class CmlLiteValidator {
     private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
-    private URIValidator uriValidator = new URIValidator();
 
      /**
      * Validate an XML from given input stream.

@@ -123,6 +123,11 @@ public class ConventionValidator {
                     Element e = (Element) warnings.get(index);
                     report.addWarning(e);
                 }
+                Nodes infos = result.query("//*[local-name()='"+ValidationReport.infoElementName+"' and namespace-uri()='"+ValidationReport.reportNS+"']");
+                for (int index = 0, n = infos.size(); index < n; index++) {
+                    Element e = (Element) infos.get(index);
+                    report.addInfo(e);
+                }
             }
         } else {
             if (!dummy.equals(convention)) {

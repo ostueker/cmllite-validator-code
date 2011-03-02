@@ -114,12 +114,23 @@
     </xsl:template>
 
     <xsl:template match="cml:*" mode="dictionary">
+        <!--
+        <xsl:call-template name="info">
+            <xsl:with-param name="location">
+                <xsl:apply-templates select="." mode="get-full-path"/>
+            </xsl:with-param>
+            <xsl:with-param name="text">
+                <xsl:value-of select="local-name()"/> is not a part of the
+                http://www.xml-cml.org/convention/dictionary convention
+            </xsl:with-param>
+        </xsl:call-template>
+        -->
         <xsl:call-template name="error">
             <xsl:with-param name="location">
                 <xsl:apply-templates select="." mode="get-full-path"/>
             </xsl:with-param>
             <xsl:with-param name="text">
-                <xsl:value-of select="local-name()"/> is not a valid element in the
+                <xsl:value-of select="local-name()"/>is not a valid element in the
                 http://www.xml-cml.org/convention/dictionary convention
             </xsl:with-param>
         </xsl:call-template>

@@ -39,4 +39,13 @@ public class ConventionTest {
         assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
 
+
+//    @Test
+//    public void testExampleDictionary() {
+//        String location = root+"example-dictionary.cml";
+//        Document input = testUtils.getFileAsDocument(location);
+//        report = conventionValidator.validate(input);
+//        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
+//    }
+
 }
