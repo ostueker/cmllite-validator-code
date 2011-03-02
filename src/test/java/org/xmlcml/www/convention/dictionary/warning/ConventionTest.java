@@ -4,10 +4,7 @@ import nu.xom.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -119,6 +116,15 @@ public class ConventionTest {
         String location = root + "term-attribute-should-only-contain-ascii-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitValueNotFoundInDictionary() {
+        String location = root + "unit-value-not-found-in-dictionary.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
         assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 

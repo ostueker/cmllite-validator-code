@@ -91,12 +91,12 @@ public class URIValidator {
     public URIValidator() {
         HttpParams httpParameters = new BasicHttpParams();
         // Set the timeout in milliseconds until a connection is established.
-        int timeoutConnection = 500;
+        int timeoutConnection = 750;
         HttpConnectionParams.setConnectionTimeout(httpParameters,
                 timeoutConnection);
         // Set the default socket timeout (SO_TIMEOUT)
         // in milliseconds which is the timeout for waiting for data.
-        int timeoutSocket = 500;
+        int timeoutSocket = 750;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         this.client = new DefaultHttpClient(httpParameters);
         this.builder = new Builder();
@@ -125,18 +125,18 @@ public class URIValidator {
                 if (null == namespace) {
                     report.addError("no namespace declared for the prefix: " + a[0]);
                     report.setValidationResult(ValidationResult.INVALID);
-
                 } else if (dummyNamespace.equals(namespace) && dummyPath.equals(a[1])) {
-                    // skip the dummy entries
+                    // ignore the dummy dictRef
                 } else {
                     URI uri = createUri(namespace);
-                    if (map.containsKey(uri)) {
-                        map.get(uri).add(a[1]);
-                    } else {
-                        Set<String> set = new HashSet<String>();
-                        set.add(a[1]);
-                        map.put(uri, set);
-                    }
+                        if (map.containsKey(uri)) {
+                            map.get(uri).add(a[1]);
+                        } else {
+                            Set<String> set = new HashSet<String>();
+                            set.add(a[1]);
+                            map.put(uri, set);
+                        }
+
                 }
             }
         }
@@ -147,7 +147,7 @@ public class URIValidator {
             }
             for (Map.Entry<URI, Set<String>> entry : unreachableUris.entrySet()) {
                 for (String path : entry.getValue()) {
-                    report.addWarning("the entry " + path + " was not reachable in the document found at " + entry.getKey().toString());
+                    report.addWarning("the entry '" + path + "' was not reachable in the document found at " + entry.getKey().toString());
                 }
             }
         }
@@ -213,7 +213,7 @@ public class URIValidator {
     private void checkUrisAreReachable(Set<URI> uris, ValidationReport report) {
         for (URI uri : uris) {
             if (!isReachable(uri)) {
-                report.addWarning(uri.toString() + " is not reachable");
+                report.addWarning(uri.toString() + " is not reachable. The server may be having problems - suggest you try again later");
                 if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
                     report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
                 }
@@ -242,6 +242,7 @@ public class URIValidator {
                             unreachableUris.get(entry.getKey()).add(id);
                         } else {
                             Set<String> set = new HashSet<String>();
+                            set.add(id);
                             unreachableUris.put(entry.getKey(), set);
                         }
                     }
