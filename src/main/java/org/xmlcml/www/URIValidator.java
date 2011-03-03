@@ -91,12 +91,12 @@ public class URIValidator {
     public URIValidator() {
         HttpParams httpParameters = new BasicHttpParams();
         // Set the timeout in milliseconds until a connection is established.
-        int timeoutConnection = 750;
+        int timeoutConnection = 1000;
         HttpConnectionParams.setConnectionTimeout(httpParameters,
                 timeoutConnection);
         // Set the default socket timeout (SO_TIMEOUT)
         // in milliseconds which is the timeout for waiting for data.
-        int timeoutSocket = 750;
+        int timeoutSocket = 1000;
         HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
         this.client = new DefaultHttpClient(httpParameters);
         this.builder = new Builder();
