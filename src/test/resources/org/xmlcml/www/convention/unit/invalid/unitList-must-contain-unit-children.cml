@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<unitList
+        xmlns="http://www.xml-cml.org/schema"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dummyDictionary="http://www.xml-cml.org/dictionary/"
+        xmlns:convention="http://www.xml-cml.org/convention/"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        convention="convention:unit"
+        namespace="http://www.xml-cml.org/dictionary/dummy/"
+        title="example units dictionary"
+        >
+    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:description>a cml:unitList must contain at least one cml:unit element child</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
+    <dc:date>2011-03-03</dc:date>
+    <description>
+        <xhtml:p>
+            A dummy units dictionary.
+        </xhtml:p>
+    </description>
+</unitList>
+
