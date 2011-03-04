@@ -45,4 +45,13 @@ public class ConventionTest {
         log.info(report.getReport().toXML());
         assertEquals(location+" should be warning\n"+report.getReport().toXML() , ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
+
+    @Test
+    public void testUnitListShouldHaveTitleAttributeAttribute() {
+        String location = root + "unitList-should-have-title-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
 }

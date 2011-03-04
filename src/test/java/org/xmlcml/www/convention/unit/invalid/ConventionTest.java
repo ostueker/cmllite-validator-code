@@ -59,5 +59,7 @@ public class ConventionTest {
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
+
+
 }
 
