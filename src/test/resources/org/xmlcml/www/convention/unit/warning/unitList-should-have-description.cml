@@ -10,15 +10,10 @@
         title="example units dictionary"
         >
     <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
-    <dc:description>a valid unit dictionary</dc:description>
+    <dc:description>unit dictionary should have a description</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
     <dc:date>2011-03-03</dc:date>
-    <description>
-        <xhtml:p>
-            A dummy units dictionary.
-        </xhtml:p>
-    </description>
     <unit
             title="unit 1"
             id="u1"

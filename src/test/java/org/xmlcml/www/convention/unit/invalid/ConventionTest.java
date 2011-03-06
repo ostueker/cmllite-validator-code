@@ -59,6 +59,22 @@ public class ConventionTest {
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
+    @Test
+    public void testUnitListTitleMustNotBeEmpty() {
+        String location = root + "unitList-title-must-not-be-empty.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitListTitleMustNotContainOnlyWhitespace() {
+        String location = root + "unitList-title-must-not-contain-only-whitespace.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
 
 
 }

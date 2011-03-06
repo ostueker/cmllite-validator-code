@@ -3,8 +3,11 @@ package org.xmlcml.www;
 import nu.xom.*;
 import nu.xom.xslt.XSLException;
 import nu.xom.xslt.XSLTransform;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -39,13 +42,10 @@ public class ConventionValidator {
             knownConventions.put(new URI(conventionNS + "dictionary"), createXSLTTransform(ConventionValidator.class, "dictionary-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "molecular"), createXSLTTransform(ConventionValidator.class, "molecular-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "cmlcomp"), createXSLTTransform(ConventionValidator.class, "cmlcomp-rules.xsl"));
-            knownConventions.put(new URI(conventionNS + "unit"), createXSLTTransform(ConventionValidator.class, "unit-rules.xsl"));
+            knownConventions.put(new URI(conventionNS + "unit-dictionary"), createXSLTTransform(ConventionValidator.class, "unit-dictionary-rules.xsl"));
         } catch (URISyntaxException e) {
             log.fatal("can't create uris", e);
             throw new RuntimeException(e);
-        } catch (Exception ex) {
-            log.fatal("unknown exception", ex);
-            throw new RuntimeException(ex);
         }
 
         try {
@@ -223,12 +223,33 @@ public class ConventionValidator {
      * @return
      * @throws Exception
      */
-    protected static XSLTransform createXSLTTransform(Class clzz, String xsltName) throws Exception {
+    protected static XSLTransform createXSLTTransform(Class clzz, String xsltName) {
         Builder builder = new Builder();
         URL xslt = clzz.getResource(xsltName);
         /* set up to use saxon 9 */
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
-        Document stylesheet = builder.build(xslt.openStream());
-        return new XSLTransform(stylesheet);
+        Document stylesheet = null;
+        InputStream is = null;
+        try {
+            is = xslt.openStream();
+            try {
+                Builder b = new Builder();
+                stylesheet = builder.build(is);
+            } catch (ParsingException e) {
+                log.fatal("error parsing stylesheet at: "+xslt.toString()+" "+e);
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            log.fatal("can't load stylesheet at: "+xslt.toString()+" "+e);
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(is);
+        }
+        try {
+            return new XSLTransform(stylesheet);
+        } catch (XSLException e) {
+            log.fatal("can't create style sheet from: "+xslt.toString()+" "+e);
+            throw new RuntimeException(e);
+        }
     }
 }

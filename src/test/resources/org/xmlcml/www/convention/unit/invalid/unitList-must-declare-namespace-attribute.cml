@@ -5,7 +5,7 @@
         xmlns:dummyDictionary="http://www.xml-cml.org/dictionary/"
         xmlns:convention="http://www.xml-cml.org/convention/"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        convention="convention:unit"
+        convention="convention:unit-dictionary"
         title="example units dictionary"
         >
     <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
