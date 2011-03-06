@@ -8,7 +8,7 @@
         convention="convention:unit-dictionary"
         namespace="http://www.xml-cml.org/dictionary/dummy/"
         >
-    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
     <dc:description>unitList must have title attribute</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>

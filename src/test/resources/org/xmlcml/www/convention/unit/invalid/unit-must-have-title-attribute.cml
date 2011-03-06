@@ -9,7 +9,7 @@
         namespace="http://www.xml-cml.org/dictionary/dummy/"
         title="example units dictionary"
         >
-    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
     <dc:description>a unit must have a title attribute - the value of which will typically be the full name of the unit</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>

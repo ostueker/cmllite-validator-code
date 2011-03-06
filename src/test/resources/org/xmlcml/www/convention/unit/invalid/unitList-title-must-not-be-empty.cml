@@ -9,7 +9,7 @@
         namespace="http://www.xml-cml.org/dictionary/dummy/"
         title=""
         >
-    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
     <dc:description>the title attribute MUST NOT be empty and MUST contain non-whitespace characters</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>

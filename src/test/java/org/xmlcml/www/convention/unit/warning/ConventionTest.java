@@ -44,6 +44,22 @@ public class ConventionTest {
     }
 
     @Test
+    public void testUnitSymbolShouldOnlyContainAscii() {
+        String location = root + "unit-symbol-should-only-contain-ascii.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitTitleShouldOnlyContainAscii() {
+        String location = root + "unit-title-should-only-contain-ascii.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
+    @Test
     public void testUnitListShouldHaveTitleAttributeAttribute() {
         String location = root + "unitList-should-have-title-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
@@ -57,7 +73,6 @@ public class ConventionTest {
         String location = root + "unitList-should-have-description.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        CmlLiteValidator.print(report.getReport(), System.out);
         assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
@@ -66,7 +81,6 @@ public class ConventionTest {
         String location = root + "unitList-title-should-only-contain-ascii.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        CmlLiteValidator.print(report.getReport(), System.out);
         assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 

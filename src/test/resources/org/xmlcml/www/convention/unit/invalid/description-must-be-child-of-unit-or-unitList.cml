@@ -10,7 +10,7 @@
         title="example units dictionary"
         >
     <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
-    <dc:description>a valid unit dictionary</dc:description>
+    <dc:description>description must be the child of unit or unitList</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
     <dc:date>2011-03-03</dc:date>
@@ -21,7 +21,7 @@
     </description>
     <unit
             title="unit 1"
-            id="duplicate_id"
+            id="u1"
             symbol="unit1"
             parentSI="dummyDictionary:dummy"
             multiplierToSI="1"
@@ -33,15 +33,17 @@
                 The description of the first entry in this dummy unit dictionary.
             </xhtml:p>
         </definition>
-        <description>
-            <xhtml:p>
-                The description of the first unit in this dummy unit dictionary.
-            </xhtml:p>
-        </description>
+        <xhtml:div>
+            <description>
+                <xhtml:p>
+                    The description of the first unit in this dummy unit dictionary.
+                </xhtml:p>
+            </description>
+        </xhtml:div>
     </unit>
     <unit
             title="unit 2"
-            id="duplicate_id"
+            id="u2"
             symbol="unit2"
             parentSI="dummyDictionary:dummy"
             constantToSI="1"

@@ -222,7 +222,7 @@
 
         <xsl:choose>
             <xsl:when test="@symbol">
-                <xsl:if test="string-length(normalize-space(@title)) = 0">
+                <xsl:if test="string-length(normalize-space(@symbol)) = 0">
                     <xsl:call-template name="error">
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="@symbol" mode="get-full-path"/>

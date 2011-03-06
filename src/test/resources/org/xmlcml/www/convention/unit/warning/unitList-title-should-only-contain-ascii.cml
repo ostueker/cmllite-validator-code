@@ -9,7 +9,7 @@
         namespace="http://www.xml-cml.org/dictionary/dummy/"
         title="α"
         >
-    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
     <dc:description>the value of the title attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>

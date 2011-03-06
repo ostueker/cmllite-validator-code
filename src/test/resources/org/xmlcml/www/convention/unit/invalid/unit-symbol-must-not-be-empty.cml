@@ -10,7 +10,7 @@
         title="example units dictionary"
         >
     <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
-    <dc:description>a valid unit dictionary</dc:description>
+    <dc:description>the symbol attribute MUST NOT be empty and MUST contain non-whitespace characters</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
     <dc:date>2011-03-03</dc:date>
@@ -21,8 +21,8 @@
     </description>
     <unit
             title="unit 1"
-            id="duplicate_id"
-            symbol="unit1"
+            id="u1"
+            symbol=""
             parentSI="dummyDictionary:dummy"
             multiplierToSI="1"
             constantToSI="0"
@@ -41,7 +41,7 @@
     </unit>
     <unit
             title="unit 2"
-            id="duplicate_id"
+            id="u2"
             symbol="unit2"
             parentSI="dummyDictionary:dummy"
             constantToSI="1"

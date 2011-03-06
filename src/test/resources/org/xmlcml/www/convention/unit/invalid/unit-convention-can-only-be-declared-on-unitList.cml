@@ -6,7 +6,7 @@
         xmlns:convention="http://www.xml-cml.org/convention/"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         convention="convention:unit-dictionary">
-    <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/convention/unit-dictionary convention</dc:title>
     <dc:description>the unit convention can only be declared on the unitList element</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
