@@ -7,11 +7,10 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         convention="convention:unit-dictionary"
         namespace="http://www.xml-cml.org/dictionary/dummy/"
-        title="
-        "
+        title="example units dictionary"
         >
     <dc:title>test file for http://www.xml-cml.org/convention/unit convention</dc:title>
-    <dc:description>the title attribute MUST NOT be empty and MUST contain non-whitespace characters</dc:description>
+    <dc:description>a unit must have an id</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
     <dc:date>2011-03-03</dc:date>
@@ -22,7 +21,6 @@
     </description>
     <unit
             title="unit 1"
-            id="u1"
             symbol="unit1"
             parentSI="dummyDictionary:dummy"
             multiplierToSI="1"

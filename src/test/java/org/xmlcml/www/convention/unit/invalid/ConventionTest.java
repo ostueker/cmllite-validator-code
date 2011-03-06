@@ -5,7 +5,10 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.*;
+import org.xmlcml.www.ConventionValidator;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,6 +47,46 @@ public class ConventionTest {
     }
 
     @Test
+    public void testUnitIdMustBeUniqueWithinUnitList() {
+        String location = root + "unit-id-must-be-unique-within-unitList.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitMustBeChildOfUnitList() {
+        String location = root + "unit-must-be-child-of-unitList.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitMustHaveIdAttribute() {
+        String location = root + "unit-must-have-id-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitMustHaveTitleAttribute() {
+        String location = root + "unit-must-have-title-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitListCannotHaveMultipleDescriptionChildren() {
+        String location = root + "unitList-cannot-have-multiple-description-children.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
     public void testUnitListMustContainUnitChildren() {
         String location = root + "unitList-must-contain-unit-children.cml";
         Document input = testUtils.getFileAsDocument(location);
@@ -74,7 +117,6 @@ public class ConventionTest {
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
-
 
 
 }

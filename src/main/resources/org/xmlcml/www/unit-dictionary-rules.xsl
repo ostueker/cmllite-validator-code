@@ -120,7 +120,6 @@
             </xsl:otherwise>
          </xsl:choose>
 
-
         <xsl:choose>
             <xsl:when test="cml:description">
                 <xsl:if test="count(cml:description) > 1">

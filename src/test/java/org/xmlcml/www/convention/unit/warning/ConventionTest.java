@@ -61,5 +61,14 @@ public class ConventionTest {
         assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
+    @Test
+    public void testUnitListTitleShouldOnlyContainAscii() {
+        String location = root + "unitList-title-should-only-contain-ascii.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
+        assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+    }
+
 }
 
