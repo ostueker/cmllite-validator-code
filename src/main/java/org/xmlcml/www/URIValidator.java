@@ -89,7 +89,7 @@ public class URIValidator {
      * Create a URIValidator
      */
     public URIValidator() {
-        this(1000, 1000);
+        this(1500, 1500);
     }
 
     private URIValidator(int timeoutConnection, int timeoutSocket) {
