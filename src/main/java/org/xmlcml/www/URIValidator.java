@@ -176,6 +176,7 @@ public class URIValidator {
         List<Attribute> attributes = getAsAttributeList(conventions);
         Set<URI> uniqueUris = getUniqueUris(attributes, report);
         uniqueUris.remove(dummy);
+        uniqueUris.removeAll(ConventionValidator.getSupportedConventions());
         checkUrisAreReachable(uniqueUris, report);
     }
 

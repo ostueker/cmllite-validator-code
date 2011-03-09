@@ -1,14 +1,11 @@
-package org.xmlcml.www.convention.unit.invalid;
+package org.xmlcml.www.convention.unitType.invalid;
 
 import nu.xom.Document;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +23,7 @@ public class ConventionTest {
     private TestUtils testUtils = new TestUtils();
     private ConventionValidator conventionValidator = new ConventionValidator();
     private ValidationReport report = null;
-    private String root = "convention/unit/invalid/";
+    private String root = "convention/unitType/invalid/";
 
     @Before
     public void setUp() throws Exception {
@@ -38,230 +35,298 @@ public class ConventionTest {
     }
 
     @Test
-    public void testDefinitionMustBeChildOfUnit() {
-        String location = root + "definition-must-be-child-of-unit.cml";
+    public void testDefinitionMustBeChildOfUnitType() {
+        String location = root + "definition-must-be-child-of-unitType.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testDescriptionMustBeChildOfUnitOrUnitList() {
-        String location = root + "description-must-be-child-of-unit-or-unitList.cml";
+    public void testDescriptionMustBeChildOfUnitTypeListOrUnitType1() {
+        String location = root + "description-must-be-child-of-unitTypeList-or-unitType-1.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitConventionCanOnlyBeDeclaredOnUnitList() {
-        String location = root + "unit-dictionary-convention-can-only-be-declared-on-unitList.cml";
+    public void testDescriptionMustBeChildOfUnitTypeListOrUnitType2() {
+        String location = root + "description-must-be-child-of-unitTypeList-or-unitType-2.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitCannotHaveMultipleDefinition() {
-        String location = root + "unit-cannot-have-multiple-definition.cml";
+    public void testDimensionMustBeChildOfUnitType() {
+        String location = root + "dimension-must-be-child-of-unitType.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitCannotHaveMultipleDescription() {
-        String location = root + "unit-cannot-have-multiple-description.cml";
+    public void testDimensionMustHaveNameAttribute() {
+        String location = root + "dimension-must-have-name-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitDefinitionMustContainNonWhitespaceText() {
-        String location = root + "unit-definition-must-contain-non-whitespace-text.cml";
+    public void testDimensionMustHavePowerAttribute() {
+        String location = root + "dimension-must-have-power-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitDefinitionMustContainText() {
-        String location = root + "unit-definition-must-contain-text.cml";
+    public void testDimensionMustHaveUnitTypeAttribute() {
+        String location = root + "dimension-must-have-unitType-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitDefinitionMustContainXhtml() {
-        String location = root + "unit-definition-must-contain-xhtml.cml";
+    public void testDimensionNameMustNotBeEmpty() {
+        String location = root + "dimension-name-must-not-be-empty.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitDescriptionMustContainNonWhitespaceText() {
-        String location = root + "unit-description-must-contain-non-whitespace-text.cml";
+    public void testDimensionNameMustNotContainOnlyWhitespace() {
+        String location = root + "dimension-name-must-not-contain-only-whitespace.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitDescriptionMustContainText() {
-        String location = root + "unit-description-must-contain-text.cml";
+    public void testUnitTypeDefinitionMustContainNonWhitespaceText() {
+        String location = root + "unitType-definition-must-contain-non-whitespace-text.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitIdMustBeUniqueWithinUnitList() {
-        String location = root + "unit-id-must-be-unique-within-unitList.cml";
+    public void testUnitTypeDefinitionMustContainText() {
+        String location = root + "unitType-definition-must-contain-text.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustBeChildOfUnitList() {
-        String location = root + "unit-must-be-child-of-unitList.cml";
+    public void testUnitTypeDefinitionMustContainXhtml() {
+        String location = root + "unitType-definition-must-contain-xhtml.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
-    }
-
-
-    @Test
-    public void testUnitMustAtLeastOneOfConstantToSIOrMultiplierToSI() {
-        String location = root + "unit-must-have-at-least-one-of-constantToSI-or-multiplierToSI.cml";
-        Document input = testUtils.getFileAsDocument(location);
-        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveDefinitionChild() {
-        String location = root + "unit-must-have-definition-child.cml";
+    public void testUnitTypeDescriptionMustContainNonWhitespaceText() {
+        String location = root + "unitType-description-must-contain-non-whitespace-text.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveDataTypeAttribute() {
-        String location = root + "unit-must-have-unitType-attribute.cml";
+    public void testUnitTypeDescriptionMustContainText() {
+        String location = root + "unitType-description-must-contain-text.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveIdAttribute() {
-        String location = root + "unit-must-have-id-attribute.cml";
+    public void testUnitTypeDescriptionMustContainXhtml() {
+        String location = root + "unitType-definition-must-contain-xhtml.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveParentSIAttribute() {
-        String location = root + "unit-must-have-parentSI-attribute.cml";
+    public void testUnitTypeDictionaryConventionMustBeDeclaredOnUnitTypeList() {
+        String location = root + "unitType-dictionary-convention-must-be-declared-on-unitTypeList.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveSymbolAttribute() {
-        String location = root + "unit-must-have-symbol-attribute.cml";
+    public void testUnitTypeMustBeChildOfUnitTypeList() {
+        String location = root + "unitType-must-be-child-of-unitTypeList.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitMustHaveTitleAttribute() {
-        String location = root + "unit-must-have-title-attribute.cml";
+    public void testUnitTypeMustContainDefinition() {
+        String location = root + "unitType-must-contain-definition.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitSymbolMustContainNonWhitespaceCharacters() {
-        String location = root + "unit-symbol-must-contain-non-whitespace-characters.cml";
+    public void testUnitTypeMustHaveDimension() {
+        String location = root + "unitType-must-have-dimension.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitSymbolMustNotBeEmpty() {
-        String location = root + "unit-symbol-must-not-be-empty.cml";
+    public void testUnitTypeMustHaveIdAttribute() {
+        String location = root + "unitType-must-have-id-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitTitleMustNotBeEmpty() {
-        String location = root + "unit-title-must-not-be-empty.cml";
+    public void testUnitTypeMustHaveNameAttribute() {
+        String location = root + "unitType-must-have-name-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitTitleMustContainNonWhitespaceCharacters() {
-        String location = root + "unit-title-must-contain-non-whitespace-characters.cml";
+    public void testUnitTypeMustHaveTitleAttribute() {
+        String location = root + "unitType-must-have-title-attribute.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitListCannotHaveMultipleDescriptionChildren() {
-        String location = root + "unitList-cannot-have-multiple-description-children.cml";
+    public void testUnitTypeMustNotHaveMultipleDefinition() {
+        String location = root + "unitType-must-not-have-multiple-definition.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitListMustContainUnitChildren() {
-        String location = root + "unitList-must-contain-unit-children.cml";
+    public void testUnitTypeMustNotHaveMultipleDescription() {
+        String location = root + "unitType-must-not-have-multiple-description.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+     @Test
+    public void testUnitTypeNameMustNotBeEmpty() {
+        String location = root + "unitType-name-must-not-be-empty.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitListMustDeclareNamespaceAttribute() {
-        String location = root + "unitList-must-declare-namespace-attribute.cml";
+    public void testUnitTypeNameMustNotBeContainOnlyWhitespace() {
+        String location = root + "unitType-name-must-not-contain-only-whitespace.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitListTitleMustNotBeEmpty() {
-        String location = root + "unitList-title-must-not-be-empty.cml";
+    public void testUnitTypeTitleMustNotBeEmpty() {
+        String location = root + "unitType-title-must-not-be-empty.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
     @Test
-    public void testUnitListTitleMustNotContainOnlyWhitespace() {
-        String location = root + "unitList-title-must-not-contain-only-whitespace.cml";
+    public void testUnitTypeTitleMustNotBeContainOnlyWhitespace() {
+        String location = root + "unitType-title-must-not-contain-only-whitespace.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 
+    @Test
+    public void testUnitTypeListMustContainAtLeastOneUnitType() {
+        String location = root + "unitTypeList-must-contain-at-least-one-unitType.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitTypeListMustHaveNamespaceAttribute() {
+        String location = root + "unitTypeList-must-have-namespace-attribute.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitTypeListMustNotHaveMultipleDescriptions() {
+        String location = root + "unitTypeList-must-not-have-multiple-descriptions.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitTypeListTitleMustNotBeEmpty() {
+        String location = root + "unitTypeList-title-must-not-be-empty.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testUnitTypeListTitleMustNotBeContainOnlyWhitespace() {
+        String location = root + "unitTypeList-title-must-not-contain-only-whitespace.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        log.info(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
 
 }
 

@@ -11,10 +11,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,6 +33,10 @@ public class ConventionValidator {
         registerKnownConventionLocations();
     }
 
+    public static Set<URI> getSupportedConventions() {
+        return new HashSet<URI>(knownConventions.keySet());
+    }
+
     private static void registerKnownConventionLocations() {
         knownConventions = new HashMap<URI, XSLTransform>();
         try {
@@ -43,6 +44,7 @@ public class ConventionValidator {
             knownConventions.put(new URI(conventionNS + "molecular"), createXSLTTransform(ConventionValidator.class, "molecular-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "cmlcomp"), createXSLTTransform(ConventionValidator.class, "cmlcomp-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "unit-dictionary"), createXSLTTransform(ConventionValidator.class, "unit-dictionary-rules.xsl"));
+            knownConventions.put(new URI(conventionNS + "unitType-dictionary"), createXSLTTransform(ConventionValidator.class, "unitType-dictionary-rules.xsl"));
         } catch (URISyntaxException e) {
             log.fatal("can't create uris", e);
             throw new RuntimeException(e);
@@ -236,11 +238,11 @@ public class ConventionValidator {
                 Builder b = new Builder();
                 stylesheet = builder.build(is);
             } catch (ParsingException e) {
-                log.fatal("error parsing stylesheet at: "+xslt.toString()+" "+e);
+                log.fatal("error parsing stylesheet at: " + xslt.toString() + " " + e);
                 throw new RuntimeException(e);
             }
         } catch (IOException e) {
-            log.fatal("can't load stylesheet at: "+xslt.toString()+" "+e);
+            log.fatal("can't load stylesheet at: " + xslt.toString() + " " + e);
             throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(is);
@@ -248,7 +250,7 @@ public class ConventionValidator {
         try {
             return new XSLTransform(stylesheet);
         } catch (XSLException e) {
-            log.fatal("can't create style sheet from: "+xslt.toString()+" "+e);
+            log.fatal("can't create style sheet from: " + xslt.toString() + " " + e);
             throw new RuntimeException(e);
         }
     }

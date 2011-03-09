@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<unitTypeList
+        xmlns="http://www.xml-cml.org/schema"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dummyDictionary="http://www.xml-cml.org/dictionary/"
+        xmlns:convention="http://www.xml-cml.org/convention/"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        convention="convention:unitType-dictionary"
+        namespace="http://www.xml-cml.org/dictionary/dummy/"
+        title="example unitType dictionary"
+        >
+    <dc:title>test file for http://www.xml-cml.org/convention/unitType-dictionary convention</dc:title>
+    <dc:description>description MUST contain non whitespace text</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
+    <dc:date>2011-03-07</dc:date>
+    <description>
+        <xhtml:p>
+            A dummy unitType dictionary.
+        </xhtml:p>
+    </description>
+    <unitType id="ut1"
+              name="unitType 1"
+              title="dummy unitType 1 - a base unitType">
+        <dc:source>a dummy source</dc:source>
+        <dimension name="dummy dimension 1" unitType="dummyDictionary:dummy" power="1"/>
+        <definition>
+            <xhtml:p>
+                A dummy unitType for testing
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+
+
+            </xhtml:p>
+        </description>
+    </unitType>
+    <unitType id="ut2"
+              name="unitType 2"
+              title="dummy unitType 2 - a base unitType">
+        <dc:source>a dummy source</dc:source>
+        <dimension name="dummy dimension 2" unitType="dummyDictionary:dummy" power="1"/>
+        <definition>
+            <xhtml:p>
+                A dummy unitType for testing
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                The description of the second unitType in this dummy unitType dictionary.
+            </xhtml:p>
+        </description>
+    </unitType>
+    <unitType id="ut3"
+              name="unitType 3"
+              title="dummy unitType 3 - a compound unitType">
+        <dc:source>a dummy source</dc:source>
+        <dimension name="dummy dimension 3" unitType="dummyDictionary:dummy" power="1"/>
+        <dimension name="dummy dimension 3" unitType="dummyDictionary:dummy" power="-2"/>
+        <definition>
+            <xhtml:p>
+                A dummy unitType for testing
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                The description of the third unitType in this dummy unitType dictionary.
+            </xhtml:p>
+        </description>
+    </unitType>
+    <unitType id="ut4"
+              name="unitType 4"
+              title="dummy unitType 4 - a compound unitType"
+              preserve="true">
+        <dc:source>a dummy source</dc:source>
+        <dimension name="dummy dimension 4" unitType="dummyDictionary:dummy" power="2"/>
+        <dimension name="dummy dimension 4" unitType="dummyDictionary:dummy" power="-1"/>
+        <definition>
+            <xhtml:p>
+                A dummy unitType for testing
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                The description of the fourth unitType in this dummy unitType dictionary.
+            </xhtml:p>
+        </description>
+    </unitType>
+</unitTypeList>
+

@@ -7640,7 +7640,7 @@
                 <h:div class="description">
                     This will be primarily used within the definition of units.
                     Two dimensions are of the same type if their 'name' attributes are (case-sensitive)
-                    identical. Dimensions of the same typecan be algebraically combined using the 'power' attributes.
+                    identical. Dimensions of the same type can be algebraically combined using the 'power' attributes.
                     Normally dimensions will be aggregated and cancelled algebraically, but the 'preserve'
                     attribute can be used to prevent this. Thus a velocity gradient over length can be
                     defined as:
@@ -7673,6 +7673,7 @@
             <xsd:attributeGroup ref="name"/>
             <xsd:attributeGroup ref="power"/>
             <xsd:attributeGroup ref="preserve"/>
+            <xsd:attributeGroup ref="unitType"/>
             <xsd:anyAttribute namespace="##other" processContents="lax"/>
         </xsd:complexType>
     </xsd:element>

@@ -10,7 +10,7 @@
 
     <xsl:param name="absoluteXPathToStartElement" select="/"/>
 
-    <xsl:variable name="conventionName">unit-dictionary</xsl:variable>
+    <xsl:variable name="conventionName">unitType-dictionary</xsl:variable>
 
     <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
     <xsl:variable name="cmlNS">http://www.xml-cml.org/schema</xsl:variable>
@@ -27,98 +27,71 @@
         <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()" mode="unit-dictionary">
-        <xsl:apply-templates mode="unit-dictionary"/>
+    <xsl:template match="*|@*|text()" mode="unitType-dictionary">
+        <xsl:apply-templates mode="unitType-dictionary"/>
     </xsl:template>
 
     <xsl:template
             match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
         <xsl:choose>
-            <xsl:when test="self::cml:unitList">
-                <xsl:call-template name="unitList-template"/>
+            <xsl:when test="self::cml:unitTypeList">
+                <xsl:call-template name="unitTypeList-template"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="@convention" mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">the only valid cml elements which can specify the unit-dictionary convention is "unitList"</xsl:with-param>
+                    <xsl:with-param name="text">the only valid cml element which can specify the unitType-dictionary
+                        convention is "unitTypeList"
+                    </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="cml:*" mode="unit-dictionary">
+    <xsl:template match="cml:*" mode="unitType-dictionary">
         <xsl:call-template name="info">
             <xsl:with-param name="location">
                 <xsl:apply-templates select="." mode="get-full-path"/>
             </xsl:with-param>
             <xsl:with-param name="text">
                 <xsl:value-of select="local-name()"/> is not a part of the
-                http://www.xml-cml.org/convention/unit-dictionary convention
+                http://www.xml-cml.org/convention/unitType-dictionary convention
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="cml:unitList" mode="unit-dictionary" name="unitList-template">
+    <xsl:template match="cml:unitTypeList" mode="unitType-dictionary" name="unitTypeList-template">
         <xsl:choose>
             <xsl:when test="@namespace">
-                <xsl:choose>
-                    <xsl:when test="ends-with(@namespace, '/')"/>
-                    <xsl:when test="ends-with(@namespace, '#')"/>
-                    <xsl:otherwise>
-                        <xsl:call-template name="warning">
-                            <xsl:with-param name="location">
-                                <xsl:apply-templates select="@namespace" mode="get-full-path"/>
-                            </xsl:with-param>
-                            <xsl:with-param name="text">The namespace URI SHOULD end with either a '/'
-                                character or a '#' character so that terms may be referenced by appending them to the
-                                URI
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:call-template name="unitTypeList-namespace"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">The unitList element MUST have a namespace attribute</xsl:with-param>
+                    <xsl:with-param name="text">The unitTypeList element MUST have a namespace attribute
+                    </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
         <xsl:choose>
             <xsl:when test="@title">
-                <xsl:if test="string-length(normalize-space(@title)) = 0">
-                    <xsl:call-template name="error">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@title" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the title attribute MUST NOT be empty and MUST contain non-whitespace characters
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
-                <xsl:if test="not(translate(@title, $ascii-chars, '') = '')">
-                    <xsl:call-template name="warning">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@title" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the value of the title attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
+                <xsl:call-template name="title-attribute"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="warning">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">a unitList must have a title attribute
+                    <xsl:with-param name="text">a unitTypeList must have a title attribute
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
-         </xsl:choose>
+        </xsl:choose>
 
         <xsl:choose>
             <xsl:when test="cml:description">
@@ -127,7 +100,7 @@
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="." mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">The unitList element can only have a single description child
+                        <xsl:with-param name="text">The unitTypeList element can only have a single description child
                             element
                         </xsl:with-param>
                     </xsl:call-template>
@@ -138,43 +111,45 @@
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">The unitList element SHOULD have a single description child element
+                    <xsl:with-param name="text">The unitTypeList element SHOULD have a single description child element
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:if test="not(.//cml:unit)">
+        <xsl:if test="not(.//cml:unitType)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">a unitList must have at least one unit element child</xsl:with-param>
+                <xsl:with-param name="text">a unitTypeList must have at least one unitType element child
+                </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:apply-templates mode="unit-dictionary" />
+        <xsl:apply-templates mode="unitType-dictionary"/>
     </xsl:template>
 
-    <!-- unit template -->
-    <xsl:template match="cml:unit" mode="unit-dictionary">
-        <xsl:if test="not(parent::cml:unitList)">
+    <!-- unitType template -->
+    <xsl:template match="cml:unitType" mode="unitType-dictionary">
+        <xsl:if test="not(parent::cml:unitTypeList)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">unit must be the child of unitList</xsl:with-param>
+                <xsl:with-param name="text">unitType must be the child of unitTypeList</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
         <xsl:choose>
             <xsl:when test="@id">
-                <xsl:if test="count(ancestor::cml:unitList//cml:unit[@id = current()/@id]) > 1">
+                <xsl:if test="count(ancestor::cml:unitTypeList//cml:unitType[@id = current()/@id]) > 1">
                     <xsl:call-template name="error">
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="." mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the id of a unit must be unique within the unitList (duplicate found: <xsl:value-of select="@id"/>)
+                        <xsl:with-param name="text">the id of a unitType must be unique within the unitTypeList
+                            (duplicate found: <xsl:value-of select="@id"/>)
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
@@ -184,101 +159,58 @@
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">a unit must have an id</xsl:with-param>
+                    <xsl:with-param name="text">a unitType must have an id</xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
         <xsl:choose>
             <xsl:when test="@title">
-                <xsl:if test="string-length(normalize-space(@title)) = 0">
-                    <xsl:call-template name="error">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@title" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the title attribute MUST NOT be empty and MUST contain non-whitespace characters
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
-                <xsl:if test="not(translate(@title, $ascii-chars, '') = '')">
-                    <xsl:call-template name="warning">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@title" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the value of the title attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
+                <xsl:call-template name="title-attribute"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">a unit must have a title attribute - the value of which will typically be the full name of the unit
+                    <xsl:with-param name="text">a unitType must have a title attribute - the value of which will
+                        typically be the full name of the unitType
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
         <xsl:choose>
-            <xsl:when test="@symbol">
-                <xsl:if test="string-length(normalize-space(@symbol)) = 0">
-                    <xsl:call-template name="error">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@symbol" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the symbol attribute MUST NOT be empty and MUST contain non-whitespace characters
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
-                <xsl:if test="not(translate(@symbol, $ascii-chars, '') = '')">
-                    <xsl:call-template name="warning">
-                        <xsl:with-param name="location">
-                            <xsl:apply-templates select="@symbol" mode="get-full-path"/>
-                        </xsl:with-param>
-                        <xsl:with-param name="text">the value of the symbol attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
+            <xsl:when test="@name">
+                <xsl:call-template name="name-attribute"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="error">
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">a unit must have a symbol attribute - the value of which is the full symbol used to represent this unit
+                    <xsl:with-param name="text">a unitType must have a name attribute - the value of which
+                        linguistically identifies the type of the unit
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
-        <xsl:if test="not(@parentSI)">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">A unit element MUST have a parentSI attribute
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="not(@constantToSI or @multiplierToSI)">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">A unit element MUST have at least one of the constantToSI and multiplierToSI attributes
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="not(@unitType)">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">A unit element MUST have a unitType attribute
-                </xsl:with-param>
-            </xsl:call-template>
+        <xsl:if test="@preserve">
+            <xsl:choose>
+                <xsl:when test="@preserve = 'true'"/>
+                <xsl:when test="@preserve = 'false'"/>
+                <xsl:otherwise>
+                    <xsl:call-template name="warning">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="@preserve" mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">it is RECOMMENDED that the value of the preserve attribute is "true"
+                            or "false" found ='<xsl:value-of select="@preserve/."/>'
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:if>
 
         <xsl:if test="count(.//cml:definition) != 1">
@@ -286,51 +218,63 @@
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">A unit element MUST contain a single definition child element
+                <xsl:with-param name="text">A unitType element MUST contain a single definition child element
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:if test="count(cml:description) > 1">
+        <xsl:if test="count(.//cml:description) > 1">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">A unit element MAY contain a single description child element
+                <xsl:with-param name="text">A unitType element MAY contain a single description child element
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:apply-templates mode="unit-dictionary"/>
+        <xsl:if test="not(cml:dimension)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">A unitType element MUST contain at least one dimension child element
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:apply-templates mode="unitType-dictionary"/>
     </xsl:template>
 
-    <xsl:template match="cml:definition" mode="unit-dictionary">
-        <xsl:if test="not(parent::cml:unit)">
+    <xsl:template match="cml:definition" mode="unitType-dictionary">
+        <xsl:if test="not(parent::cml:unitType)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">definition must be the child of unit</xsl:with-param>
+                <xsl:with-param name="text">definition must be the child of unitType</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:if test="string-length(.) = 0">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">definition MUST contain text</xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="string-length(normalize-space(.)) = 0">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">definition MUST contain non whitespace text</xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="string-length(.) = 0">
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">definition MUST contain text</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="string-length(normalize-space(.)) = 0">
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">definition MUST contain non whitespace text</xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
 
         <xsl:if test="not(xhtml:*)">
             <xsl:call-template name="error">
@@ -343,37 +287,40 @@
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:apply-templates mode="unit-dictionary"/>
+        <xsl:apply-templates mode="unitType-dictionary"/>
     </xsl:template>
 
 
-    <xsl:template match="cml:description" mode="unit-dictionary">
-        <xsl:if test="not(parent::cml:unit or parent::cml:unitList)">
+    <xsl:template match="cml:description" mode="unitType-dictionary">
+        <xsl:if test="not(parent::cml:unitType or parent::cml:unitTypeList)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
                 </xsl:with-param>
-                <xsl:with-param name="text">description must be the child of unit or unitList</xsl:with-param>
+                <xsl:with-param name="text">description must be the child of unitType or unitTypeList</xsl:with-param>
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:if test="string-length(.) = 0">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">description MUST contain text</xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="string-length(normalize-space(.)) = 0">
-            <xsl:call-template name="error">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">description MUST contain non whitespace text</xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="string-length(.) = 0">
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">description MUST contain text</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="string-length(normalize-space(.)) = 0">
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">description MUST contain non whitespace text</xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
 
         <xsl:if test="not(xhtml:*)">
             <xsl:call-template name="error">
@@ -386,8 +333,124 @@
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:apply-templates mode="unit-dictionary"/>
+        <xsl:apply-templates mode="unitType-dictionary"/>
     </xsl:template>
+
+    <xsl:template match="cml:dimension" mode="unitType-dictionary">
+        <xsl:if test="not(parent::cml:unitType)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">dimension must be the child of unitType</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
+        <xsl:choose>
+            <xsl:when test="@name">
+                <xsl:call-template name="name-attribute"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="error">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="." mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">a dimension must have a name attribute - the value of which
+                        linguistically identifies the type of the unit
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+
+        <xsl:if test="not(@unitType)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">a dimension must have a unitType attribute
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
+        <xsl:if test="not(@power)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">a dimension must have a power attribute
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
+        <xsl:apply-templates mode="unitType-dictionary"/>
+    </xsl:template>
+
+    <xsl:template match="cml:unitTypeList/@namespace" name="unitTypeList-namespace" mode="unitType-dictionary">
+        <xsl:choose>
+            <xsl:when test="ends-with(@namespace, '/')"/>
+            <xsl:when test="ends-with(@namespace, '#')"/>
+            <xsl:otherwise>
+                <xsl:call-template name="warning">
+                    <xsl:with-param name="location">
+                        <xsl:apply-templates select="@namespace" mode="get-full-path"/>
+                    </xsl:with-param>
+                    <xsl:with-param name="text">The namespace URI SHOULD end with either a '/'
+                        character or a '#' character so that terms may be referenced by appending them to the
+                        URI
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="@title" name="title-attribute" mode="unitType-dictionary">
+        <xsl:if test="string-length(normalize-space(@title)) = 0">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="@title" mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">the title attribute MUST NOT be empty and MUST contain non-whitespace
+                    characters
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="not(translate(@title, $ascii-chars, '') = '')">
+            <xsl:call-template name="warning">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="@title" mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">the value of the title attribute MAY contain any valid unicode character,
+                    however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is
+                    represented using an entity reference.
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="@name" name="name-attribute" mode="unitType-dictionary">
+        <xsl:if test="string-length(normalize-space(@name)) = 0">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="@name" mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">the name attribute MUST NOT be empty and MUST contain non-whitespace
+                    characters
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="not(translate(@name, $ascii-chars, '') = '')">
+            <xsl:call-template name="warning">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="@title" mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">the value of the name attribute MAY contain any valid unicode character,
+                    however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is
+                    represented using an entity reference.
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
 
     <!-- error report -->
     <xsl:template name="error">
