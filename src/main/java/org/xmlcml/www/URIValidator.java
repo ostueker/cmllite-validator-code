@@ -34,6 +34,7 @@ public class URIValidator {
     private String dummyNamespace = "http://www.xml-cml.org/dictionary/";
     private String dummyPath = "dummy";
     private URI dummy = createUri(dummyNamespace,dummyPath);
+    private URI dummyURI = createUri(dummyNamespace, dummyPath+"/");
 
     static {
         xsdDataTypes.add("string");
@@ -168,6 +169,7 @@ public class URIValidator {
         List<Attribute> attributes = getAsAttributeList(namespaces);
         Set<URI> uniqueUris = getUniqueUris(attributes, report);
         uniqueUris.remove(dummy);
+        uniqueUris.remove(dummyURI);
         checkUrisAreReachable(uniqueUris, report);
     }
 
@@ -176,6 +178,7 @@ public class URIValidator {
         List<Attribute> attributes = getAsAttributeList(conventions);
         Set<URI> uniqueUris = getUniqueUris(attributes, report);
         uniqueUris.remove(dummy);
+        uniqueUris.remove(dummyURI);
         uniqueUris.removeAll(ConventionValidator.getSupportedConventions());
         checkUrisAreReachable(uniqueUris, report);
     }
