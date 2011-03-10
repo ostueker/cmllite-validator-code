@@ -41,4 +41,6 @@ public class ConventionTest {
         report = conventionValidator.validate(input);
         assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
+
+
 }
