@@ -35,10 +35,19 @@ public class ConventionTest {
     }
 
     @Test
-    public void testExampleUnitList() {
+    public void testExampleUnitTypeList() {
         String location = root+"example-unitType-list.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
         assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
+
+    @Test
+    public void testUnitType() {
+        String location = root+"unitType.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
+    }
+
 }
