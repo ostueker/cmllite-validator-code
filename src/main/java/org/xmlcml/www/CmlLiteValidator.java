@@ -1,12 +1,13 @@
 package org.xmlcml.www;
 
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.ParsingException;
+import nu.xom.Serializer;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * @author jat45
@@ -22,7 +23,7 @@ public class CmlLiteValidator {
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
 
-     /**
+    /**
      * Validate an XML from given input stream.
      *
      * @param ins an input stream of XML
@@ -50,14 +51,14 @@ public class CmlLiteValidator {
         ValidationReport xmlWellFormedReport = new ValidationReport(XmlWellFormednessValidator.reportTitle);
         xmlWellFormedReport.addValid("xml is well formed");
         ValidationReport schemaReport = schemaValidator.validate(document);
-        switch (schemaReport.getValidationResult()){
+        switch (schemaReport.getValidationResult()) {
             case INVALID: {
                 return createFinalReport(schemaReport.getValidationResult(), xmlWellFormedReport, schemaReport);
             }
             default: {
                 schemaReport.addValid("document conforms to the schema");
                 ValidationReport conventionsReport = conventionValidator.validate(document);
-                return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport,schemaReport,conventionsReport);
+                return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport);
 
 //                ValidationReport qnameReachableReport = uriValidator.validate(document);
 //                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
@@ -86,7 +87,7 @@ public class CmlLiteValidator {
         }
     }
 
-    private ValidationReport createFinalReport(ValidationResult result, ValidationReport ... reports) {
+    private ValidationReport createFinalReport(ValidationResult result, ValidationReport... reports) {
         ValidationReport finalReport = new ValidationReport("final-report");
         finalReport.setValidationResult(result);
         for (ValidationReport report : reports) {
@@ -107,7 +108,42 @@ public class CmlLiteValidator {
 
     }
 
-        /**
+    public static void main(String[] args) {
+        if (args.length == 1) {
+            File file = new File(args[0]);
+            InputStream inputStream = null;
+            try {
+                inputStream = new BufferedInputStream(new FileInputStream(file));
+            } catch (IOException e) {
+                System.err.println("Can't read from " + file.getAbsolutePath() + " " + e);
+                System.exit(1);
+            }
+            CmlLiteValidator validator = new CmlLiteValidator();
+            ValidationReport report = validator.validate(inputStream);
+            switch (report.getValidationResult()) {
+                case VALID: {
+                    System.exit(0);
+                    break;
+                }
+                case VALID_WITH_WARNINGS: {
+                    CmlLiteValidator.print(report.getReport(), System.out);
+                    System.exit(0);
+                }
+                default: {
+                    CmlLiteValidator.print(report.getReport(), System.out);
+                    System.exit(1);
+                }
+            }
+
+        } else {
+            System.out.println("usage: CmlLiteValidator <in-file>");
+            System.out.println("returns 0 if valid or valid with warnings and 1 otherwise");
+            System.exit(1);
+        }
+
+    }
+
+    /**
      * Prints a XOM document to an OutputStream without having to remember the
      * serializer voodoo. The encoding is always UTF-8.
      *
