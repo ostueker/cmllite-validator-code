@@ -43,6 +43,15 @@ public class ConventionTest {
     }
 
     @Test
+    public void testAtomMustBeChildOfAtomArray() {
+        String location = root + "atom-must-be-child-of-atomArray.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        System.out.println(report.getReport().toXML());
+        assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+    @Test
     public void testMoleculeCannotBeChildOfAtom() {
         String location = root + "molecule-cannot-be-child-of-atom.cml";
         Document input = testUtils.getFileAsDocument(location);
@@ -125,6 +134,17 @@ public class ConventionTest {
         report = conventionValidator.validate(input);
         assertEquals(location + " should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
+
+    @Test
+    public void testBondMustBeChildOfBondArray() {
+        String location = root + "bond-must-be-child-of-bondArray.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        System.out.println(report.getReport().toXML());
+        assertEquals(location + " should be invalid "+report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+    }
+
+
     @Test
     public void testBondArrayInvalidParent() {
         String location = root + "bondArray-invalid-parent.cml";

@@ -224,6 +224,15 @@
 
 
     <xsl:template match="cml:atom" mode="molecular">
+        <xsl:if test="not(parent::cml:atomArray)">
+             <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">atom must a child of a atomArray</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
         <!--
           atoms must have id unless they are part of an atomArray in a
           formula
@@ -347,6 +356,15 @@
     </xsl:template>
 
     <xsl:template match="cml:bond" mode="molecular">
+        <xsl:if test="not(parent::cml:bondArray)">
+            <xsl:call-template name="error">
+                <xsl:with-param name="location">
+                    <xsl:apply-templates select="." mode="get-full-path"/>
+                </xsl:with-param>
+                <xsl:with-param name="text">bond must a child of a bondArray</xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+
         <xsl:if test="not(@atomRefs2)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">

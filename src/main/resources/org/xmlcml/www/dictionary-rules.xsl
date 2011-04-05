@@ -7,7 +7,7 @@
         >
     <xsl:output method="xml" omit-xml-declaration="no"
                 standalone="yes" indent="yes"/>
-    <xsl:param name="absoluteXPathToStartElement" select="/"/>
+    <!--<xsl:param name="absoluteXPathToStartElement" select="/"/>-->
 
     <xsl:variable name="conventionName">dictionary</xsl:variable>
 

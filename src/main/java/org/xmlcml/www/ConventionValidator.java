@@ -42,7 +42,7 @@ public class ConventionValidator {
         try {
             knownConventions.put(new URI(conventionNS + "dictionary"), createXSLTTransform(ConventionValidator.class, "dictionary-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "molecular"), createXSLTTransform(ConventionValidator.class, "molecular-rules.xsl"));
-            knownConventions.put(new URI(conventionNS + "cmlcomp"), createXSLTTransform(ConventionValidator.class, "cmlcomp-rules.xsl"));
+            knownConventions.put(new URI(conventionNS + "compchem"), createXSLTTransform(ConventionValidator.class, "compchem-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "unit-dictionary"), createXSLTTransform(ConventionValidator.class, "unit-dictionary-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "unitType-dictionary"), createXSLTTransform(ConventionValidator.class, "unitType-dictionary-rules.xsl"));
         } catch (URISyntaxException e) {
