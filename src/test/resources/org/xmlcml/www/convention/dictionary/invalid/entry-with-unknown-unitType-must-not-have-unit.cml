@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dictionary xmlns="http://www.xml-cml.org/schema"
+            xmlns:convention="http://www.xml-cml.org/convention/"
+            xmlns:unitType="http://www.xml-cml.org/unit/unitType/"
+            xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            convention="convention:dictionary"
+            title="fundamental chemistry concepts"
+            namespace="http://www.xml-cml.org/dictionary/dummy/"
+            dictionaryPrefix="dummy">
+
+     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
+    <dc:description>If the unitType is expressly given as unknown then the unit attribute MUST NOT be present</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
+    <dc:date>2011-04-08</dc:date>
+            <description>
+            <xhtml:p>
+                A dictionary for testing
+            </xhtml:p>
+        </description>
+    <entry id="unknown" term="unknown"
+           dataType="xsd:string" unitType="unitType:unknown" units="dictionaries:dummy">
+        <definition>
+            <xhtml:p>
+                An unknown type of thing
+            </xhtml:p>
+        </definition>
+        <description>
+            <xhtml:p>
+                A description
+            </xhtml:p>
+        </description>
+    </entry>
+
+</dictionary>

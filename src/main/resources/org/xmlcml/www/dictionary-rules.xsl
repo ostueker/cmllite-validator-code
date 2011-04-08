@@ -12,9 +12,13 @@
     <xsl:variable name="conventionName">dictionary</xsl:variable>
 
     <xsl:variable name="conventionNS">http://www.xml-cml.org/convention/</xsl:variable>
+    <xsl:variable name="unitTypeNS">http://www.xml-cml.org/unit/unitType/</xsl:variable>
+    <xsl:variable name="siUnitNS">http://www.xml-cml.org/unit/si/</xsl:variable>
     <xsl:variable name="cmlNS">http://www.xml-cml.org/schema</xsl:variable>
     <xsl:variable name="xhtmlNS">http://www.w3.org/1999/xhtml</xsl:variable>
     <xsl:variable name="ascii-chars">&#32;!"#$%&amp;'()*+,-./0123456789:;&lt;=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~&#127;</xsl:variable>
+    <xsl:variable name="unknownName">unknown</xsl:variable>
+    <xsl:variable name="noneName">none</xsl:variable>
 
     <xsl:template match="/">
         <report:result>
@@ -254,7 +258,8 @@
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="." mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the id of an entry must be unique within the dictionary (duplicate found: <xsl:value-of select="@id"/>)
+                        <xsl:with-param name="text">the id of an entry must be unique within the dictionary (duplicate
+                            found: <xsl:value-of select="@id"/>)
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
@@ -276,7 +281,8 @@
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="@term" mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the term attribute MUST NOT be empty and MUST contain non-whitespace characters
+                        <xsl:with-param name="text">the term attribute MUST NOT be empty and MUST contain non-whitespace
+                            characters
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
@@ -285,7 +291,10 @@
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="@term" mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the value of the term attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</xsl:with-param>
+                        <xsl:with-param name="text">the value of the term attribute MAY contain any valid unicode
+                            character, however it is RECOMMENDED that any character from outside of the ASCII subset
+                            (codepoints 32-127) is represented using an entity reference.
+                        </xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
             </xsl:when>
@@ -343,16 +352,51 @@
             </xsl:call-template>
         </xsl:if>
 
-        <xsl:if test="not(@units)">
-            <xsl:call-template name="warning">
-                <xsl:with-param name="location">
-                    <xsl:apply-templates select="." mode="get-full-path"/>
-                </xsl:with-param>
-                <xsl:with-param name="text">When applicable to the concept defined, an entry SHOULD have a units
-                    attribute, the value of which is a QName referencing the default units
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:if>
+        <xsl:variable name="unitTypeIsUnknown"
+                      select="namespace-uri-for-prefix(substring-before(@unitType, ':'),.) = $unitTypeNS and substring-after(@unitType, ':') = $unknownName"/>
+        <xsl:variable name="unitTypeIsNone"
+                      select="namespace-uri-for-prefix(substring-before(@unitType, ':'),.) = $unitTypeNS and substring-after(@unitType, ':') = $noneName"/>
+        <xsl:choose>
+            <xsl:when test="@units">
+                <xsl:if test="$unitTypeIsUnknown">
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="@units" mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">
+                            If the unitType is expressly given as "unknown" then the unit attribute MUST NOT be present
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
+
+                <xsl:if test="$unitTypeIsNone">
+                    <!-- the unit MUST also be none -->
+                    <xsl:if test="not(namespace-uri-for-prefix(substring-before(@units, ':'),.) = $siUnitNS and substring-after(@units, ':') = $noneName)">
+                        <xsl:call-template name="error">
+                            <xsl:with-param name="location">
+                                <xsl:apply-templates select="@units" mode="get-full-path"/>
+                            </xsl:with-param>
+                            <xsl:with-param name="text">
+                                If the unitType is expressly given as none then the unit attribute MUST be present and
+                                its value must point to http://www.xml-cml.org/unit/si#none.
+                            </xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="not($unitTypeIsUnknown)">
+                    <xsl:call-template name="warning">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">When applicable to the concept defined, an entry SHOULD have a units
+                            attribute, the value of which is a QName referencing the default units
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
 
         <xsl:apply-templates mode="dictionary"/>
     </xsl:template>

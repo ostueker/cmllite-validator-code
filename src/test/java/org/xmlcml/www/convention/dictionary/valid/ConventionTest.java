@@ -39,6 +39,22 @@ public class ConventionTest {
         assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
 
+    @Test
+    public void testEntryWithNoneUnitTypeMustHaveNoneUnit() {
+        String location = root+"entry-with-none-unitType-must-have-none-unit.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testEntryWithUnknownUnitTypeMustNotHaveUnit() {
+        String location = root+"entry-with-unknown-unitType-must-not-have-unit.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
+    }
+
 
 //    @Test
 //    public void testExampleDictionary() {

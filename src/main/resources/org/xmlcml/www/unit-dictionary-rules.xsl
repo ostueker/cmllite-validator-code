@@ -105,7 +105,8 @@
                         <xsl:with-param name="location">
                             <xsl:apply-templates select="@title" mode="get-full-path"/>
                         </xsl:with-param>
-                        <xsl:with-param name="text">the value of the title attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.</xsl:with-param>
+                        <xsl:with-param name="text">the value of the title attribute MAY contain any valid unicode character, however it is RECOMMENDED that any character from outside of the ASCII subset (codepoints 32-127) is represented using an entity reference.
+                        </xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
             </xsl:when>
@@ -114,7 +115,7 @@
                     <xsl:with-param name="location">
                         <xsl:apply-templates select="." mode="get-full-path"/>
                     </xsl:with-param>
-                    <xsl:with-param name="text">a unitList must have a title attribute
+                    <xsl:with-param name="text">a unitList SHOULD have a title attribute
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:otherwise>
