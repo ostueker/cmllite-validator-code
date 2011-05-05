@@ -37,7 +37,7 @@
     </xsl:template>
 
     <xsl:template
-            match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]">
+            match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]" priority="1">
         <xsl:choose>
             <xsl:when test="self::cml:module">
                 <xsl:call-template name="compchem-template"/>
@@ -252,25 +252,27 @@
             </xsl:call-template>
         </xsl:if>
 
-        <!-- The molecule MUST specify a convention using the convention attribute -->
-        <xsl:choose>
-            <xsl:when test="child::cml:molecule[@convention]">
-                <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
-                <xsl:call-template name="molecule-convention-rules">
-                    <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="error">
-                    <xsl:with-param name="location">
-                        <xsl:apply-templates select="." mode="get-full-path"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="text">
-                        The molecule MUST specify a convention using the convention attribute
-                    </xsl:with-param>
-                </xsl:call-template>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:if test="child::cml:molecule">
+            <!-- The molecule MUST specify a convention using the convention attribute -->
+            <xsl:choose>
+                <xsl:when test="child::cml:molecule[@convention]">
+                    <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
+                    <xsl:call-template name="molecule-convention-rules">
+                        <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">
+                            The molecule MUST specify a convention using the convention attribute
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
 
         <!--An initialization module element MUST NOT contain more than one parameterList element.-->
         <xsl:if test="count(child::cml:parameterList) > 1">
@@ -286,7 +288,7 @@
         </xsl:if>
 
         <!--An initialization module element MUST contain at least one child of molecule, parameterList or user defined module element.-->
-        <xsl:if test="not(child::cml:molecule or child::cml:module[@dictRef])">
+        <xsl:if test="not(child::cml:molecule or child::cml:parameterList or child::cml:module[@dictRef])">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -319,25 +321,27 @@
             </xsl:call-template>
         </xsl:if>
 
-        <!-- The molecule MUST specify a convention using the convention attribute -->
-        <xsl:choose>
-            <xsl:when test="child::cml:molecule[@convention]">
-                <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
-                <xsl:call-template name="molecule-convention-rules">
-                    <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="error">
-                    <xsl:with-param name="location">
-                        <xsl:apply-templates select="." mode="get-full-path"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="text">
-                        The molecule MUST specify a convention using the convention attribute
-                    </xsl:with-param>
-                </xsl:call-template>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:if test="child::cml:molecule">
+            <!-- The molecule MUST specify a convention using the convention attribute -->
+            <xsl:choose>
+                <xsl:when test="child::cml:molecule[@convention]">
+                    <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
+                    <xsl:call-template name="molecule-convention-rules">
+                        <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">
+                            The molecule MUST specify a convention using the convention attribute
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
 
         <!--A calculation module element MUST NOT contain more than one parameterList element.-->
         <xsl:if test="count(child::cml:parameterList) > 1">
@@ -401,25 +405,27 @@
             </xsl:call-template>
         </xsl:if>
 
-        <!-- The molecule MUST specify a convention using the convention attribute -->
-        <xsl:choose>
-            <xsl:when test="child::cml:molecule[@convention]">
-                <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
-                <xsl:call-template name="molecule-convention-rules">
-                    <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="error">
-                    <xsl:with-param name="location">
-                        <xsl:apply-templates select="." mode="get-full-path"/>
-                    </xsl:with-param>
-                    <xsl:with-param name="text">
-                        The molecule MUST specify a convention using the convention attribute
-                    </xsl:with-param>
-                </xsl:call-template>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:if test="child::cml:molecule">
+            <!-- The molecule MUST specify a convention using the convention attribute -->
+            <xsl:choose>
+                <xsl:when test="child::cml:molecule[@convention]">
+                    <!-- and the convention SHOULD be one of the RECOMMENDED molecular conventions -->
+                    <xsl:call-template name="molecule-convention-rules">
+                        <xsl:with-param name="convention-attribute" select="child::cml:molecule/@convention"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="error">
+                        <xsl:with-param name="location">
+                            <xsl:apply-templates select="." mode="get-full-path"/>
+                        </xsl:with-param>
+                        <xsl:with-param name="text">
+                            The molecule MUST specify a convention using the convention attribute
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
 
         <!--A finalization module element MUST NOT contain more than one propertyList element.-->
         <xsl:if test="count(child::cml:propertyList) > 1">
