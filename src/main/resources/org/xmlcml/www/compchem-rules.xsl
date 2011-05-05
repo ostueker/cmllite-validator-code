@@ -287,8 +287,13 @@
             </xsl:call-template>
         </xsl:if>
 
+        <xsl:variable name="hasUserDefinedModuleChild">
+            <xsl:apply-templates mode="calculate-hasUserDefinedModuleChild" select="." />
+        </xsl:variable>
+
         <!--An initialization module element MUST contain at least one child of molecule, parameterList or user defined module element.-->
-        <xsl:if test="not(child::cml:molecule or child::cml:parameterList or child::cml:module[@dictRef])">
+
+        <xsl:if test="not(child::cml:molecule or child::cml:parameterList or $hasUserDefinedModuleChild)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -369,9 +374,13 @@
             </xsl:call-template>
         </xsl:if>
 
+        <xsl:variable name="hasUserDefinedModuleChild">
+            <xsl:apply-templates mode="calculate-hasUserDefinedModuleChild" select="." />
+        </xsl:variable>
+
         <!-- A calculation module element MUST contain at least one child of molecule, parameterList, propertyList or user
         defined module elements. -->
-        <xsl:if test="not(child::cml:molecule or child::cml:parameterList or child::cml:propertyList or child::cml:module[@dictRef])">
+        <xsl:if test="not(child::cml:molecule or child::cml:parameterList or child::cml:propertyList or $hasUserDefinedModuleChild)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -440,9 +449,13 @@
             </xsl:call-template>
         </xsl:if>
 
+        <xsl:variable name="hasUserDefinedModuleChild">
+            <xsl:apply-templates mode="calculate-hasUserDefinedModuleChild" select="." />
+        </xsl:variable>
+
         <!-- A finalization module element MUST contain at least one child of molecule, propertyList or user
         defined module elements. -->
-        <xsl:if test="not(child::cml:molecule or child::cml:propertyList or child::cml:module[@dictRef])">
+        <xsl:if test="not(child::cml:molecule or child::cml:propertyList or $hasUserDefinedModuleChild)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -511,9 +524,13 @@
             </xsl:call-template>
         </xsl:if>
 
+        <xsl:variable name="hasUserDefinedModuleChild">
+            <xsl:apply-templates mode="calculate-hasUserDefinedModuleChild" select="." />
+        </xsl:variable>
+
         <!-- An environment module element MUST contain at least one child of propertyList or user
         defined module elements. -->
-        <xsl:if test="not(child::cml:propertyList or child::cml:module[@dictRef])">
+        <xsl:if test="not(child::cml:propertyList or $hasUserDefinedModuleChild)">
             <xsl:call-template name="error">
                 <xsl:with-param name="location">
                     <xsl:apply-templates select="." mode="get-full-path"/>
@@ -683,6 +700,36 @@
         </xsl:call-template>
     </xsl:template>
 
+
+    <xsl:template match="cml:module" mode="calculate-hasUserDefinedModuleChild">
+        <xsl:choose>
+            <xsl:when test="child::cml:module[@dictRef]">
+                <xsl:choose>
+                    <xsl:when test="child::cml:module[not(namespace-uri-for-prefix(substring-before(@dictRef, ':'),.) = $compChemDict)]">
+                        <xsl:value-of select="true()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                           <xsl:when test="child::cml:module[namespace-uri-for-prefix(substring-before(@dictRef, ':'),.) = $compChemDict
+                                and not(substring-after(@dictRef, ':') = $initializationName
+                                        or substring-after(@dictRef, ':') = $calculationName
+                                        or substring-after(@dictRef, ':') = $finalizationName
+                                        or substring-after(@dictRef, ':') = $environmentName
+                                        )]">
+                                <xsl:value-of select="true()"/>
+                           </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="false()"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="false()" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
     <xsl:template name="molecule-convention-rules">
         <xsl:param name="convention-attribute"/>
