@@ -37,7 +37,7 @@
     </xsl:template>
 
     <xsl:template
-            match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]" priority="1">
+            match="cml:*[@convention and namespace-uri-for-prefix(substring-before(@convention, ':'),.) = $conventionNS and substring-after(@convention, ':') = $conventionName]" priority="-1">
         <xsl:choose>
             <xsl:when test="self::cml:module">
                 <xsl:call-template name="compchem-template"/>
