@@ -16,12 +16,12 @@
             <cml:atom elementType="Br" id="a5" />
         </cml:atomArray>
         <cml:bondArray>
-            <cml:bond id="b1" atomRefs2="a1 a2" order="1">
+            <cml:bond id="b1" atomRefs2="a1 a2" order="S">
                 <cml:bondStereo atomRefs4="a1 a2 a3 a4">H</cml:bondStereo>
             </cml:bond>
-            <cml:bond id="b2" atomRefs2="a1 a3" order="1" />
-            <cml:bond id="b3" atomRefs2="a1 a4" order="1" />
-            <cml:bond id="b4" atomRefs2="a1 a5" order="1" />
+            <cml:bond id="b2" atomRefs2="a1 a3" order="S" />
+            <cml:bond id="b3" atomRefs2="a1 a4" order="S" />
+            <cml:bond id="b4" atomRefs2="a1 a5" order="S" />
         </cml:bondArray>
     </cml:molecule>
 </cml:cml>
