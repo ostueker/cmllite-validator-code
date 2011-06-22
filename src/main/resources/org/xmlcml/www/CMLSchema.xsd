@@ -17,31 +17,6 @@
             <xsd:enumeration value="parallel"/>
         </xsd:restriction>
     </xsd:simpleType>
-    <xsd:simpleType id="st.alternativeTypeType" name="alternativeTypeType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <h:div class="summary">The type of an alternative.</h:div>
-                <h:div class="general">This adds semantics to an _alternative_ and might be used by an RDF or related
-                    engine.
-                </h:div>
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
-                <xsd:restriction base="xsd:string">
-                    <xsd:enumeration value="synonym"/>
-                    <xsd:enumeration value="quasi-synonym"/>
-                    <xsd:enumeration value="acronym"/>
-                    <xsd:enumeration value="abbreviation"/>
-                    <xsd:enumeration value="homonym"/>
-                    <xsd:enumeration value="identifier"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
-    </xsd:simpleType>
     <xsd:simpleType name="angleUnitsType" id="st.angleUnitsType">
     <xsd:annotation>
       <xsd:documentation>
@@ -527,8 +502,6 @@
                 <h:div class="curation">2006-01-13: PMR. Created.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="columnVectors">
                         <xsd:annotation>
@@ -544,12 +517,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="elementTypeArrayType" id="st.elementTypeArrayType">
         <xsd:annotation>
@@ -766,20 +742,21 @@
                 <h:div class="example" href="scalar1.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="observedRange"/>
                     <xsd:enumeration value="observedStandardDeviation"/>
                     <xsd:enumeration value="observedStandardError"/>
                     <xsd:enumeration value="estimatedStandardDeviation"/>
                     <xsd:enumeration value="estimatedStandardError"/>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="errorValueArrayType" id="st.errorValueArrayType">
         <xsd:annotation>
@@ -855,13 +832,11 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="1D">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div class="summary">one dimensional spectru.</h:div>
+                                <h:div class="summary">one dimensional spectrum.</h:div>
                                 <h:div class="description">
                                     Data are represented by two _array_s, one representing the independent variable
                                     (e.g. wavelength, mass number) and the other the measured dependent variable
@@ -875,7 +850,7 @@
                     <xsd:enumeration value="2Dsymm">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div class="summary">Two dimensional spectru.</h:div>
+                                <h:div class="summary">Two dimensional spectrum.</h:div>
                                 <h:div class="description">
                                     Data are represented by a single symmetric _matrix_ with both axes identical (i.e.
                                     the same independent variable). A typical example is a "2D 1HNMR spectrum". The
@@ -896,12 +871,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                     </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="formulaType" id="st.formulaType">
         <xsd:annotation>
@@ -928,8 +906,6 @@
                 <h:div class="description">Indicates whether a spectrum is raw FID or has been transforme.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="raw">
                         <xsd:annotation>
@@ -956,12 +932,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                     </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="headType" id="st.headType">
         <xsd:annotation>
@@ -1190,8 +1169,6 @@
                 <h:div class="example" href="lattice3.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="primitive"/>
                     <xsd:enumeration value="full"/>
@@ -1204,21 +1181,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                     </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User-defined lattice-type.</h:div>
-                            <h:div class="description">This definition must be by reference to a namespaced dictionary
-                                entry.
-                            </h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType id="st.linkTypeType" name="linkTypeType">
         <xsd:annotation>
@@ -1308,8 +1279,6 @@
                 <h:div class="example" href="matrix1.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="rectangular">
                         <xsd:annotation>
@@ -1616,21 +1585,15 @@
                     <xsd:enumeration value="rotation33"/>
                     <xsd:enumeration value="rotationTranslation43"/>
                     <xsd:enumeration value="homogeneous44"/>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User-defined matrix-type.</h:div>
-                            <h:div class="description">This definition must be by reference to a namespaced dictionary
-                                entry.
-                            </h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="maxType" id="st.maxType">
         <xsd:annotation>
@@ -1673,8 +1636,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="transmittance">
                         <xsd:annotation>
@@ -1691,340 +1652,29 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="metadataType" id="st.metadataType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The name of the metadata.</h:div>
                 <h:div class="description">Metadata consists of name-value pairs (value is in the "content" attribute).
-                    The names are from a semi-restricted vocabulary, mainly Dublin Core. The content is unrestricted.
-                    The order of metadata has no implied semantics at present. Users can create their own metadata names
+                    It is expected that the names come from defined vocabularies (such as Dublin Core). The content is
+                    unrestricted. The order of metadata has no implied semantics at present. Users can create their own metadata names
                     using the namespaced prefix syntax (e.g. foo:institution). Ideally these names should be defined in
-                    an STMML dictionary.
+                    a dictionary.
                 </h:div>
-                <h:div class="curation">2003-03-05: Added UNION to manage non-controlled name.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
-                <xsd:restriction base="xsd:string">
-                    <xsd:enumeration value="dc:coverage">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    The extent or scope of the
-                                    content of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Coverage will typically include
-                                    spatial location (a place name or geographic
-                                    coordinates), temporal period (a period label, date, or
-                                    date range) or jurisdiction (such as a named
-                                    administrative entity). Recommended best practice is to
-                                    select a value from a controlled vocabulary (for
-                                    example, the Thesaurus of Geographic Names [TGN]) and
-                                    that, where appropriate, named places or time periods
-                                    be used in preference to numeric identifiers such as
-                                    sets of coordinates or date ranges.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:description">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    An account of the content of the
-                                    resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Description may include but is not
-                                    limited to: an abstract, table of contents, reference
-                                    to a graphical representation of content or a free-text
-                                    account of the content.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:identifier">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    An unambiguous reference to the
-                                    resource within a given context.
-                                </h:div>
-                                <h:div class="description">
-                                    Recommended best practice is to
-                                    identify the resource by means of a string or number
-                                    conforming to a formal identification system. Example
-                                    formal identification systems include the Uniform
-                                    Resource Identifier (URI) (including the Uniform
-                                    Resource Locator (URL)), the Digital Object Identifier
-                                    (DOI) and the International Standard Book Number
-                                    (ISBN).
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:format">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    The physical or digital
-                                    manifestation of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically, Format may include the
-                                    media-type or dimensions of the resource. Format may be
-                                    used to determine the software, hardware or other
-                                    equipment needed to display or operate the resource.
-                                    Examples of dimensions include size and duration.
-                                    Recommended best practice is to select a value from a
-                                    controlled vocabulary (for example, the list of
-                                    Internet Media Types [MIME] defining computer media
-                                    formats).
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:relation">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    A reference to a related
-                                    resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Recommended best practice is to
-                                    reference the resource by means of a string or number
-                                    conforming to a formal identification system.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:rights">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    Information about rights held in
-                                    and over the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically, a Rights element will
-                                    contain a rights management statement for the resource,
-                                    or reference a service providing such information.
-                                    Rights information often encompasses Intellectual
-                                    Property Rights (IPR), Copyright, and various Property
-                                    Rights. If the Rights element is absent, no assumptions
-                                    can be made about the status of these and other rights
-                                    with respect to the resource.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:subject">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    The topic of the content of the
-                                    resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically, a Subject will be
-                                    expressed as keywords, key phrases or classification
-                                    codes that describe a topic of the resource.
-                                    Recommended best practice is to select a value from a
-                                    controlled vocabulary or formal classification
-                                    scheme.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:title">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">A name given to the resource.</h:div>
-                                <h:div class="description">
-                                    Typically, a Title will be a name by
-                                    which the resource is formally known.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:type">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    The nature or genre of the
-                                    content of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Type includes terms describing
-                                    general categories, functions, genres, or aggregation
-                                    levels for content. Recommended best practice is to
-                                    select a value from a controlled vocabulary (for
-                                    example, the working draft list of Dublin Core Types
-                                    [DCT1]). To describe the physical or digital
-                                    manifestation of the resource, use the FORMAT
-                                    element.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:contributor">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    An entity responsible for making
-                                    contributions to the content of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Examples of a Contributor include a
-                                    person, an organisation, or a service. Typically, the
-                                    name of a Contributor should be used to indicate the
-                                    entity.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:creator">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    An entity primarily responsible
-                                    for making the content of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Examples of a Creator include a
-                                    person, an organisation, or a service. Typically, the
-                                    name of a Creator should be used to indicate the
-                                    entity.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:publisher">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    An entity responsible for making
-                                    the resource available.
-                                </h:div>
-                                <h:div class="description">
-                                    Examples of a Publisher include a
-                                    person, an organisation, or a service. Typically, the
-                                    name of a Publisher should be used to indicate the
-                                    entity.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:source">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    A Reference to a resource from
-                                    which the present resource is derived.
-                                </h:div>
-                                <h:div class="description">
-                                    The present resource may be derived
-                                    from the Source resource in whole or in part.
-                                    Recommended best practice is to reference the resource
-                                    by means of a string or number conforming to a formal
-                                    identification system.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:language">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    A language of the intellectual
-                                    content of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Recommended best practice for the
-                                    values of the Language element is defined by RFC 1766
-                                    [RFC1766] which includes a two-letter Language Code
-                                    (taken from the ISO 639 standard [ISO639]), followed
-                                    optionally, by a two-letter Country Code (taken from
-                                    the ISO 3166 standard [ISO3166]). For example, 'en' for
-                                    English, 'fr' for French, or 'en-uk' for English used
-                                    in the United Kingdom.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="dc:date">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    A date associated with an event
-                                    in the life cycle of the resource.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically, Date will be associated
-                                    with the creation or availability of the resource.
-                                    Recommended best practice for encoding the date value
-                                    is defined in a profile of ISO 8601 [W3CDTF] and
-                                    follows the YYYY-MM-DD format.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="cmlm:safety">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    Entry contains information
-                                    relating to chemical safety.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically the content will be a
-                                    reference to a handbook, MSDS, threshhold or other
-                                    human-readable strin.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="cmlm:insilico">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">
-                                    Part or whole of the information
-                                    was computer-generated.
-                                </h:div>
-                                <h:div class="description">
-                                    Typically the content will be the
-                                    name of a method or a progra.
-                                </h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="cmlm:structure">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <h:div class="definition">3D structure included.</h:div>
-                                <h:div class="description">details include.</h:div>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                    <xsd:enumeration value="cmlm:reaction"/>
-                    <xsd:enumeration value="cmlm:identifier"/>
-                    <xsd:enumeration value="other"/>
-                </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
+                <xsd:restriction base="namespaceRefType" />
     </xsd:simpleType>
     <xsd:simpleType name="minType" id="st.minType">
         <xsd:annotation>
@@ -2366,8 +2016,6 @@
                 <h:div class="description">Uses a semi-controlled vocabulary.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="singlet">
                         <xsd:annotation>
@@ -2420,18 +2068,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div>User contributed vocabulary of type foo:ba.</h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType id="st.peakShapeType" name="peakShapeType">
         <xsd:annotation>
@@ -2443,8 +2088,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="sharp">
                         <xsd:annotation>
@@ -2469,18 +2112,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User contributed vocabulary of type foo:bar.</h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType id="st.peakStructureTypeType" name="peakStructureTypeType">
         <xsd:annotation>
@@ -2492,8 +2132,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="coupling">
                         <xsd:annotation>
@@ -2509,18 +2147,16 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
+
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User contributed vocabulary.</h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="peakWidthType" id="st.peakWidthType">
         <xsd:annotation>
@@ -2619,8 +2255,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="reactantProduct">
                         <xsd:annotation>
@@ -2640,12 +2274,17 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
+
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
+
     </xsd:simpleType>
     <xsd:simpleType name="reactionRoleType" id="st.reactionRoleType">
         <xsd:annotation>
@@ -2654,8 +2293,6 @@
                 <h:div class="description">Semantics are semi-controlled.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="complete">
                         <xsd:annotation>
@@ -2711,20 +2348,16 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div>
-                                <h:p>Examples could be "myDict:step1", "foo:chainPropagation", etc.</h:p>
-                            </h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
+
     </xsd:simpleType>
     <xsd:simpleType id="st.reactionStepListTypeType" name="reactionStepListTypeType">
         <xsd:annotation>
@@ -2742,8 +2375,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="unknown">
                         <xsd:annotation>
@@ -2778,12 +2409,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="reactionTypeType" id="st.reactionTypeType">
         <xsd:annotation>
@@ -2802,9 +2436,7 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
-                <xsd:restriction base="xsd:string">
+                       <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="chainReaction">
                         <xsd:annotation>
                             <xsd:documentation>
@@ -2857,12 +2489,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                           <xsd:enumeration value="other">
+                               <xsd:annotation>
+                                   <xsd:documentation>
+                                       <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                       </h:div>
+                                   </xsd:documentation>
+                               </xsd:annotation>
+                       </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="refType" id="st.refType">
         <xsd:annotation>
@@ -2920,8 +2555,6 @@
                 </h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="unknown">
                         <xsd:annotation>
@@ -2957,12 +2590,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="shapeType" id="st.shapeType">
         <xsd:annotation>
@@ -2974,9 +2610,7 @@
                 <h:div class="example" href="arrayList1.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
-                <xsd:restriction base="xsd:string">
+                      <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="rectangular">
                         <xsd:annotation>
                             <xsd:documentation>
@@ -3005,21 +2639,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                          <xsd:enumeration value="other">
+                              <xsd:annotation>
+                                  <xsd:documentation>
+                                      <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                      </h:div>
+                                  </xsd:documentation>
+                              </xsd:annotation>
+                      </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User-defined arrayList-type.</h:div>
-                            <h:div class="description">This definition must be by reference to a namespaced dictionary
-                                entry.
-                            </h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="sizeType" id="st.sizeType">
         <xsd:annotation>
@@ -3040,8 +2668,6 @@
                 <h:div class="example" href="space1.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="real"/>
                     <xsd:enumeration value="k-space">
@@ -3065,19 +2691,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User-defined space-type.</h:div>
-                            <h:div class="description">No obvious possibilities, but who know.</h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType id="st.spectrumTypeType" name="spectrumTypeType">
         <xsd:annotation>
@@ -3085,8 +2707,6 @@
                 <h:div class="summary">The type of the spectrum.</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="infrared">
                         <xsd:annotation>
@@ -3136,12 +2756,16 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
+
     </xsd:simpleType>
     <xsd:simpleType name="sphere3Type" id="st.sphere3Type">
         <xsd:annotation>
@@ -3171,13 +2795,11 @@
                 <h:div class="example" href="stateType1.xml"/>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="aqueous">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>An aqueous solutio.</h:div>
+                                <h:div>An aqueous solution.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
@@ -3205,44 +2827,47 @@
                     <xsd:enumeration value="nematic">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>The nematic phas.</h:div>
+                                <h:div>The nematic phase.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
                     <xsd:enumeration value="smectic">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>The smectic phas.</h:div>
+                                <h:div>The smectic phase.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
                     <xsd:enumeration value="solid">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>A soli.</h:div>
+                                <h:div>A solid.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
                     <xsd:enumeration value="solidSolution">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>A solid solutio.</h:div>
+                                <h:div>A solid solution.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
                     <xsd:enumeration value="solution">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <h:div>A (liquid) solutio.</h:div>
+                                <h:div>A (liquid) solution.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType"/>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="stereoType" id="st.stereoType">
         <xsd:annotation>
@@ -3342,8 +2967,6 @@
                 <h:div class="curation">2006-11-03: formlized 3 table types</h:div>
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:union>
-            <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
                     <xsd:enumeration value="rowBased">
                         <xsd:annotation>
@@ -3366,21 +2989,15 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
+                    <xsd:enumeration value="other">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="summary">A value not in the controlled vocabulary - use dictRef to add further information.
+                                </h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:enumeration>
                 </xsd:restriction>
-            </xsd:simpleType>
-            <xsd:simpleType>
-                <xsd:restriction base="namespaceRefType">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <h:div class="summary">User-defined table-type.</h:div>
-                            <h:div class="description">This definition must be by reference to a namespaced dictionary
-                                entry.
-                            </h:div>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:restriction>
-            </xsd:simpleType>
-        </xsd:union>
     </xsd:simpleType>
     <xsd:simpleType name="tailType" id="st.tailType">
         <xsd:annotation>
@@ -3410,33 +3027,6 @@
         <xsd:restriction base="xsd:double">
             <xsd:minInclusive value="-360.0"/>
             <xsd:maxInclusive value="360.0"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-    <xsd:simpleType name="unitListTypeType" id="st.unitListTypeType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <h:div class="summary">Type of unitList.</h:div>
-                <h:div class="description">
-                    Required to differentiate between the two types of
-                    unitList (units and unitTypes)
-                </h:div>
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="unit">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <h:div class="description">child elements are unit</h:div>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="unitType">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <h:div class="description">child elements are unitType</h:div>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:enumeration>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="unitsType" id="st.unitsType">
@@ -5820,20 +5410,6 @@
                 <xsd:documentation>
                     <h:div class="summary">Type of the object.</h:div>
                     <h:div class="description">A qualifier which may affect the semantics of the object.</h:div>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:attribute>
-    </xsd:attributeGroup>
-    <xsd:attributeGroup id="attGp.unitListType" name="unitListType">
-        <xsd:attribute id="att.unitListType" name="type" type="unitListTypeType">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <h:div class="summary">A reference to the type of a unit.</h:div>
-                    <h:div class="description">
-                        Needed to differentiate the rather unhappy
-                        polymorphism of unitList/unit and unitList/unitType.
-                    </h:div>
-                    <h:div class="curation">2005-12-17 PMR: Added</h:div>
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
@@ -10474,7 +10050,7 @@
             <xsd:attributeGroup ref="title"/>
             <xsd:attributeGroup ref="id"/>
             <xsd:attributeGroup ref="ref"/>
-            <xsd:attributeGroup ref="type"/>
+            <xsd:attributeGroup ref="reactionStepListType"/>
             <xsd:attributeGroup ref="reactionFormat"/>
             <xsd:anyAttribute namespace="##other" processContents="lax"/>
         </xsd:complexType>

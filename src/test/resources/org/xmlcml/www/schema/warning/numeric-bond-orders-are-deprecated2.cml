@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.xml-cml.org/schema">
+    <dc:title>test file for http://www.xml-cml.org/schema</dc:title>
+    <dc:description>should be a warning numeric bond orders are deprecated</dc:description>
+    <dc:author>J A Townsend</dc:author>
+    <dc:rights>Copyright J A Townsend jat45@cantab.net 2011.</dc:rights>
+    <dc:date>2011-06-21</dc:date>
+    <bond order="2" />
+</cml>
+

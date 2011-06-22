@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cml xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:title>test file for http://www.xml-cml.org/conventions/molecular convention</dc:title>
+    <dc:title>test file for http://www.xml-cml.org/schema</dc:title>
     <dc:description>should be a warning as no cml is present. CML must be namespaced</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>

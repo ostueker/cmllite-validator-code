@@ -4,10 +4,7 @@ import nu.xom.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,6 +37,7 @@ public class ConventionTest {
         String location = root + "definition-must-be-child-of-entry.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
         assertEquals(location + " should be invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
     }
 

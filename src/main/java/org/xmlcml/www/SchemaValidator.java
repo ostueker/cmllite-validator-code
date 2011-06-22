@@ -107,6 +107,16 @@ public class SchemaValidator {
                 }
             }
         }
+        if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
+            Nodes bondOrders = doc.query("//*[namespace-uri()='"+CmlLiteValidator.CML_NS+"']/@*[local-name()='order' and namespace-uri()='']");
+            for (int i = 0, max = bondOrders.size(); i < max; i++) {
+                String order = bondOrders.get(i).getValue();
+                if ("1".equals(order) || "2".equals(order) || "3".equals(order)) {
+                    report.addWarning("numeric bond orders are deprecated (found order='"+order+"')");
+                    report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
+                }
+            }
+        }
         return report;
     }
 
