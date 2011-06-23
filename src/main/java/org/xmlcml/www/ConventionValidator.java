@@ -28,7 +28,7 @@ public class ConventionValidator {
     private static Map<URI, XSLTransform> knownConventions = null;
     private final static String conventionNS = "http://www.xml-cml.org/convention/";
     private static URI dummy = null;
-    private URIValidator uriValidator = new URIValidator();
+
     static {
         registerKnownConventionLocations();
     }
@@ -61,7 +61,6 @@ public class ConventionValidator {
 
     public ValidationReport validate(Document doc) {
         ValidationReport report = new ValidationReport("convention-validation-test");
-        report.setValidationResult(ValidationResult.VALID);
         if (doc != null) {
             Map<URI, List<Element>> conventionsMap = findConventions(doc, report);
             if (conventionsMap != null) {
@@ -86,7 +85,7 @@ public class ConventionValidator {
             }
         }
         if (!ValidationResult.INVALID.equals(report.getValidationResult())) {
-            uriValidator.validate(doc, report);
+            report.addValid("document conforms to all the conventions specified");
         }
         return report;
     }

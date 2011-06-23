@@ -113,7 +113,9 @@ public class URIValidator {
         return new URIValidator(timeoutConnection,socketConnection);
     }
 
-    public ValidationReport validate(Document document, ValidationReport report) {
+    public ValidationReport validate(Document document) {
+        ValidationReport report = new ValidationReport("uris-reachable-test");
+
         checkNamespaceAttributes(document, report);
         checkConventionAttributes(document, report);
         Nodes nodes = document.query("//*[namespace-uri()='" +
@@ -160,6 +162,9 @@ public class URIValidator {
                     report.addWarning("the entry '" + path + "' was not reachable in the document found at " + entry.getKey().toString());
                 }
             }
+        }
+        if (ValidationResult.VALID.equals(report.getValidationResult())) {
+            report.addValid("All appropriate URIs were reachable");
         }
         return report;
     }

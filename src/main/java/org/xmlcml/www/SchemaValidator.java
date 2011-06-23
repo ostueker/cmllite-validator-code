@@ -116,6 +116,7 @@ public class SchemaValidator {
                     report.setValidationResult(ValidationResult.VALID_WITH_WARNINGS);
                 }
             }
+            report.addValid("document conforms to the schema");
         }
         return report;
     }

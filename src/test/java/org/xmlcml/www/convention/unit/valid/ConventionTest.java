@@ -4,10 +4,7 @@ import nu.xom.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.ConventionValidator;
-import org.xmlcml.www.TestUtils;
-import org.xmlcml.www.ValidationReport;
-import org.xmlcml.www.ValidationResult;
+import org.xmlcml.www.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,6 +36,15 @@ public class ConventionTest {
         String location = root+"example-unit-list.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
+    }
+
+    @Test
+    public void testValidUnitListWithInfo() {
+        String location = root+"valid-unit-list-with-info.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
         assertEquals(location+" should be valid\n"+report.getReport().toXML() , ValidationResult.VALID, report.getValidationResult());
     }
 

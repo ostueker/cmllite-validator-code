@@ -24,11 +24,16 @@ public class ValidationReport {
     private Element element = null;
 
     public ValidationReport(String testType) {
+        this(testType, ValidationResult.VALID);
+    }
+
+    public ValidationReport(String testType, ValidationResult initialValidationResult) {
         document = new Document(new Element("report", reportNS));
         element = new Element(testType, reportNS);
         document.getRootElement().appendChild(element);
-        setValidationResult(ValidationResult.INVALID);
+        setValidationResult(initialValidationResult);
     }
+
 
     public ValidationResult getValidationResult() {
         return this.validationResult;

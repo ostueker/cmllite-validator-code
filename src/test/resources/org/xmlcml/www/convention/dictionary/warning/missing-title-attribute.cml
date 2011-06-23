@@ -6,7 +6,7 @@
      xmlns:dictionaries="http://www.xml-cml.org/dictionary/"
      convention="conventions:dictionary">
     <dc:title>test file for http://www.xml-cml.org/convention/dictionary convention</dc:title>
-    <dc:description>a valid dictionary</dc:description>
+    <dc:description>a valid (with warnings) dictionary - the dictionary SHOULD have a namespace attribute</dc:description>
     <dc:author>J A Townsend</dc:author>
     <dc:rights>Copyright J A Townsend jat45@cantab.net 2009.</dc:rights>
     <dc:date>2010-12-23</dc:date>

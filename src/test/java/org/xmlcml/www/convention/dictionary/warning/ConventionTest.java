@@ -92,7 +92,14 @@ public class ConventionTest {
         String location = root + "namespace-should-be-resolvable-url.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
-        assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
+        System.out.println("report 1");
+        CmlLiteValidator.print(report.getReport(), System.out);
+        assertEquals(location + "should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
+        URIValidator uriValidator = new URIValidator();
+        System.out.println("report 2");
+        report = uriValidator.validate(input);
+        CmlLiteValidator.print(report.getReport(), System.out);
+        assertEquals(location + " should be warning " + report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 
     @Test
@@ -124,7 +131,10 @@ public class ConventionTest {
         String location = root + "unit-value-not-found-in-dictionary.cml";
         Document input = testUtils.getFileAsDocument(location);
         report = conventionValidator.validate(input);
+        assertEquals(location + " should be valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
         CmlLiteValidator.print(report.getReport(), System.out);
+        URIValidator uriValidator = new URIValidator();
+        report = uriValidator.validate(input);
         assertEquals(location + " should be warning "+report.getReport().toXML(), ValidationResult.VALID_WITH_WARNINGS, report.getValidationResult());
     }
 

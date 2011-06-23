@@ -22,6 +22,7 @@ public class CmlLiteValidator {
     private XmlWellFormednessValidator xmlWellFormednessValidator = new XmlWellFormednessValidator();
     private SchemaValidator schemaValidator = new SchemaValidator();
     private ConventionValidator conventionValidator = new ConventionValidator();
+    private URIValidator uriValidator = new URIValidator();
 
     /**
      * Validate an XML from given input stream.
@@ -56,23 +57,22 @@ public class CmlLiteValidator {
                 return createFinalReport(schemaReport.getValidationResult(), xmlWellFormedReport, schemaReport);
             }
             default: {
-                schemaReport.addValid("document conforms to the schema");
                 ValidationReport conventionsReport = conventionValidator.validate(document);
-                return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport);
+                // we can do qname validation even if the document is not fully convention valid
 
-//                ValidationReport qnameReachableReport = uriValidator.validate(document);
-//                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
-//                    qnameReachableReport.addValid("all dictRefs are resolvable");
-//                }
-//                switch (conventionsReport.getValidationResult()) {
-//                    case VALID: {
-//                        conventionsReport.addValid("document conforms to the convention(s) specified");
-//                        return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
-//                    }
-//                    default : {
-//                        return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
-//                    }
-//                }
+                ValidationReport qnameReachableReport = uriValidator.validate(document);
+                if (ValidationResult.VALID.equals(qnameReachableReport.getValidationResult())) {
+                    qnameReachableReport.addValid("all dictRefs are resolvable");
+                }
+                switch (conventionsReport.getValidationResult()) {
+                    case VALID: {
+                        conventionsReport.addValid("document conforms to the convention(s) specified");
+                        return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+                    }
+                    default : {
+                        return createFinalReport(conventionsReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
+                    }
+                }
             }
         }
     }
@@ -87,7 +87,7 @@ public class CmlLiteValidator {
         }
     }
 
-    private ValidationReport createFinalReport(ValidationResult result, ValidationReport... reports) {
+    public ValidationReport createFinalReport(ValidationResult result, ValidationReport... reports) {
         ValidationReport finalReport = new ValidationReport("final-report");
         finalReport.setValidationResult(result);
         for (ValidationReport report : reports) {
