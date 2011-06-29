@@ -1,14 +1,14 @@
 package org.xmlcml.www.convention.simpleUnit.invalid;
 
-import org.apache.commons.io.FileUtils;
+import nu.xom.Document;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xmlcml.www.*;
-
-import java.io.File;
-import java.util.Collection;
+import org.xmlcml.www.ConventionValidator;
+import org.xmlcml.www.TestUtils;
+import org.xmlcml.www.ValidationReport;
+import org.xmlcml.www.ValidationResult;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -39,19 +39,76 @@ public class ConventionTest {
         report = null;
     }
 
-   @Test
-    public void testInvalidAreSchemaValid() {
-        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/invalid"), new String[]{"cml"}, false);
-        assertFalse("there should be test documents", files.isEmpty());
-        for (File file : files) {
-            //ValidationReport report = conventionValidator.validate(testUtils.getFileAsDocument(file));
-            CmlLiteValidator validator = new CmlLiteValidator();
-              ValidationReport report = validator.validate(testUtils.getFileAsDocument(file));
+    @Test
+    public void testSimpleUnitMustBeSpecifiedOnUnitList1() {
+        String location = root + "simpleUnit-must-be-specified-on-unitList-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
 
-            System.out.println("report for: "+file.getAbsolutePath());
-            CmlLiteValidator.print(report.getReport(), System.out);
-            assertEquals(file.getAbsolutePath() + " should be convention invalid " + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
-        }
+    @Test
+    public void testSimpleUnitMustBeSpecifiedOnUnitList2() {
+        String location = root + "simpleUnit-must-be-specified-on-unitList-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild1() {
+        String location = root + "unitList-must-have-child-unit-1.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild2() {
+        String location = root + "unitList-must-have-child-unit-2.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild3() {
+        String location = root + "unitList-must-have-child-unit-3.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild4() {
+        String location = root + "unitList-must-have-child-unit-4.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild5() {
+        String location = root + "unitList-must-have-child-unit-5.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
+    }
+
+    @Test
+    public void testUnitListMustHaveUnitChild6() {
+        String location = root + "unitList-must-have-child-unit-6.cml";
+        Document input = testUtils.getFileAsDocument(location);
+        report = conventionValidator.validate(input);
+        assertEquals(location + " should be invalid\n" + report.getReport().toXML(), ValidationResult.INVALID, report.getValidationResult());
+        assertFalse(location + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
     }
 
 }

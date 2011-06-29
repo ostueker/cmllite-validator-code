@@ -44,6 +44,7 @@ public class SchemaTest {
         for (File file : files) {
             ValidationReport report = schemaValidator.validate(testUtils.getFileAsDocument(file));
             assertEquals(file.getAbsolutePath() + " should be schema valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
+            assertFalse(file.getAbsolutePath() + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
         }
     }
 }
