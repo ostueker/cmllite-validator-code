@@ -45,6 +45,8 @@ public class ConventionValidator {
             knownConventions.put(new URI(conventionNS + "compchem"), createXSLTTransform(ConventionValidator.class, "compchem-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "unit-dictionary"), createXSLTTransform(ConventionValidator.class, "unit-dictionary-rules.xsl"));
             knownConventions.put(new URI(conventionNS + "unitType-dictionary"), createXSLTTransform(ConventionValidator.class, "unitType-dictionary-rules.xsl"));
+
+            knownConventions.put(new URI(conventionNS + "simpleUnit"), createXSLTTransform(ConventionValidator.class, "simple-units-rules.xsl"));
         } catch (URISyntaxException e) {
             log.fatal("can't create uris", e);
             throw new RuntimeException(e);

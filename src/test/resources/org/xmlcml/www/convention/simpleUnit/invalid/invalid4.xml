@@ -1,0 +1,7 @@
+<cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema" xmlns:conventions="http://www.xml-cml.org/convention/">
+        <x:p xmlns:x="http://www.w3.org/1999/xhtml">
+            <cml:unit/>
+            This unit is not a direct child of unitList
+            and therefore should cause an error.
+        </x:p>
+    </cml:unitList>

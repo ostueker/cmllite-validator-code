@@ -1,0 +1,4 @@
+<cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema" xmlns:conventions="http://www.xml-cml.org/convention/">
+    <!-- not valid, a unitList must have at least
+        one unit child -->
+</cml:unitList>

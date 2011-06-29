@@ -1,0 +1,5 @@
+<cml:molecule convention="conventions:simpleUnit"  xmlns:cml="http://www.xml-cml.org/schema" xmlns:conventions="http://www.xml-cml.org/convention/">
+        <cml:unitList>
+            <cml:unit />
+        </cml:unitList>
+    </cml:molecule>

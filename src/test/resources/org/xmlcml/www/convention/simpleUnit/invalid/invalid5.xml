@@ -1,0 +1,10 @@
+ <cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema" xmlns:conventions="http://www.xml-cml.org/convention/">
+        <cml:unitList>
+            <cml:unit>
+                <x:p xmlns:x="http://www.w3.org/1999/xhtml">
+                    the outer unitList does not have at least
+                    one unit child
+                </x:p>
+            </cml:unit>
+        </cml:unitList>
+    </cml:unitList>

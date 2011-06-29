@@ -1,0 +1,8 @@
+<x:p xmlns:x="http://www.w3.org/1999/xhtml">
+    the unitList need not be the root element
+    <cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema"  xmlns:conventions="http://www.xml-cml.org/convention/">
+        <cml:molecule/>
+        <cml:unit/>
+    </cml:unitList>
+</x:p>
+

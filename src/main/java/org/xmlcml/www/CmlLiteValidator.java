@@ -66,7 +66,6 @@ public class CmlLiteValidator {
                 }
                 switch (conventionsReport.getValidationResult()) {
                     case VALID: {
-                        conventionsReport.addValid("document conforms to the convention(s) specified");
                         return createFinalReport(qnameReachableReport.getValidationResult(), xmlWellFormedReport, schemaReport, conventionsReport, qnameReachableReport);
                     }
                     default : {
@@ -87,7 +86,7 @@ public class CmlLiteValidator {
         }
     }
 
-    public ValidationReport createFinalReport(ValidationResult result, ValidationReport... reports) {
+    private ValidationReport createFinalReport(ValidationResult result, ValidationReport... reports) {
         ValidationReport finalReport = new ValidationReport("final-report");
         finalReport.setValidationResult(result);
         for (ValidationReport report : reports) {

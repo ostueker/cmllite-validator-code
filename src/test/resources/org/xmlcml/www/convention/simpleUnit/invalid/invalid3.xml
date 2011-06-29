@@ -1,0 +1,5 @@
+ <cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema" xmlns:conventions="http://www.xml-cml.org/convention/">
+        <x:p xmlns:x="http://www.w3.org/1999/xhtml">
+            no unit child of unitList
+        </x:p>
+    </cml:unitList>

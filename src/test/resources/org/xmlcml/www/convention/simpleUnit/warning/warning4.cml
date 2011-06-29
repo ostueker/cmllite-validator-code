@@ -1,0 +1,10 @@
+<cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema"  xmlns:conventions="http://www.xml-cml.org/convention/">
+    <cml:unit>
+        <x:p xmlns:x="http://www.w3.org/1999/xhtml">
+            this is still going to be processed in
+            unitList mode.
+            <cml:bond/>
+        </x:p>
+    </cml:unit>
+</cml:unitList>
+
