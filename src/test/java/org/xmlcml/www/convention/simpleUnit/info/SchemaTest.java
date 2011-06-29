@@ -1,4 +1,4 @@
-package org.xmlcml.www.convention.simpleUnit.invalid;
+package org.xmlcml.www.convention.simpleUnit.info;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -38,12 +38,13 @@ public class SchemaTest {
     }
 
     @Test
-    public void testInvalidAreSchemaValid() {
-        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/invalid"), new String[]{"cml"}, false);
+    public void testInfoAreSchemaValid() {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/info"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", files.isEmpty());
         for (File file : files) {
             ValidationReport report = schemaValidator.validate(testUtils.getFileAsDocument(file));
-            assertEquals(file.getAbsolutePath() + " should be schema valid "+report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
+            assertEquals(file.getAbsolutePath() + " should be schema valid " + report.getReport().toXML(), ValidationResult.VALID, report.getValidationResult());
+            assertFalse(file.getAbsolutePath() + " should not contain info\n" + report.getReport().toXML(), report.containsInfo());
         }
     }
 }

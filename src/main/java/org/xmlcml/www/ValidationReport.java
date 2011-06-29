@@ -3,6 +3,7 @@ package org.xmlcml.www;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Elements;
+import nu.xom.Nodes;
 
 /**
  * Created by IntelliJ IDEA.
@@ -96,6 +97,11 @@ public class ValidationReport {
         Element e = new Element("valid", reportNS);
         e.appendChild(message);
         element.appendChild(e);
+    }
+
+    public boolean containsInfo() {
+        Nodes nodes = document.query("//*[namespace-uri()='"+reportNS+"' and local-name()='"+infoElementName+"']");
+        return nodes.size() > 0;
     }
 
 }

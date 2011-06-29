@@ -1,4 +1,4 @@
-package org.xmlcml.www.convention.simpleUnit.warning;
+package org.xmlcml.www.convention.simpleUnit.valid;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -38,8 +38,8 @@ public class SchemaTest {
     }
 
     @Test
-    public void testWarningAreSchemaValid() {
-        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/warning"), new String[]{"cml"}, false);
+    public void testValidAreSchemaValid() {
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/valid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", files.isEmpty());
         for (File file : files) {
             ValidationReport report = schemaValidator.validate(testUtils.getFileAsDocument(file));

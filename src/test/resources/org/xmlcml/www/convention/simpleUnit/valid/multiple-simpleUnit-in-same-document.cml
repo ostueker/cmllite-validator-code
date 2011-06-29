@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:p xmlns:x="http://www.w3.org/1999/xhtml" xmlns:cml="http://www.xml-cml.org/schema"
+                  xmlns:conventions="http://www.xml-cml.org/convention/">
+    there are multiple instances of the simpleUnit
+    convention in this document
+    <cml:unitList convention="conventions:simpleUnit">
+        <cml:unit/>
+    </cml:unitList>
+    <cml:unitList convention="conventions:simpleUnit">
+        <cml:unit/>
+    </cml:unitList>
+</x:p>

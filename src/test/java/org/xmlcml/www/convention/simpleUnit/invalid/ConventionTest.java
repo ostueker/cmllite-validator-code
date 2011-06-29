@@ -41,7 +41,7 @@ public class ConventionTest {
 
    @Test
     public void testInvalidAreSchemaValid() {
-        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/invalid"), new String[]{"xml"}, false);
+        Collection<File> files = FileUtils.listFiles(new File("./src/test/resources/org/xmlcml/www/convention/simpleUnit/invalid"), new String[]{"cml"}, false);
         assertFalse("there should be test documents", files.isEmpty());
         for (File file : files) {
             //ValidationReport report = conventionValidator.validate(testUtils.getFileAsDocument(file));

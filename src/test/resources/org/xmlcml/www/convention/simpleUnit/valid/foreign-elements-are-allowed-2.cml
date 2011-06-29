@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cml:unitList convention="conventions:simpleUnit" xmlns:cml="http://www.xml-cml.org/schema"
+                  xmlns:conventions="http://www.xml-cml.org/convention/">
+    <element-in-default-namespace />
+    <cml:unit/>
+</cml:unitList>
+
+
