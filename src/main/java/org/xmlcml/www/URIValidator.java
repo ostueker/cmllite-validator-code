@@ -215,10 +215,6 @@ public class URIValidator {
 
             if (uri != null) {
                 uniqueUris.add(uri);
-            } else {
-                log.warn("invalid uri " + uri.toString());
-                report.addError("'" + uri.toString() + "' is not a valid uri");
-                report.setValidationResult(ValidationResult.INVALID);
             }
         }
         return uniqueUris;
