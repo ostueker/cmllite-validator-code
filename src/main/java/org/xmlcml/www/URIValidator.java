@@ -206,13 +206,9 @@ public class URIValidator {
         int n = attributes.size();
         Set<URI> uniqueUris = new HashSet<URI>(n);
         for (Attribute attribute : attributes) {
-            URI uri = null;
+            URI uri;
             if ("convention".equals(attribute.getLocalName())) {
-                Element parent = (Element) attribute.getParent();
-                String [] a = attribute.getValue().split(":");
-                String prefix = a[0];
-                String namespace = parent.getNamespaceURI(prefix);
-                uri = createUri(namespace, a[1]);
+                uri = getConventionUri(report, attribute);
             } else {
                 uri = createUri(attribute.getValue());
             }
@@ -220,12 +216,34 @@ public class URIValidator {
             if (uri != null) {
                 uniqueUris.add(uri);
             } else {
-                log.info("invalid uri " + uri.toString());
+                log.warn("invalid uri " + uri.toString());
                 report.addError("'" + uri.toString() + "' is not a valid uri");
                 report.setValidationResult(ValidationResult.INVALID);
             }
         }
         return uniqueUris;
+    }
+
+    private URI getConventionUri(final ValidationReport report, final Attribute attribute) {
+        final String convention = attribute.getValue();
+        Element parent = (Element) attribute.getParent();
+        if (convention.contains(":")) {
+            String[] a = convention.split(":");
+            String prefix = a[0];
+            String namespace = parent.getNamespaceURI(prefix);
+            if (namespace != null) {
+                return createUri(namespace, a[1]);
+            } else {
+                log.warn("Undefined namespace prefix: '" + prefix + "'");
+                report.addError("Undefined namespace prefix: '" + prefix + "'");
+                report.setValidationResult(ValidationResult.INVALID);
+            }
+        } else {
+            log.warn("Convention is not a CURIE: '" + convention + "'");
+            report.addError("Convention is not a CURIE: '" + convention + "'");
+            report.setValidationResult(ValidationResult.INVALID);
+        }
+        return null;
     }
 
     private void checkUrisAreReachable(Set<URI> uris, ValidationReport report) {
