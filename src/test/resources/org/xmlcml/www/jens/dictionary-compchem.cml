@@ -1,0 +1,1075 @@
+<?xml version="1.0"?>
+<dictionary
+        xmlns="http://www.xml-cml.org/schema"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:cml="http://www.xml-cml.org/schema/cml"
+        xmlns:cmlx="http://www.xml-cml.org/schema/cmlx"
+        xmlns:convention="http://www.xml-cml.org/convention/"
+        xmlns:m="http://www.w3.org/1998/Math/MathML"
+        xmlns:nonSi="http://www.xml-cml.org/unit/nonSi/"
+        xmlns:si="http://www.xml-cml.org/unit/si/"
+        xmlns:unitType="http://www.xml-cml.org/unit/unitType/"
+        convention="convention:dictionary"
+        dictionaryPrefix="compchem"
+        namespace="http://www.xml-cml.org/dictionary/compchem/"
+        title="Computational Chemistry - Core Concepts">
+
+    <dc:contributor>Peter Murray-Rust</dc:contributor>
+    <dc:contributor>Weerapong Phadungsukanan</dc:contributor>
+    <dc:contributor>Jens Thomas</dc:contributor>
+
+    <description>
+        <h:p>Toplevel dictionary for computational chemistry</h:p>
+        <h:p>
+            Concepts in this dictionary are general throughout computational chemistry and
+            are used extensively in the CompChem convention to describe the structure of
+            computational chemistry.
+        </h:p>
+    </description>
+    <dc:author>Weerapong Phadungsukanan</dc:author>
+
+<h:h2>Modules</h:h2>
+
+    <entry id="calculation" term="calculation" dataType="cml:module"
+        units="si:none" unitType="unitType:none">
+        <definition>
+            <h:p>A calculation module for a computational job</h:p>
+        </definition>
+        <description>
+            <h:p>
+                A calculation module represents the concept of the model calculation
+                or
+                optimisation or iteration processes for computational job.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="environment" term="environment" dataType="cml:module"
+        units="si:none" unitType="unitType:none">
+        <definition>
+            <h:p>Module holding concepts relating to environment that
+                the job used or required</h:p>
+        </definition>
+        <description>
+            <h:p>
+                The computing environment concept refers to a hardware platform,
+                software application,
+                the operating system and any hardware and software configurations used
+                in order to run
+                the job or computational task. The environment also includes the
+                metadata such as
+                machine id, username, starting and finishing date time, tools, compilers,
+                IP, etc.
+            </h:p>
+            <h:p>
+                This information is not related to input and output of the model but is
+                supplementary to
+                the software application to run properly and may vary from machine to
+                machine.
+                Therefore, the computing environment is OPTIONAL element in the CompChem
+                convention.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="finalization" term="finalization" dataType="cml:module"
+        units="si:none" unitType="unitType:none">
+        <definition>
+            <h:p>A finalization module for a computational job</h:p>
+        </definition>
+        <description>
+            <h:p>
+                A finalisation module represents the concept of the model results for
+                computational job.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="initialization" term="initialization" dataType="cml:module"
+        units="si:none" unitType="unitType:none">
+        <definition>
+            <h:p>A initialisation module for a computational job</h:p>
+        </definition>
+        <description>
+            <h:p>
+                An initialisation module represents the concept of the model
+                parameters and
+                inputs for computational job.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="job" term="job" dataType="cml:module" units="si:none"
+        unitType="unitType:none">
+        <definition>
+            <h:p>A job or computational task</h:p>
+        </definition>
+        <description>
+            <h:p>
+                The job concept represents a computational job performed by
+                quantum chemistry
+                software, e.g. geometry optimisation job,
+                frequency analysis job. The job
+                concept is the smallest unit
+                which can fully describe a general picture of
+                computational
+                modelling.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="jobList" term="job list" dataType="cml:module"
+        units="si:none" unitType="unitType:none">
+        <definition>
+            <h:p>A list of computational job</h:p>
+        </definition>
+        <description>
+            <h:p>
+                A quantum chemistry calculation is often comprised of a
+                series of subtasks,
+                <h:i>e.g.</h:i>
+                coarse optimisation -> fine optimisation -> NMR Spectrum
+                Analysis; this is
+                because most quantum chemistry software packages are designed to be
+                modularised and only to perform a single task at a time.
+                The joblist concept
+                is introduced to capture these series of successive subtasks and links
+                the information from one subtask to the next subtask.
+            </h:p>
+        </description>
+    </entry>
+
+    <h:h2>Environment terms</h:h2>
+
+    <entry id="citation" dataType="xsd:string" unitType="unitType:unknown"
+        term="TODO">
+        <definition>
+            <h:p>TODO</h:p>
+        </definition>
+        <description>
+            <h:p>TODO</h:p>
+        </description>
+    </entry>
+
+    <entry id="date" dataType="xsd:string" unitType="unitType:unknown"
+        term="date">
+        <definition>
+            <h:p>An unspecified date</h:p>
+        </definition>
+        <description>
+            <h:p>no controlled syntax</h:p>
+            <h:p class="example">TODO</h:p>
+        </description>
+    </entry>
+
+    <entry id="executable" dataType="xsd:string" unitType="unitType:none" units="si:mole"
+        term="executable program">
+        <definition>
+            <h:p>executable program</h:p>
+        </definition>
+        <description>
+            <h:p>no controlled syntax</h:p>
+            <h:p class="example">TODO</h:p>
+        </description>
+    </entry>
+
+    <entry id="hostname" dataType="xsd:string" unitType="unitType:none"
+        term="host name">
+        <definition>
+            <h:p>host name</h:p>
+        </definition>
+        <description>
+            <h:p>uncontrolled vocabulary</h:p>
+            <h:p class="example">TODO</h:p>
+        </description>
+    </entry>
+
+    <entry id="input" dataType="xsd:string" unitType="unitType:none"  term="program input">
+      <definition>
+        <h:p>program input</h:p>
+      </definition>
+      <description>
+        <h:p>no controlled syntax</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="metadata" dataType="xsd:string" unitType="unitType:unknown"
+        term="metadata">
+        <definition>
+            <h:p>metadata</h:p>
+        </definition>
+        <description>
+            <h:p>Metadata TODO MOVE</h:p>
+        </description>
+    </entry>
+
+    <entry id="nproc" dataType="xsd:string" unitType="unitType:dimensionless"
+        term="number of processors">
+        <definition>
+            <h:p>The number of processors used to run the job.</h:p>
+        </definition>
+        <description>
+            <h:p>The number of processors the job was executed on.</h:p>
+            <h:p class="example">TODO</h:p>
+        </description>
+    </entry>
+
+    <entry id="program" dataType="xsd:string" unitType="unitType:unknown"
+        term="program">
+        <definition>
+            <h:p>The program being run</h:p>
+        </definition>
+        <description>
+            <h:p>This is the name of the computational chemistry package
+                being run.
+                Known values for this are listed in the table below.
+            </h:p>
+            <h:table>
+
+                <h:tr>
+                    <h:th>Program</h:th>
+                    <h:th>Description</h:th>
+                    <h:th>Reference</h:th>
+                </h:tr>
+
+                <h:tr>
+                    <h:td>nwchem</h:td>
+                    <h:td>The Northwest Computational Chemistry Package
+                        (NWChem)
+                    </h:td>
+                    <h:td>nwchem website</h:td>
+                </h:tr>
+
+                <h:tr>
+                    <h:td>gaussian</h:td>
+                    <h:td>The Gaussian electronic structure coe</h:td>
+                    <h:td>gaussian website</h:td>
+                </h:tr>
+
+            </h:table>
+        </description>
+    </entry>
+
+    <entry id="title" unitType="unitType:none" term="title"
+        dataType="xsd:string">
+        <definition>
+            <h:p>An arbitrary title.</h:p>
+        </definition>
+        <description>
+            <h:p>A title is not used for reference, though could be used
+                for
+                lexical indexing (e.g. by Solr). It often contains important metadata
+                that is not otherwise available in the output.
+            </h:p>
+        </description>
+    </entry>
+
+    <entry id="version" dataType="xsd:string" unitType="unitType:none"
+        term="program version">
+        <definition>
+            <h:p>program version</h:p>
+        </definition>
+        <description>
+            <h:p>This specifies the version of the code that was used to
+                run the calculation. Ideally it should specify a version
+                in a version control system, although the version number
+                (e.g. 6.1) of the code is acceptable.</h:p>
+            <h:p class="example"></h:p>
+            <h:a
+                href="https://bitbucket.org/wwmm/jumbo-converters/src/5bee7e407c43/jumbo-converters-compchem/jumbo-converters-compchem-nwchem/src/main/resources/org/xmlcml/cml/converters/compchem/nwchem/log/templates/job.xml">jumbo template</h:a>
+        </description>
+    </entry>
+
+<h:h2>Miscellaneous </h:h2>
+
+    <entry id="compx" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="compy" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="compz" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="data" unitType="unitType:unknown"  term="data" dataType="xsd:string">
+      <definition>
+        <h:p>data</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+
+    <entry id="id" dataType="xsd:string" unitType="unitType:unknown"  term="CML id">
+      <definition>
+        <h:p>A CML id</h:p>
+      </definition>
+      <description>
+        <h:p>usable throughout cml documents. Need not be unique</h:p>
+      </description>
+    </entry>
+
+    <entry id="misc" dataType="xsd:string" unitType="unitType:unknown"  term="miscellaneous markup">
+      <definition>
+        <h:p>miscellaneous</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+    
+    <entry id="parameter" dataType="xsd:string" unitType="unitType:unknown"  term="parameter">
+      <definition>
+        <h:p>parameter</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+    
+    <entry id="property" dataType="xsd:string" unitType="unitType:unknown"  term="property">
+      <definition>
+        <h:p>property</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+
+    <entry id="row.x" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="row.y" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="row.z" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="serial" dataType="xsd:string" unitType="unitType:unknown"  term="Serial">
+      <definition>
+        <h:p>A serial number</h:p>
+      </definition>
+      <description>
+        <h:p>a serial number from 1...n</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="startid" dataType="xsd:string" unitType="unitType:unknown"  term="startid">
+      <definition>
+        <h:p>???</h:p>
+      </definition>
+      <description>
+        <h:p>???</h:p>
+      </description>
+    </entry>
+
+    <entry id="tensorname" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+<h:h2>Static properties</h:h2>
+
+    <entry id="atnum" unitType="unitType:unknown"  term="TODO atnum" dataType="xsd:integer">
+      <definition>
+        <h:p>serial number of atom</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="atomicmass" dataType="xsd:string" unitType="unitType:unknown"  term="atomic mass">
+      <definition>
+        <h:p>Atomic mass</h:p>
+      </definition>
+      <description>
+        <h:p>normally the mass of an isolated atom, but the isotopic variation may not be clear</h:p>
+      </description>
+    </entry>
+
+    <entry id="atomicNumber" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="atommass" unitType="unitType:unknown"  term="Mass of the atom" dataType="xsd:double">
+      <definition>
+        <h:p>Mass of the atom</h:p>
+      </definition>
+      <description>
+        <h:p>May not always be that from a table of atomic masses TODO
+        </h:p>
+      </description>
+    </entry>
+    
+
+    <entry id="atomtype" dataType="xsd:string" unitType="unitType:unknown"  term="atom type">
+      <definition>
+        <h:p>CML atomType element</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="atomtypeRef" dataType="xsd:string" unitType="unitType:unknown"  term="reference to atom type">
+      <definition>
+        <h:p>Reference to CML atomType element</h:p>
+      </definition>
+      <description>
+        <h:p>This should be the normal usage for atomtype symbols/refs</h:p>
+      </description>
+    </entry>
+
+    <entry id="atomsym" unitType="unitType:unknown"  term="Atom symbol" dataType="cml:elementType">
+      <definition>
+        <h:p>Symbol of the atom</h:p>
+      </definition>
+      <description>
+        <h:p>This may not always be a CML elementType TODO</h:p>
+      </description>
+    </entry>
+    
+    <entry id="atomType" dataType="xsd:string" unitType="unitType:unknown"  term="atom type">
+      <definition>
+        <h:p>an atom type</h:p>
+      </definition>
+      <description>
+        <h:p>An atom type (not the element type). Cf cml:atomType</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.a" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.b" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.c" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.alpha" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.beta" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.gamma" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="cell.omega" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="centerofmass" dataType="xsd:string" unitType="unitType:unknown"  term="center of mass">
+      <definition>
+        <h:p>center of mass</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="charge" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="elemname" unitType="unitType:unknown"  term="TODO elemname" dataType="cml:elementType">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="elementType" dataType="xsd:string" unitType="unitType:unknown"  term="element type">
+      <definition>
+        <h:p>the type of the element</h:p>
+      </definition>
+      <description>
+        <h:p>the atomic symbol as in CML:@elementTypeS</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="elsym" unitType="unitType:unknown"  term="TODO elsym" dataType="cml:elementType">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+   <entry id="groupnumber" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+  <entry id="groupname" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="grouporder" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+
+    <entry id="irrep" dataType="xsd:string" unitType="unitType:unknown"  term="Irreducible representation">
+      <definition>
+        <h:p>Irreducible representation</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="lattice.recip.units" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+  <entry id="mass" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="molmass" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="natoms" dataType="xsd:string" unitType="unitType:unknown"  term="atom count">
+      <definition>
+        <h:p>number of atoms</h:p>
+      </definition>
+      <description>
+        <h:p>normally the count of atoms in a molecule or other collection of atoms</h:p>
+        <h:p class="example">TODO</h:p>
+      </description>
+    </entry>
+
+<!-- <entry id="nuclear_dipole_moment" dataType="xsd:double" unitType="unitType:electric_dipole_moment" term="nuclear dipole moment"> -->
+    <entry id="nuclear_electric_dipole_moment" term="nuclear electric dipole moment" >
+      <definition>
+        <h:p>The nuclear electric dipole moment</h:p>
+      </definition>
+      <description>
+        <h:p>The electric dipole moment arising from the nuclear charges.</h:p>
+        <h:p class="example">TODO</h:p>
+        <h:a href="https://bitbucket.org/wwmm/jumbo-converters/src/5bee7e407c43/jumbo-converters-compchem/jumbo-converters-compchem-nwchem/src/main/resources/org/xmlcml/cml/converters/compchem/nwchem/log/templates/nucdipole.xml">jumbo template</h:a>
+      </description>
+    </entry>
+
+<entry id="nuclear_repulsion_energy" term="Nuclear repulsion energy" dataType="xsd:double" units="nonSi:hartree"
+       unitType="unitType:energy">
+    <definition>
+        <h:p>The potential energy arising from Coulombic nuclei-nuclei repulsions.</h:p>
+        <h:p>
+        <m:math>
+            <m:mrow>
+
+                <m:msub>
+                    <m:mover>
+                        <m:mi>T</m:mi>
+                        <!-- <m:mo>&Hat;-->
+                                <m:mo>&#94;
+                                </m:mo>
+                            </m:mover>
+                            <m:mi>n</m:mi>
+                        </m:msub>
+
+                        <m:mo>=</m:mo>
+
+                        <m:mo>-</m:mo>
+                        <m:munder>
+<!--                            <m:mo>&Sum;-->
+                            <m:mo>&#8721;
+                            </m:mo>
+                            <m:mi>i</m:mi>
+                        </m:munder>
+
+                        <m:mfrac>
+                            <m:mrow>
+                                <m:msup>
+<!--                                    <m:mo>&hbar; -->
+                                    <m:mo>&#8463;
+                                    </m:mo>
+                                    <m:mn>2</m:mn>
+                                </m:msup>
+                            </m:mrow>
+
+                            <m:mrow>
+                                <m:mn>2</m:mn>
+                                <m:msub>
+                                    <m:mi>M</m:mi>
+                                    <m:mi>i</m:mi>
+                                </m:msub>
+                            </m:mrow>
+                        </m:mfrac>
+
+                        <m:msubsup>
+<!--                            <m:mi>&nabla;-->
+                    <m:mi>&#8711;
+                    </m:mi>
+                    <m:msub>
+                        <m:mi>R</m:mi>
+                        <m:mi>i</m:mi>
+                    </m:msub>
+                    <m:mn>2</m:mn>
+                </m:msubsup>
+
+            </m:mrow>
+        </m:math>
+        </h:p>
+    </definition>
+    <description>
+        <h:p>The nuclear repulsion energy is the sum of the repulsive Coulombic 
+        interaction energies between the positively charged nuclei.</h:p>
+        <h:a href="https://bitbucket.org/wwmm/jumbo-converters/src/5bee7e407c43/jumbo-converters-compchem/jumbo-converters-compchem-nwchem/src/main/resources/org/xmlcml/cml/converters/compchem/nwchem/log/templates/effnucrep.xml">jumbo template</h:a>
+    </description>
+</entry>
+
+    <entry id="pointgroup" dataType="xsd:string" unitType="unitType:none"  term="molecular point group">
+        <dc:source>Wikipedia</dc:source>    
+        <dc:creator>Jens Thomas</dc:creator>    
+      <definition>
+        <h:p>The molecular point group in Schoenflies notation.</h:p>
+      </definition>
+      <description>
+        <h:p>The point group of the molecule defines the symmetry operations under which the molecule
+        remains unchanged.</h:p>
+      </description>
+    </entry>
+
+    <entry id="x3" dataType="xsd:string" unitType="unitType:unknown"  term="CML cartesian x">
+      <definition>
+        <h:p>CML x3 coordinate</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="y3" dataType="xsd:string" unitType="unitType:unknown"  term="CML cartesian y">
+      <definition>
+        <h:p>CML y3 coordinate</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="z3" dataType="xsd:string" unitType="unitType:unknown"  term="CML cartesian z">
+      <definition>
+        <h:p>CML z3 coordinate</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+<h:h2>Calculation properties</h:h2>
+
+    <entry id="basis" unitType="unitType:none"  term="basis set name" dataType="xsd:string">
+      <definition>
+        <h:p>The name of a basis set.</h:p>
+      </definition>
+      <description>
+        <h:p>The basis set name should map to one of the names as listed in the 
+        EMSL basis set library.</h:p>
+      </description>
+    </entry>
+
+    <entry id="basis.coefficient" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+    
+    <entry id="basis.exponent" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="basis.shellnum" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="bfn" unitType="unitType:unknown"  term="TODO bfn" dataType="xsd:integer">
+      <definition>
+        <h:p>basis function</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="calculationType" dataType="xsd:string" unitType="unitType:unknown"  term="Type of calculation">
+      <definition>
+        <h:p>calculationType</h:p>
+      </definition>
+      <description>
+        <h:p>Type of calculation</h:p>
+        <h:p class="example">TODO MOVE</h:p>
+      </description>
+    </entry>
+    
+    <entry id="cputime" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+    
+    <entry id="deltae" units="si:unknown" term="deltae" dataType="xsd:double"
+      unitType="unitType:energy">
+      <definition>
+        <h:p>change in energy between cycles</h:p>
+      </definition>
+      <description>
+        <h:p>change in energy between cycles</h:p>
+      </description>
+    </entry>
+
+    <entry id="diiserr" unitType="unitType:unknown" term="diiserr"
+        dataType="xsd:double">
+        <definition>
+            <h:p>error in DIIS</h:p>
+        </definition>
+        <description>
+            <h:p>error in DIIS</h:p>
+        </description>
+    </entry>
+
+    <entry id="homo" unitType="unitType:unknown"  term="HOMO" dataType="xsd:double">
+      <definition>
+        <h:p>Highest Occupied Molecular Orbital</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+    
+    <entry id="lumo" unitType="unitType:unknown"  term="LUMO" dataType="xsd:double">
+      <definition>
+        <h:p>Lowest Occupied Moecular Orbital</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+
+    <entry id="iter" unitType="unitType:unknown"  term="serial number of iteration" dataType="xsd:integer">
+      <definition>
+        <h:p>serial number of iteration</h:p>
+      </definition>
+      <description>
+        <h:p>serial number of iteration TODO MOVE</h:p>
+      </description>
+    </entry>
+    <!-- unitType should be added to entry attributes <entry id="energy" 
+     dataType="xsd:string" unitType="unitType:unknown"  term="energy" dataType="xsd:double" unitType="unitType:energy"> <definition><h:p>energy</h:p></definition> 
+      <description><h:p>energy of unspecified typeTODO MOVE</h:p></description> 
+      </entry> 
+      -->
+      
+    <entry id="rmsdens" unitType="unitType:unknown"  term="RMS electron density" dataType="xsd:double">
+      <definition>
+        <h:p>rms density</h:p>
+      </definition>
+      <description>
+        <h:p>RMS electron density</h:p>
+      </description>
+    </entry>
+    
+    <entry id="shellsym" term="TODO" dataType="xsd:string" units="si:none"
+      unitType="unitType:none">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="time" unitType="unitType:unknown"  term="cumulative time" dataType="xsd:double">
+      <definition>
+        <h:p>cumulative time</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+    
+    <entry id="walltime" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+<h:h2>Calculated Energies</h:h2>
+
+    <entry id="coulomb" unitType="unitType:unknown"  term="Coulomb energy" dataType="xsd:double">
+      <definition>
+        <h:p>Coulomb energy</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="ener1e" unitType="unitType:unknown"  term="1-electron energy" dataType="xsd:double">
+      <definition>
+        <h:p>1-electron energy</h:p>
+      </definition>
+      <description>
+        <h:p>1-electron energy</h:p>
+      </description>
+    </entry>
+    
+    <entry id="ener2e" unitType="unitType:unknown"  term="TODO ener2e" dataType="xsd:double">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="energy" units="si:unknown" term="energy" dataType="xsd:double" unitType="unitType:energy">
+      <definition>
+        <h:p>energy</h:p>
+      </definition>
+      <description>
+        <h:p>energy of unspecified typeTODO MOVE</h:p>
+      </description>
+    </entry>
+   
+    <entry id="echangecorr" unitType="unitType:unknown"  term="Exchange correlation energy"
+      dataType="xsd:double">
+      <definition>
+        <h:p>Exchange correlation energy</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="oneelecener" unitType="unitType:unknown"  term="1-electron energy" dataType="xsd:double">
+      <definition>
+        <h:p>1-electron energy</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="oneeener" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+    <entry id="sumatomener" unitType="unitType:unknown"  term="Sum of atom energies" dataType="xsd:double">
+      <definition>
+        <h:p>Sum of atom energies</h:p>
+      </definition>
+      <description>
+        <h:p>Sum of atom energies</h:p>
+      </description>
+    </entry>
+    
+    <entry id="totalener" dataType="xsd:string" unitType="unitType:unknown"  term="total energy">
+      <definition>
+        <h:p>The total energy</h:p>
+      </definition>
+      <description>
+        <h:p>This may be a code-specific term so may be overridden by code-specific dictionaries</h:p>
+      </description>
+    </entry>
+
+    <entry id="totaldft" unitType="unitType:unknown"  term="Total DFT energy" dataType="xsd:double">
+      <definition>
+        <h:p>Total DFT energy</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+
+    <entry id="totener" unitType="unitType:unknown"  term="Total energy" dataType="xsd:double">
+      <definition>
+        <h:p>Total energy</h:p>
+      </definition>
+      <description>
+        <h:p>TODO MOVE</h:p>
+      </description>
+    </entry>
+
+    <entry id="twoeener" dataType="xsd:string" unitType="unitType:unknown"  term="TODO">
+      <definition>
+        <h:p>TODO</h:p>
+      </definition>
+      <description>
+        <h:p>TODO</h:p>
+      </description>
+    </entry>
+
+</dictionary>
