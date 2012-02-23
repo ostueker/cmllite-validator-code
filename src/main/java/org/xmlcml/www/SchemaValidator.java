@@ -6,9 +6,7 @@ import nu.xom.Serializer;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -60,10 +58,7 @@ public class SchemaValidator {
             Source schemaFile = new StreamSource(cmlSchemaInputStream);
             try {
                 Schema schema = factory.newSchema(schemaFile);
-//                return schema.newValidator();
-                Validator newValidator = schema.newValidator();
-                newValidator.setErrorHandler(new CMLSchemaErrorHandler());
-                return newValidator;
+                return schema.newValidator();
             } catch (SAXException e) {
                 log.fatal("can't create new validator", e);
                 throw new RuntimeException(e);
@@ -175,27 +170,4 @@ public class SchemaValidator {
         }
     }
 
-}
-
-class CMLSchemaErrorHandler implements ErrorHandler {
-    public void fatalError( SAXParseException e ) throws SAXException {
-        System.out.println("Fatal Error: ");
-        throw e;
-    }
-    public void error( SAXParseException e ) throws SAXException {
-        System.out.println("Error: ");
-        printInfo(e);
-        throw e;
-    }
-    public void warning( SAXParseException e ) throws SAXException {
-        System.out.println("Warning : ");
-        // noop
-    }
-    private void printInfo(SAXParseException e) {
-        System.out.println("   Public ID: "+e.getPublicId());
-        System.out.println("   System ID: "+e.getSystemId());
-        System.out.println("   Line number: "+e.getLineNumber());
-        System.out.println("   Column number: "+e.getColumnNumber());
-        System.out.println("   Message: "+e.getMessage());
-    }
 }
