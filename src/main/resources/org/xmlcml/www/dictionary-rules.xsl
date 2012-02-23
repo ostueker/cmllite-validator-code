@@ -19,6 +19,9 @@
     <xsl:variable name="ascii-chars">&#32;!"#$%&amp;'()*+,-./0123456789:;&lt;=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~&#127;</xsl:variable>
     <xsl:variable name="unknownName">unknown</xsl:variable>
     <xsl:variable name="noneName">none</xsl:variable>
+    
+    <!-- if not empty, print full xpath else print the id chain -->
+    <xsl:param name="print-full-path"></xsl:param>
 
     <xsl:template match="/">
         <report:result>
@@ -543,25 +546,39 @@
     <!--MODE: FULL-PATH-->
     <xsl:template match="*" mode="get-full-path">
         <xsl:apply-templates select="parent::*" mode="get-full-path"/>
-        <xsl:text>/</xsl:text>
         <xsl:choose>
-            <xsl:when test="namespace-uri()=''">
-                <xsl:value-of select="name()"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:text>*[local-name()='</xsl:text>
-                <xsl:value-of select="local-name()"/>
-                <xsl:text>' and namespace-uri()='</xsl:text>
-                <xsl:value-of select="namespace-uri()"/>
-                <xsl:text>']</xsl:text>
-            </xsl:otherwise>
+	        <xsl:when test="$print-full-path">
+		        <xsl:text>/</xsl:text>
+		        <xsl:choose>
+		            <xsl:when test="namespace-uri()=''">
+		                <xsl:value-of select="name()"/>
+		            </xsl:when>
+		            <xsl:otherwise>
+		                <xsl:text>*[local-name()='</xsl:text>
+		                <xsl:value-of select="local-name()"/>
+		                <xsl:text>' and namespace-uri()='</xsl:text>
+		                <xsl:value-of select="namespace-uri()"/>
+		                <xsl:text>']</xsl:text>
+		            </xsl:otherwise>
+		        </xsl:choose>
+		        <xsl:variable name="preceding"
+		                      select="count(preceding-sibling::*[local-name()=local-name(current()) and namespace-uri() = namespace-uri(current())])"/>
+		        <xsl:text>[</xsl:text>
+		        <xsl:value-of select="1+ $preceding"/>
+		        <xsl:text>]</xsl:text>
+		    </xsl:when>
+		    <xsl:otherwise>
+		        <xsl:variable name="id" select="@id"/>
+		        <xsl:text>/*</xsl:text>
+	            <xsl:if test="$id">
+			        <xsl:text>[@id='</xsl:text>
+			        <xsl:value-of select="$id"/>
+			        <xsl:text>']</xsl:text>
+			    </xsl:if>
+		    </xsl:otherwise>
         </xsl:choose>
-        <xsl:variable name="preceding"
-                      select="count(preceding-sibling::*[local-name()=local-name(current()) and namespace-uri() = namespace-uri(current())])"/>
-        <xsl:text>[</xsl:text>
-        <xsl:value-of select="1+ $preceding"/>
-        <xsl:text>]</xsl:text>
     </xsl:template>
+    
     <xsl:template match="@*" mode="get-full-path">
         <xsl:apply-templates select="parent::*" mode="get-full-path"/>
         <xsl:text>@*[local-name()='</xsl:text>
@@ -571,4 +588,5 @@
         <xsl:text>']</xsl:text>
     </xsl:template>
 
+    
 </xsl:stylesheet>
