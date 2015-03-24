@@ -22,6 +22,11 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <archive>
+                      <manifest>
+                        <mainClass>org.xmlcml.www.CmlLiteValidator</mainClass>
+                      </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
