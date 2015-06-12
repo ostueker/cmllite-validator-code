@@ -2961,10 +2961,11 @@
             <xsd:documentation>
                 <h:div class="summary">Allowed types of table.</h:div>
                 <h:div class="description">
-                    <h:p>rowBased, arrayBased, contentBased.</h:p>
+                    <h:p>rowBased, columnBased, arrayBased, contentBased.</h:p>
                 </h:div>
                 <h:div class="example" href="arrayList1.xml"/>
                 <h:div class="curation">2006-11-03: formlized 3 table types</h:div>
+                <h:div class="curation">2015-05-12: Added columnBased as 4th table type. Should 'arrayBased' be deprecated? (ostueker)</h:div>
             </xsd:documentation>
         </xsd:annotation>
                 <xsd:restriction base="xsd:string">
@@ -2972,6 +2973,13 @@
                         <xsd:annotation>
                             <xsd:documentation>
                                 <h:div class="description">rowBased.</h:div>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                    <xsd:enumeration value="columnBased">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <h:div class="description">columnBased.</h:div>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:enumeration>
